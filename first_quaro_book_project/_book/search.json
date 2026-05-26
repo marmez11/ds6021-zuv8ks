@@ -24,7 +24,7 @@
     "href": "HW1.html",
     "title": "2  Homework 1: Data Exploration and Visualization",
     "section": "",
-    "text": "This Chapter will focus on the topics surrounding Visualizing Data Models\nTopics includes:\n\nPartial effect plots\nPartial dependent plots\nIndividual conditional expectation plots\nAccumulated local effect plots\n(Possible) Permutation feature importance",
+    "text": "3 Module 1 homework\nThis Chapter will focus on the topics surrounding Visualizing Data Models\nTopics includes:",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 1: Data Exploration and Visualization</span>"
     ]
@@ -47,6 +47,16 @@
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. (USA) 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
       "References"
+    ]
+  },
+  {
+    "objectID": "HW1.html#partial-effect-plots",
+    "href": "HW1.html#partial-effect-plots",
+    "title": "2  Homework 1: Data Exploration and Visualization",
+    "section": "3.1 Partial Effect Plots",
+    "text": "3.1 Partial Effect Plots\ninstall.packages(“pak”) pak::pak(“thomasgstewart/ds6021b”) require(ds6021b)\nexpanded_grid_for_df_mod_01 &lt;- expand.grid(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 0)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 1: Data Exploration and Visualization</span>"
     ]
   }
 ]
