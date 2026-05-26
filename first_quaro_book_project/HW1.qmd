@@ -1,0 +1,11 @@
+# Homework 1: Data Exploration and Visualization
+
+This Chapter will focus on the topics surrounding Visualizing Data Models
+
+Topics includes:
+
+- Partial effect plots
+- Partial dependent plots
+- Individual conditional expectation plots
+- Accumulated local effect plots
+- (Possible) Permutation feature importance

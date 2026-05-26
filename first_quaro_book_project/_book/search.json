@@ -20,13 +20,23 @@
     ]
   },
   {
+    "objectID": "HW1.html",
+    "href": "HW1.html",
+    "title": "2  Homework 1: Data Exploration and Visualization",
+    "section": "",
+    "text": "This Chapter will focus on the topics surrounding Visualizing Data Models\nTopics includes:\n\nPartial effect plots\nPartial dependent plots\nIndividual conditional expectation plots\nAccumulated local effect plots\n(Possible) Permutation feature importance",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 1: Data Exploration and Visualization</span>"
+    ]
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "2  Summary",
+    "title": "3  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
