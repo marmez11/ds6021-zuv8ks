@@ -20,6 +20,7 @@ Stratification across subgroups
 2. For each prediction rule, create two calibration curves: one for x3=0 and another for x3=1.
 
 # Installing the properties and packages if needed:
+```{r}
 #install.packages("pak")
 #pak::pak("thomasgstewart/ds6021b")
 #pak::pak("thomasgstewart/ds6021c")
@@ -119,6 +120,7 @@ plot(1:5, quantile_90th_vals,
         cex = 1.5,
         xaxt = "n")
 axis(1, 1:5, c("f1","f2","f3","f4","f5"))
+```
 
 5. Describe a measure of model performance from the other section.
 
