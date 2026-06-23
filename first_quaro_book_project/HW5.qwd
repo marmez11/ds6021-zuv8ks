@@ -1,0 +1,286 @@
+# Name: Maxwell Braseth 
+# Date: 06/22/2026
+# Module 5 Homework
+
+require(FNN)
+require(dplyr)
+require(ggplot2)
+require(ranger)
+require(rms)
+require(nnet)
+library(FNN)
+library(dplyr)
+library(ggplot2)
+library(ranger)
+library(rms)
+library(nnet)
+
+abalone_data <- read.csv(
+  "https://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data",
+  header = FALSE,
+  col.names = c("sex","length","diameter","height",
+                "whole_wt","shucked_wt","viscera_wt","shell_wt","rings"))
+
+abalone_data$sex <- factor(
+  abalone_data$sex,
+  levels = c("F", "I", "M"),
+  labels = c("Female", "Infant", "Male")
+)
+
+abalone_data$sex <- factor(abalone_data$sex)
+
+predictors <- c("length", "diameter", "height", "whole_wt", 
+                "shucked_wt", "viscera_wt", "shell_wt")
+
+# 1.) Fit all five model types to the Abalone data using a 70/30 training-test split:
+
+# Training-Test Split (70/30)
+set.seed(123)
+
+total_rows_in_abalone_data <- nrow(abalone_data)
+
+training_test_split_70_30 <- sample(
+  seq_len(total_rows_in_abalone_data),
+  size = floor(0.70 * total_rows_in_abalone_data)
+)
+
+training_data_70 <- abalone_data[training_test_split_70_30, ]
+testing_data_30  <- abalone_data[-training_test_split_70_30, ]
+
+# * KNN (FNN::knn.reg(), choose k using cross-validation or a reasonable default)
+y_training_data_rings <- training_data_70$rings
+y_testing_data_rings  <- testing_data_30$rings
+
+x_training_data <- training_data_70[, predictors]
+x_testing_data  <- testing_data_30[, predictors]
+
+# Choosing k values using cross-validation
+k_values_to_test <- seq(1, 20, by = 1)
+
+cross_validation_errors <- sapply(k_values_to_test, function(k) {
+  preds <- knn.reg(train = x_training_data, 
+                   y = y_training_data_rings, 
+                   test = x_training_data,
+                   k = k)$pred
+  mean((preds - y_training_data_rings)^2)
+})
+
+# determines the best k value from how the cross-validation error values show which k has the smallest distance from the predicted values to the observed values
+best_k <- k_values_to_test[min(which(cross_validation_errors == min(cross_validation_errors)))]
+
+# Final KNN with best k
+final_knn_predictions <- knn.reg(
+  train = x_training_data,
+  test = x_testing_data,
+  y = y_training_data_rings,
+  k = best_k
+)$pred
+
+
+# * Random forest (ranger::ranger(), default hyperparameters)
+random_forest_model_training <- ranger(
+  formula = rings ~ .,
+  data = training_data_70,
+  num.trees = 500,
+  respect.unordered.factors = "order"
+)
+
+random_forest_model_testing <- ranger(
+  formula = rings ~ .,
+  data = testing_data_30,
+  num.trees = 500,
+  respect.unordered.factors = "order"
+)
+
+random_forest_training_predictions <- predict(random_forest_model_training, data = training_data_70)$predictions
+random_forest_testing_predictions <- predict(random_forest_model_testing, data = testing_data_30)$predictions
+
+
+# * Ordinal regression with Restricted Cubic Splines (RCS) (rms::orm() with rcs() terms)
+orm_fit <- orm(rings ~ 
+    sex +
+    rcs(length) +
+    rcs(diameter) +
+    rcs(height) +
+    rcs(whole_wt) +
+    rcs(shucked_wt) +
+    rcs(viscera_wt) +
+    rcs(shell_wt),
+  data = training_data_70
+)
+
+orm_predictions_training_data <- predict(orm_fit, newdata = training_data_70, type = "mean")
+orm_predictions_testing_data  <- predict(orm_fit, newdata = testing_data_30, type = "mean")
+
+
+# * Linear regression with RCS (rms::ols() with rcs() terms)
+dd <- datadist(training_data_70)
+options(datadist = 'dd')
+
+lm_fit <- ols(rings ~ sex + 
+                rcs(length) + rcs(diameter) + rcs(height) +
+                rcs(whole_wt) + rcs(shucked_wt) + 
+                rcs(viscera_wt) + rcs(shell_wt),
+              data = training_data_70, 
+              x = TRUE, 
+              y = TRUE)
+
+lm_testing_predictions  <- predict(lm_fit, newdata = testing_data_30)
+
+
+# * Neural network (nnet::nnet(), linout = TRUE)
+train_nn <- training_data_70
+test_nn  <- testing_data_30
+
+means <- sapply(train_nn[, predictors], mean)
+sds   <- sapply(train_nn[, predictors], sd)
+
+train_nn[, predictors] <- scale(train_nn[, predictors], center = means, scale = sds)
+test_nn[, predictors]  <- scale(test_nn[, predictors],  center = means, scale = sds)
+
+x_train_nn <- model.matrix(rings ~ ., data = train_nn)[, -1]
+x_test_nn  <- model.matrix(rings ~ ., data = test_nn)[, -1]
+
+set.seed(123)
+
+nn_fit <- nnet(x = x_train_nn, y = train_nn$rings, size = 5, linout = TRUE, 
+               maxit = 500, trace = FALSE)
+
+nn_pred <- as.vector(predict(nn_fit, x_test_nn))
+
+
+# 2. For each fitted model, compute on the test set:
+# * A calibration plot (predicted vs. observed, with a loess smooth and the line of identity)
+# * Mean squared error (MSE)
+
+#  KNN
+
+# Root Mean Squared Error
+final_knn_prediction_RMSE_testing <- sqrt(mean((final_knn_predictions - y_testing_data_rings)^2))
+final_knn_prediction_RMSE_training <- sqrt(mean((final_knn_predictions - y_training_data_rings)^2))
+cat("Final KNN Root Mean Squared Error (RMSE) for Testing Data =", round(final_knn_prediction_RMSE_testing, 4), "\n")
+cat("Final KNN Root Mean Squared Error (RMSE) for Training Data =", round(final_knn_prediction_RMSE_training, 4), "\n")
+# Calibration Plot
+knn_results <- data.frame(
+  Actual = as.numeric(y_testing_data_rings),
+  Predicted = as.numeric(final_knn_predictions)
+)
+ggplot(knn_results, aes(x = Actual, y = Predicted)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "loess", color = "red", se = FALSE) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black") +
+  labs(title = paste("KNN Calibration Plot (best k =", best_k, ")"),
+       x = "Actual Rings or Age of the Abalone Data Subjects/Individuals",
+       y = "Predicted Rings or Age of the Abalone Data Subjects/Individuals") +
+  theme_minimal()
+
+#  Random Forest
+
+# Root Mean Squared Error value
+random_forest_rmse_testing <- sqrt(mean((random_forest_testing_predictions - y_testing_data_rings)^2))
+random_forest_rmse_training <- sqrt(mean((random_forest_training_predictions - y_training_data_rings)^2))
+cat("\nRandom Forest Training RMSE =", round(random_forest_rmse_training, 4), "\n")
+cat("\nRandom Forest Testing RMSE =", round(random_forest_rmse_testing, 4), "\n")
+# calibration plot
+rf_results_testing <- data.frame(
+  Actual_Rings_testing = y_testing_data_rings,
+  Predicted_testing = random_forest_testing_predictions
+)
+ggplot(rf_results_testing, aes(x = Actual_Rings_testing, y = Predicted_testing)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "loess", color = "red", se = FALSE, linewidth = 1.2) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black", linewidth = 1) +
+  labs(title = "Random Forest Calibration Plot (Test Set)",
+       subtitle = paste("Test RMSE =", round(random_forest_rmse_testing, 4)),
+       x = "Actual Rings", y = "Predicted Rings") +
+  theme_minimal()
+
+
+# Ordinal Regression (ORM + RCS)
+# Root Mean Squared Error value
+orm_rmse_testing <- sqrt(mean((orm_predictions_testing_data - y_testing_data_rings)^2))
+cat("\nOrdinal Regression Testing RMSE =", round(orm_rmse_testing, 4), "\n")
+orm_rmse_training <- sqrt(mean((orm_predictions_training_data - y_training_data_rings)^2))
+cat("\nOrdinal Regression Training RMSE =", round(orm_rmse_training, 4), "\n")
+# calibration plot
+ordinal_results_testing <- data.frame(
+  Actual = y_testing_data_rings,
+  Predicted = orm_predictions_testing_data
+)
+ggplot(ordinal_results_testing, aes(x = Actual, y = Predicted)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "loess", color = "red", se = FALSE) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black") +
+  labs(title = "Ordinal Regression (RCS) Calibration Plot - Testing Data",
+       x = "Observed Rings", y = "Predicted Rings") +
+  theme_minimal()
+
+
+# Linear Regression (OLS + RCS) 
+
+# Root Mean Squared Error
+lm_rmse_testing <- sqrt(mean((lm_testing_predictions - y_testing_data_rings)^2))
+cat("Linear Regression (OLS + RCS) Test RMSE =", round(lm_rmse_testing, 4), "\n")
+
+lm_rmse_training <- sqrt(mean((predict(lm_fit) - y_training_data_rings)^2))
+cat("Linear Regression (OLS + RCS) Training RMSE =", round(lm_rmse_training, 4), "\n")
+
+# calibration plot
+lm_results_testing <- data.frame(
+  Actual_Rings_testing = y_testing_data_rings,
+  Predicted_testing = lm_testing_predictions
+)
+ggplot(lm_results_testing, aes(x = Actual_Rings_testing, y = Predicted_testing)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "loess", color = "red", se = FALSE, linewidth = 1.2) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black", linewidth = 1) +
+  labs(title = "Linear Regression (OLS + RCS) Calibration Plot - Test Set",
+       subtitle = paste("Test RMSE =", round(lm_rmse_testing, 4)),
+       x = "Actual Rings", y = "Predicted Rings") +
+  theme_minimal()
+
+
+#  Neural Network
+
+# Root Mean Squared Error
+nn_rmse <- sqrt(mean((nn_pred - y_testing_data_rings)^2))
+cat("Neural Network RMSE =", round(nn_rmse, 4), "\n")
+
+# calibration plot
+nn_results_testing <- data.frame(
+  Actual = y_testing_data_rings,
+  Predicted = nn_pred
+)
+ggplot(nn_results_testing, aes(x = Actual, y = Predicted)) +
+  geom_point(alpha = 0.5, color = "steelblue") +
+  geom_smooth(method = "loess", color = "red", se = FALSE) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black") +
+  labs(title = "Neural Network Calibration Plot (Testing Data)",
+       x = "Observed Rings", y = "Predicted Rings") +
+  theme_minimal()
+
+
+# 3. Written reflection: Which model performs best on the Abalone data, 
+# and which definition of best are you using to decide? What are some of the 
+# different considerations that might lead to different choices about which prediction model to use?
+
+# Given the MSE and Calibration plots values and conclusions, it was clear to mean and to others
+# that the Random Forest model performed the best in terms of predicting the age of the Abalone data in cross comparison to the actual
+# observations of the age of the Abalone witihin the data. This is evidenced by the fact that the Random Forest model had the lowest
+# RMSE values for both the training and testing data which means that the predictions were very close to the actual observations
+# in terms of all of the non-linear relationships of the Abalone rings(age) values with all of the variables values of the data (both numeric and non-numeric).
+# This conclusions that the Random Forest model performing the best in term of predictions
+# also helped enforce my definition that it was the best model to use due to how the Random Forest model was able to efficiently predict the age of the Abalone data and is very
+# scalable and adaptable to new testing data and even with predicting the outcome values given the actual training data observations.
+# It is even important to note that the calibration plot of the Random Forest model showed the predictions were close in distance from the actual observations of the data.
+# Which this meant that the Random Forest model prediction ring(age) values/counts were very close to the actual observations of the data and the model's predictions matched 
+# the identity line of the calibration plot that means that seems to fit the model perfectly along with avoiding over and under fitting when dealing with new data. 
+# However, it is important to note that the best model in terms of accurate predictions would need to be a model that is robust and able to keep accurate predictions in the face of new testing data.
+# In this case of the 70-30 split of the data and considering the robustness of the models, Random Forest Models would actually not be the best model since when I altered the data or entered new data the predictions dramatically shifted.
+# As a result of this reality, the next models that I would consider to be a good model for prediction would be the Oridinal Regression and the Linear Regression (OLS + RCS) models.
+# Within those models, the Oridinal Regression model performed the best in terms of accurate predictions through its RMSE calculations and the Linear Regression (OLS + RCS) model performed the best in terms of interpretability since its predictors had
+# a deep influence on its calibration plot outputs (in other words its predictor variables gave the expected accurate predictions in term of the number of rings of the Abalone data and they were accurate against the training data in the model).
+# It is also important to note that when I tested these models on the training data, the Oridinal Regression model performed the best and showed adaptability when confronted when I ran the test data against this model which showed a semi-good performance in dealing with over and underfitting.
+# At the same time, the Linear Regression (OLS + RCS) model performed better than the Ordinal Regression Model in terms of its calibration models which means that the predictions of the regression actually closely matched the observed ring(age) values/counts of the Abalone data.
+# In conclusion, the best ways that I would describe a good prediction model is that it does need a lower MSE and RMSE amount and needs a plot such as a calibration plot that reinforces the conclusions that the predictions ring(age) values/counts are close to the actual observations of the data, 
+# while still being adaptable to new testing data and out of sample data to be considered an efficient and robust prediction model.
