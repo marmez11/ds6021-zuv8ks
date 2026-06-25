@@ -2,7 +2,7 @@
 # Date: 06/22/2026
 # Module 5 Homework
 
-```{r}
+# ```{r}
 require(FNN)
 require(dplyr)
 require(ggplot2)
@@ -285,5 +285,6 @@ ggplot(nn_results_testing, aes(x = Actual, y = Predicted)) +
 # At the same time, the Linear Regression (OLS + RCS) model performed better than the Ordinal Regression Model in terms of its calibration models which means that the predictions of the regression actually closely matched the observed ring(age) values/counts of the Abalone data.
 # In conclusion, the best ways that I would describe a good prediction model is that it does need a lower MSE and RMSE amount and needs a plot such as a calibration plot that reinforces the conclusions that the predictions ring(age) values/counts are close to the actual observations of the data, 
 # while still being adaptable to new testing data and out of sample data to be considered an efficient and robust prediction model.
-```
+
+# ```
 
