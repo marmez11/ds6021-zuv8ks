@@ -257,6 +257,1990 @@ Topics includes:
 
 \bookmarksetup{startatroot}
 
+\chapter{Module 1 homework}\label{module-1-homework}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Create your course portfolio using the instructions.
+\item
+  In the HW1.qmd, create another partial effect plot of predictions with
+  x1 ranging from -3 to 3 and x2 equal -0.5 and x3 set to 0. Repeat for
+  all five models.
+\end{enumerate}
+
+\section{Partial Effect Plots}\label{partial-effect-plots}
+
+\bookmarksetup{startatroot}
+
+\chapter{```\{r\}}\label{r}
+
+install.packages(``pak'') pak::pak(``thomasgstewart/ds6021b'')
+require(ds6021b)
+
+expanded\_grid\_for\_df\_mod\_01 \textless- expand.grid(x1 = seq(-3, 3,
+0.5), x2 = -0.5, x3 = 0)
+
+\bookmarksetup{startatroot}
+
+\chapter{First prediction model}\label{first-prediction-model}
+
+plot(expanded\_grid\_for\_df\_mod\_01\(x1, f1(expanded_grid_for_df_mod_01, x1 = expanded_grid_for_df_mod_01\)x1,
+x2 = -0.5, x3 = 0), title = ``First Prediction Model'', xlab = ``x1'',
+ylab = ``Black Box Model 1=F1 for
+f1(expanded\_grid\_for\_df\_mod\_01)'', type = ``p'')
+
+\bookmarksetup{startatroot}
+
+\chapter{Second prediction model}\label{second-prediction-model}
+
+plot(expanded\_grid\_for\_df\_mod\_01\(x1, f2(expanded_grid_for_df_mod_01, x1 = expanded_grid_for_df_mod_01\)x1,
+x2 = -0.5, x3 = 0), title = ``Second Prediction Model'', xlab = ``x1'',
+ylab = ``Black Box Model 2=F2 for
+f2(expanded\_grid\_for\_df\_mod\_01)'', type = ``b'')
+
+\bookmarksetup{startatroot}
+
+\chapter{Third prediction model}\label{third-prediction-model}
+
+plot(expanded\_grid\_for\_df\_mod\_01\(x1, f3(expanded_grid_for_df_mod_01, x1 = expanded_grid_for_df_mod_01\)x1,
+x2 = -0.5, x3 = 0), title = ``Third Prediction Model'', xlab = ``x1'',
+ylab = ``Black Box Model 3=F3 for
+f3(expanded\_grid\_for\_df\_mod\_01)'', type = ``b'')
+
+\bookmarksetup{startatroot}
+
+\chapter{Fourth prediction model}\label{fourth-prediction-model}
+
+plot(expanded\_grid\_for\_df\_mod\_01\(x1, f4(expanded_grid_for_df_mod_01, x1 = expanded_grid_for_df_mod_01\)x1,
+x2 = -0.5, x3 = 0), title = ``Fourth Prediction Model'', xlab = ``x1'',
+ylab = ``Black Box Model 4=F4 for
+f4(expanded\_grid\_for\_df\_mod\_01)'', type = ``o'')
+
+\bookmarksetup{startatroot}
+
+\chapter{Fifth prediction model}\label{fifth-prediction-model}
+
+plot(expanded\_grid\_for\_df\_mod\_01\(x1, f5(expanded_grid_for_df_mod_01, x1 = expanded_grid_for_df_mod_01\)x1,
+x2 = -0.5, x3 = 0), title = ``Fifth Prediction Model'', xlab = ``x1'',
+ylab = ``Black Box Model 5=F5 for
+f5(expanded\_grid\_for\_df\_mod\_01)'', type = ``s'')```
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Create another plot that compares predictions for the following using
+  all five models:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  x1 ranging from -3 to 3 and x2 equal -0.5 and x3 set to 0
+\item
+  x1 ranging from -3 to 3 and x2 equal -0.5 and x3 set to 1
+\end{itemize}
+
+\# Generate predictions for ALL models
+
+\bookmarksetup{startatroot}
+
+\chapter{x3 = 0}\label{x3-0}
+
+y1\_0 \textless- f1(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 0) y2\_0
+\textless- f2(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 0) y3\_0 \textless-
+f3(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 0) y4\_0 \textless- f4(x1 =
+seq(-3, 3, 0.5), x2 = -0.5, x3 = 0) y5\_0 \textless- f5(x1 = seq(-3, 3,
+0.5), x2 = -0.5, x3 = 0)
+
+\bookmarksetup{startatroot}
+
+\chapter{x3 = 1}\label{x3-1}
+
+y1\_1 \textless- f1(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 1) y2\_1
+\textless- f2(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 1) y3\_1 \textless-
+f3(x1 = seq(-3, 3, 0.5), x2 = -0.5, x3 = 1) y4\_1 \textless- f4(x1 =
+seq(-3, 3, 0.5), x2 = -0.5, x3 = 1) y5\_1 \textless- f5(x1 = seq(-3, 3,
+0.5), x2 = -0.5, x3 = 1)
+
+\bookmarksetup{startatroot}
+
+\chapter{Create side-by-side plotting
+area}\label{create-side-by-side-plotting-area}
+
+par(mfrow = c(1,2))
+
+plot( seq(-3, 3, 0.5), y1\_0, type = ``l'', col = ``black'', ylim =
+range(c(y1\_0, y2\_0, y3\_0, y4\_0, y5\_0)), main = ``All Models
+Combined (x3 = 0)'', xlab = ``x1'', ylab = ``Predictions for Black Box
+Models (1-5)=(F1-F5)'' )
+
+\bookmarksetup{startatroot}
+
+\chapter{lines for all Black models f1-f5 for x3 = 0 and x3 =
+1}\label{lines-for-all-black-models-f1-f5-for-x3-0-and-x3-1}
+
+lines(seq(-3, 3, 0.5), y2\_0, col = ``red'', lwd = 2, lty = 2)
+lines(seq(-3, 3, 0.5), y3\_0, col = ``blue'', lwd = 2, lty = 3)
+lines(seq(-3, 3, 0.5), y4\_0, col = ``green'', lwd = 2, lty = 4)
+lines(seq(-3, 3, 0.5), y5\_0, col = ``purple'', lwd = 2, lty = 5)
+
+legend( ``topright'', legend = c(``Model 1 = F1'', ``Model 2 = F2'',
+``Model 3 = F3'', ``Model 4 = F4'', ``Model 5 = F5''), col =
+c(``black'', ``red'', ``blue'', ``green'', ``purple''), lty =
+c(1,2,3,4,5) )
+
+plot( seq(-3, 3, 0.5), y1\_1, type = ``l'', col = ``black'', ylim =
+range(c(y1\_1, y2\_1, y3\_1, y4\_1, y5\_1)), main = ``All Models
+Combined (x3 = 1)'', xlab = ``x1'', ylab = ``Predictions for Black Box
+Models (1-5)=(F1-F5)'' )
+
+lines(seq(-3, 3, 0.5), y2\_1, col = ``red'', lty = 2) lines(seq(-3, 3,
+0.5), y3\_1, col = ``blue'', lwd = 2, lty = 3) lines(seq(-3, 3, 0.5),
+y4\_1, col = ``green'', lwd = 2, lty = 4) lines(seq(-3, 3, 0.5), y5\_1,
+col = ``purple'', lwd = 2, lty = 5)
+
+legend( ``topright'', legend = c(``Model 1 = F1'', ``Model 2 = F2'',
+``Model 3 = F3'', ``Model 4 = F4'', ``Model 5 = F5''), col =
+c(``black'', ``red'', ``blue'', ``green'', ``purple''), lty =
+c(1,2,3,4,5) ) \# ```
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  What do we learn from the figures in question 3?
+\end{enumerate}
+
+From the figures in question 3, it becomes easy to learn that the model
+predictions vary significantly across the five different models (F1 to
+F5) when x1 ranges from -3 to 3, with x2 held constant at -0.5 and x3
+set to either 0 or 1. These predictions varies uniquely for each black
+model value from F1-F5 and x3 values changing and with these variations
+we can gain an understanding how each model creates different outcomes
+and graph/model behaviors regardless of utilizing the same input
+variable x1 from -3 to 3 with incrementation at the value of 0.5.
+Altogether, this figure helps us understand that there will always be
+differences in predictions and we need a model by model comparison to
+better understand these predictions and what is does to the
+interpretations and decisions we make based on these models.
+
+\bookmarksetup{startatroot}
+
+\chapter{Homework 2: Data Plots on Measures of
+Performance}\label{homework-2-data-plots-on-measures-of-performance}
+
+This Chapter will focus on the topics surrounding Visualizing Data
+Models
+
+Topics includes:
+
+\begin{itemize}
+\tightlist
+\item
+  Discrimination (Somer's D/C-index)
+\item
+  Calibration plot
+\item
+  Residual plots
+\item
+  Proper scoring rules
+\item
+  Expected squared error
+\item
+  Expected absolute error
+\item
+  Error distribution Stratification across subgroups
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 2 homework}\label{module-2-homework}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In your repo, create the HW2.qmd and add it to your book
+  (\_quarto.yml).
+\item
+  For each prediction rule, create two calibration curves: one for x3=0
+  and another for x3=1.
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{Installing the properties and packages if
+needed:}\label{installing-the-properties-and-packages-if-needed}
+
+\bookmarksetup{startatroot}
+
+\chapter{```\{r\}}\label{r-1}
+
+\#install.packages(``pak'') \#pak::pak(``thomasgstewart/ds6021b'')
+\#pak::pak(``thomasgstewart/ds6021c'') library(ds6021b) library(ds6021c)
+
+set.seed(23583) data\_for\_predictionModel1 \textless-
+external\_data(n=100)
+
+\bookmarksetup{startatroot}
+
+\chapter{All prediction models for all prediction rules and create two
+calibration curves: one for x3=0 and another for
+x3=1.}\label{all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31.}
+
+data \textless- external\_data(1000)
+
+\bookmarksetup{startatroot}
+
+\chapter{calibration curve for x3=0 and
+x3=1}\label{calibration-curve-for-x30-and-x31}
+
+x3\_0 \textless- data\(x3 == 0
+x3_1 <- data\)x3 == 1 \# Create side-by-side plotting area par(mfrow =
+c(1,2)) \# Loop through each prediction rule and create calibration
+curves for x3=0 and x3=1 for (fi in c(``f1'', ``f2'', ``f3'', ``f4'',
+``f5'')) \{ \# Create calibration curve for x3=0
+plot(get(fi)(data{[}x3\_0, {]}), data{[}x3\_0, {]}\(y,
+         xlab = paste("Predicted", fi, " values"),
+         ylab = paste("Observed Y values from the Predicted ", fi, " values"),
+         main = paste("Prediction Rule Model: ", fi, "at (x3=0)"),
+         col = "#aa4848", type = "p")
+    lines(lowess(get(fi)(data[x3_0, ]), data[x3_0, ]\)y), col =
+``black'') abline(0, 1, lty = 2, lwd = 2, col = ``blue'') \# calibration
+curve for x3=1 plot(get(fi)(data{[}x3\_1, {]}), data{[}x3\_1, {]}\(y,
+         xlab = paste("Predicted", fi, " values"),
+         ylab = paste("Observed Y values from the Predicted ", fi, " values"),
+         main = paste("Prediction Rule Model: ", fi, " at (x3=1)"),
+         col = "#aa4848", type = "p")
+    lines(lowess(get(fi)(data[x3_1, ]), data[x3_1, ]\)y), col =
+``black'') abline(0, 1, lty = 2, lwd = 2, col = ``darkgreen'') \}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  For each prediction rule, create a visualization of the residual
+  distribution. for (fi in c(``f1'',``f2'', ``f3'', ``f4'', ``f5'')) \{
+  resid\_value \textless- get(fi)(data) - data\$y hist(resid\_value,
+  freq = FALSE, main = paste(``Residuals model values for the Prediction
+  Rule Model:'', fi), xlab = paste(``Residual values (predicted value
+  (f1, f2, f3, f4, f5) of y - observed value of y)''), ylab =
+  paste(``Probabilities of the Y values from the Predicted'', fi, ''
+  values''), col = ``\#aa4848'', border = ``black'', breaks = 30) \#
+  Plot the density curve lines(density(resid\_value), col = ``blue'') \}
+\item
+  For each prediction rule, calculate expected squared error, expected
+  absolute error, and the 90th quantile. Place the calculated quantities
+  in a visualization for easy comparison. (You may want to create a
+  different visualization for each summary measure.)
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{Expected squared error}\label{expected-squared-error}
+
+mean\_squared\_error\_vals \textless-
+sapply(c(``f1'',``f2'',``f3'',``f4'',``f5''), function(fi) \{
+mean((get(fi)(data) - data\$y)\^{}2) \})
+
+plot(1:5, mean\_squared\_error\_vals, xlab = ``Prediction Rules (f1, f2,
+f3, f4, f5)'', ylab = ``Mean Squared Error for each Prediction Rule
+Model'', main = ``Expected Squared Error by each Prediction Rule
+Model'', col = ``\#0c27bf'', ylim =
+c(0,max(mean\_squared\_error\_vals)), pch = 16, cex = 1.5, xaxt = ``n'')
+axis(1, 1:5, c(``f1'',``f2'',``f3'',``f4'',``f5''))
+
+\bookmarksetup{startatroot}
+
+\chapter{Expected absolute error}\label{expected-absolute-error}
+
+mae\_vals \textless- sapply(c(``f1'',``f2'',``f3'',``f4'',``f5''),
+function(fi) \{ mean(abs(get(fi)(data) - data\$y)) \})
+
+plot(1:5, mae\_vals, xlab = ``Prediction Rules (f1, f2, f3, f4, f5)'',
+ylab = ``Mean Absolute Error for each Prediction Rule Model'', main =
+``Expected Absolute Error by each Prediction Rule Model'', col =
+``\#098001'', ylim = c(0,max(mae\_vals)), pch = 16, cex = 1.5, xaxt =
+``n'') axis(1, 1:5, c(``f1'',``f2'',``f3'',``f4'',``f5'')) \# 90th
+quantile quantile\_90th\_vals \textless-
+sapply(c(``f1'',``f2'',``f3'',``f4'',``f5''), function(fi) \{
+quantile(abs(get(fi)(data) - data\$y), 0.9) \})
+
+plot(1:5, quantile\_90th\_vals, xlab = ``Prediction Rules (f1, f2, f3,
+f4, f5)'', ylab = ``90th Quantile for each Prediction Rule Model'', main
+= ``90th Quantile by each Prediction Rule Model'', col = ``\#ff0000'',
+ylim = c(0,max(quantile\_90th\_vals)), pch = 16, cex = 1.5, xaxt =
+``n'') axis(1, 1:5, c(``f1'',``f2'',``f3'',``f4'',``f5'')) \# ```
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Describe a measure of model performance from the other section.
+\end{enumerate}
+
+After going through all of the sections of this homework assignment, I
+found that each graph and predictual rule model revealed some unique
+details and insights about the measure of performances and how these
+models are used to help make accurate predictions and decions from these
+models.
+
+Starting with the calibration curves, these curves are used to evaluate
+the performance of a Predictive model by comparing the Predicted (f1,
+f2, f3, f4, f5) probabilities of all x related data whose data that
+matches the x3 values of 0 and 1 to the observed Observed Y values from
+the Predicted (f1, f2, f3, f4, f5) values. The first solid line of the
+calibration curves for x3=0 along with x3=1 helped to showed how the
+data points were correlated in a smoother linear way to be represent the
+relationship between the predicted probabilities and the observed
+frequencies. While the second dashed line in the calibration curves for
+x3=0 along with x3=1 best represents the reference line of the
+calibration curve that helps to represent the ideal straight linear
+relationship between the predicted probabilities and the observed
+frequencies. Altogether, these calibration curves for x3=0 along with
+x3=1 helps us better understand how well the predicted probabilities
+from the model align with the actual observed outcomes to see which
+relationships in the data better represents the ideal calibration of how
+data is predicted and observed in the models. From here, we can make
+better decisions based on the accurate prediciton calibrations of the
+models and we could also use these models to judge the performances of
+data in models in a precise and calibrated way.
+
+Going on into the residual distribution visualization, this histogram
+model helps us understand the distribution of residuals, which are the
+differences between the predicted values from the models and the
+observed values specified in the y variable in the data. After graphing
+this histogram, we can see how well the model fits the data into an
+almost perfect bell curve distribution of the residuals which helps to
+conclude that the model's predictions are well fitted to the observed
+data since the highest frequency of residual values are clustered around
+zero. This also means that this model's predictions are most perfectly
+the same value as the observed y values of the data. If the model was
+skewed or sparsely distributed into disjointed clusters, then the data
+of the residuals would not be well fitted to the observed data and this
+would lead to poor performance and inaccurate assessments of the data.
+It is also important to note that the density curve of the residuals
+that I added helps reinforce the accuracy and reliability of the model's
+predictions by showing the overall shape of the residual distribution.
+Altogether, this histogram of residuals for each prediction rule model
+(f1, f2, f3, f4, f5) helps us understand how well the model fits the
+data and whether there are any patterns or biases in the predictions
+along with the data. On top of that, this histogram of residuals for
+each prediction rule model (f1, f2, f3, f4, f5) helps us finalize that
+data predictions could be relied upon in decision making surrounding the
+precise calibration of the data in its later usage and how it does not
+deviate away from any previous observed data values.
+
+Finally for the measure of performances of calculate expected squared
+error, expected absolute error, and the 90th quantile, anyone could see
+by these visualizations that the reliability of the data predictions of
+these models could be used to determine accuracy and validity of the
+data. For example, within the Expected Squared Error visualization, we
+can see that the model reveals that all of the squared error mean values
+of each prediction rule (f1, f2, f3, f4, f5) are relatively close to
+each other since the cover in the 1 probability range of the y axis.
+However, the model with the lowest mean squared error is the most
+accurate model in terms of its predictions being close to the observed
+values on the y axis. It is important to know that there is one mean
+squared error value in the prediction rule f1 that is the highest which
+would indicate some potential biased and inaccurates prediction values
+to the other prediction rules along with being slightly less accurate
+than the other prediction rules. Regardless though, the mean squared
+error values reveals that all of the predictions are close in value to
+their observed values and thus are closely accurate predictions along
+with having a linear relationship regardless if there is no relationship
+line to connect them together. When viewing the expected absolute error
+rate visualization, we can seem a similar linear pattern in the data
+where all of the prediction values of each prediction rule (f1, f2, f3,
+f4, f5) are relatively close to each other since the cover in the 0.8
+probability range of the y axis. Thus, it would be easy for anyone to
+conclude that all of the prediction results of the predicted value to
+the observed data values are relatively close to each other and thus are
+closely accurate predictions. Finally for the visualization describing
+the 90th quantile, we can see that all of the prediction values of each
+prediction rule (f1, f2, f3, f4, f5) are relatively close to each other
+since the cover in the 1.5 probability range of the y axis. Thus, it
+would be easy for anyone to conclude that all of the prediction results
+of the predicted value to the observed data values are relatively close
+to each other and thus are closely accurate predictions.
+
+Altogether, these visualizations of expected squared error, expected
+absolute error, and the 90th quantile help us understand which models
+are more accurate and reliable in their predictions and which models may
+be less accurate and reliable. This information can be used to make
+informed decisions about which models to use for future decisions,
+predictions and analysis in comparison to other models.
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 3 homework: Internal measures of
+performance}\label{module-3-homework-internal-measures-of-performance}
+
+This Chapter will focus on the topics surrounding Internal measures of
+performance
+
+Topics includes:
+
+\begin{itemize}
+\tightlist
+\item
+  Apparent error
+\item
+  Estimating the error rate and its uncertainty
+\item
+  K-fold CV -- Bootstrap -- 0.632 \& 0.632+
+\item
+  Optimism
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 3 homework}\label{module-3-homework}
+
+Module 3 homework 1. In your repo, create HW3.qmd and add it to your
+book (\_quarto.yml). 2. Calculate the apparent MAE and external MAE for
+all 100 models in m using their corresponding training datasets in td.
+Create a scatter plot with apparent MAE on the x-axis and external MAE
+on the y-axis. Use a large external dataset to calculate MAE. Describe
+what you observe.
+
+\bookmarksetup{startatroot}
+
+\chapter{Installing the properties and packages if
+needed:}\label{installing-the-properties-and-packages-if-needed-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{```\{r\}}\label{r-2}
+
+install.packages(``pak'', quiet = TRUE)
+pak::pak(``thomasgstewart/ds6021d'') library(ds6021d)
+
+\bookmarksetup{startatroot}
+
+\chapter{2.) Calculate the apparent MAE and external MAE for all 100
+models in
+m}\label{calculate-the-apparent-mae-and-external-mae-for-all-100-models-in-m}
+
+\bookmarksetup{startatroot}
+
+\chapter{using their corresponding training datasets in
+td.}\label{using-their-corresponding-training-datasets-in-td.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Create a scatter plot with apparent MAE on the x-axis and
+external MAE
+on}\label{create-a-scatter-plot-with-apparent-mae-on-the-x-axis-and-external-mae-on}
+
+\bookmarksetup{startatroot}
+
+\chapter{the y-axis. Use a large external dataset to calculate
+MAE.}\label{the-y-axis.-use-a-large-external-dataset-to-calculate-mae.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Describe what you observe.}\label{describe-what-you-observe.}
+
+vector\_for\_apparent\_MAE\_100\_models \textless- rep(NA, 100)
+vectors\_for\_external\_MAE\_100\_models \textless- rep(NA, 100)
+set.seed(2343)
+
+for(index in seq\_along(vector\_for\_apparent\_MAE\_100\_models))\{
+m\_functions \textless- m{[}{[}index{]}{]} td\_internal\_training\_data
+\textless- td{[}{[}index{]}{]}
+
+\begin{verbatim}
+td_internal_training_predition_data_funct_y_out <- m_functions(td_internal_training_data)
+td_internal_training_y_data <- td_internal_training_data$y
+apparent_rate_MAE <- mean(abs(td_internal_training_predition_data_funct_y_out - td_internal_training_y_data))
+vector_for_apparent_MAE_100_models[index] <- apparent_rate_MAE
+
+external_data_vals <- external_data(10000)  # larger external set
+external_data_vals_funct_y_out <- m_functions(external_data_vals)
+external_rate_MAE <- mean(abs(external_data_vals_funct_y_out - external_data_vals$y))
+vectors_for_external_MAE_100_models[index] <- external_rate_MAE
+\end{verbatim}
+
+\}
+
+plot(x = vector\_for\_apparent\_MAE\_100\_models, y =
+vectors\_for\_external\_MAE\_100\_models, main = ``Apparent MAE vs
+External MAE'', xlab = ``Apparent MAE (Training)'', ylab = ``External
+MAE (Test)'', pch = 19, col = ``steelblue'', cex = 1.2)
+
+\bookmarksetup{startatroot}
+
+\chapter{3.) For each of the 100 models, compute the
+optimism}\label{for-each-of-the-100-models-compute-the-optimism}
+
+\bookmarksetup{startatroot}
+
+\chapter{for MAE (apparent MAE minus external
+MAE).}\label{for-mae-apparent-mae-minus-external-mae.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Plot the distribution of
+optimism.}\label{plot-the-distribution-of-optimism.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Calculate the mean optimism for
+MAE.}\label{calculate-the-mean-optimism-for-mae.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Is the distribution roughly symmetric or
+skewed?}\label{is-the-distribution-roughly-symmetric-or-skewed}
+
+\bookmarksetup{startatroot}
+
+\chapter{What does the figure tell you about using apparent
+error}\label{what-does-the-figure-tell-you-about-using-apparent-error}
+
+\bookmarksetup{startatroot}
+
+\chapter{as a performance estimate?}\label{as-a-performance-estimate}
+
+vector\_for\_optimism\_MAE\_100\_models \textless- rep(NA, 100)
+for(index in seq\_along(vector\_for\_apparent\_MAE\_100\_models))\{
+vector\_for\_optimism\_MAE\_100\_models{[}index{]} \textless-
+vector\_for\_apparent\_MAE\_100\_models{[}index{]} -
+vectors\_for\_external\_MAE\_100\_models{[}index{]} \}
+mean\_optimism\_for\_MAE\_100\_models \textless-
+mean(vector\_for\_optimism\_MAE\_100\_models)
+
+hist(vector\_for\_optimism\_MAE\_100\_models, main = ``Distribution of
+Optimism (Apparent MAE - External MAE)'', xlab = ``Optimism for MAE'',
+col = ``lightblue'', border = ``darkblue'') abline(v =
+mean\_optimism\_for\_MAE\_100\_models, col = ``red'', lwd = 2) text(x =
+mean\_optimism\_for\_MAE\_100\_models, y = -0.5, labels = paste(``Mean
+='', round(mean\_optimism\_for\_MAE\_100\_models, 5)), col = ``red'')
+
+\bookmarksetup{startatroot}
+
+\chapter{4.) Select td{[}{[}1{]}{]} as your working
+dataset.}\label{select-td1-as-your-working-dataset.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Implement 10-fold CV for the regression
+model}\label{implement-10-fold-cv-for-the-regression-model}
+
+\bookmarksetup{startatroot}
+
+\chapter{in the section 3 examples and record the
+resulting}\label{in-the-section-3-examples-and-record-the-resulting}
+
+\bookmarksetup{startatroot}
+
+\chapter{MAE estimate.}\label{mae-estimate.}
+
+new\_train\_data \textless- td{[}{[}1{]}{]}
+number\_of\_rows\_training\_data \textless- nrow(new\_train\_data)
+k\_val \textless- 10 set.seed(123) folds\_randomized \textless-
+sample(rep(1:k\_val, length.out = number\_of\_rows\_training\_data))
+
+cv\_mae \textless- rep(NA, k\_val) for(k in 1:k\_val)\{ val\_idx\_of\_CV
+\textless- which(folds\_randomized == k) train\_idx\_of\_CV \textless-
+which(folds\_randomized != k)
+
+\begin{verbatim}
+train_fold_of_CV <- new_train_data[train_idx_of_CV, ]
+val_fold_of_CV <- new_train_data[val_idx_of_CV, ]
+
+linear_model_of_fold_of_CV <- lm(y ~ ., data = train_fold_of_CV)
+predict_y_val_of_fold_of_CV <- predict(linear_model_of_fold_of_CV, newdata = val_fold_of_CV)
+
+cv_mae[k] <- mean(abs(predict_y_val_of_fold_of_CV - val_fold_of_CV$y))
+
+cat("10-fold CV for the regression model: Fold number: ", k, ", MAE =", round(cv_mae[k], 4), "\n")
+\end{verbatim}
+
+\}
+
+\bookmarksetup{startatroot}
+
+\chapter{mean of 10-fold CV for MAE}\label{mean-of-10-fold-cv-for-mae}
+
+mean\_of\_10\_fold\_CV\_for\_MAE \textless- mean(cv\_mae)
+print(mean\_of\_10\_fold\_CV\_for\_MAE)
+
+\bookmarksetup{startatroot}
+
+\chapter{5.) Using td{[}{[}1{]}{]}, implement the bootstrap optimism
+estimator with
+B=200}\label{using-td1-implement-the-bootstrap-optimism-estimator-with-b200}
+
+\bookmarksetup{startatroot}
+
+\chapter{bootstrap samples. Report the apparent MAE, the estimated
+optimism,}\label{bootstrap-samples.-report-the-apparent-mae-the-estimated-optimism}
+
+\bookmarksetup{startatroot}
+
+\chapter{and the corrected MAE.}\label{and-the-corrected-mae.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Compare the corrected MAE to the true external error (computed
+with a large external
+dataset).}\label{compare-the-corrected-mae-to-the-true-external-error-computed-with-a-large-external-dataset.}
+
+b\_val \textless- 200 set.seed(42352) optimism\_b \textless- rep(NA,
+b\_val)
+
+m\_function \textless- m{[}{[}1{]}{]}
+new\_training\_predition\_data\_funct\_y\_output \textless-
+m\_function(new\_train\_data)
+
+apparent\_error\_mae \textless-
+mean(abs(new\_training\_predition\_data\_funct\_y\_output -
+new\_train\_data\$y)) \# using original m{[}{[}1{]}{]}
+
+for (b in 1:b\_val)\{ idx\_training\_data \textless-
+sample(1:number\_of\_rows\_training\_data, replace = TRUE)
+bootstrap\_training\_data \textless-
+new\_train\_data{[}idx\_training\_data, {]}
+
+\begin{verbatim}
+linearly_fittted_model_b_value <- lm(y ~ ., data = bootstrap_training_data)
+
+# In-sample on bootstrap
+predicted_y_value_b_value_training_data_bootstrap_in_sample <- predict(linearly_fittted_model_b_value, newdata = bootstrap_training_data)
+mae_optimism_in_sample_b_value <- mean(abs(predicted_y_value_b_value_training_data_bootstrap_in_sample - bootstrap_training_data$y))
+
+# original training data
+predicted_y_value_b_value_training_data_bootstrap_original <- predict(linearly_fittted_model_b_value, newdata = new_train_data)
+mae_optimism_original_b_value <- mean(abs(predicted_y_value_b_value_training_data_bootstrap_original - new_train_data$y))
+
+# optimism for bootstrap formula
+optimism_b[b] <- mae_optimism_in_sample_b_value - mae_optimism_original_b_value
+\end{verbatim}
+
+\}
+
+\bookmarksetup{startatroot}
+
+\chapter{corrected optimism bootstrap
+MAE}\label{corrected-optimism-bootstrap-mae}
+
+bootstrap\_corrected\_mae \textless- apparent\_error\_mae -
+mean(optimism\_b)
+
+\bookmarksetup{startatroot}
+
+\chapter{True external error}\label{true-external-error}
+
+large\_external \textless- external\_data(20000)
+true\_external\_error\_mae \textless- mean(abs(predict(lm(y
+\textasciitilde{} ., data = new\_train\_data), newdata =
+large\_external) - large\_external\$y))
+
+cat(``Apparent MAE:'', round(apparent\_error\_mae, 5), ``\n'')
+cat(``Bootstrap optimism:'', round(mean(optimism\_b), 5), ``\n'')
+cat(``Corrected MAE:'', round(bootstrap\_corrected\_mae, 5), ``\n'')
+cat(``True external MAE:'', round(true\_external\_error\_mae, 5),
+``\n'')
+
+hist(optimism\_b, main = ``Bootstrap estimates of optimism'', xlab =
+``Optimism (in-sample MAE − original MAE)'', freq = FALSE) abline(v =
+mean(optimism\_b), col = ``blue'', lwd = 2) text(x = mean(optimism\_b),
+y = 0, labels = paste(``Mean ='', round(mean\_optimism, 5)), col =
+``blue'') \# ```
+
+\bookmarksetup{startatroot}
+
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth}
+
+\bookmarksetup{startatroot}
+
+\chapter{Date: 06/14/2026}\label{date-06142026}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 4 Homework}\label{module-4-homework}
+
+\bookmarksetup{startatroot}
+
+\chapter{```\{r\}}\label{r-3}
+
+install.packages(``plotly'') install.packages(``dplyr'')
+install.packages(``ggplot2'') library(plotly) library(dplyr)
+library(ggplot2) set.seed(42)
+
+\bookmarksetup{startatroot}
+
+\chapter{1.)}\label{section}
+
+\bookmarksetup{startatroot}
+
+\chapter{In your repo, create the HW4.qmd and add it to your
+book}\label{in-your-repo-create-the-hw4.qmd-and-add-it-to-your-book}
+
+\bookmarksetup{startatroot}
+
+\chapter{(\_quarto.yml).}\label{quarto.yml.}
+
+\bookmarksetup{startatroot}
+
+\chapter{2.)}\label{section-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{Suppose X1 has 4
+categories,}\label{suppose-x1-has-4-categories}
+
+\bookmarksetup{startatroot}
+
+\chapter{X2 has 6 categories, and}\label{x2-has-6-categories-and}
+
+\bookmarksetup{startatroot}
+
+\chapter{X3 has 3 categories.}\label{x3-has-3-categories.}
+
+\bookmarksetup{startatroot}
+
+\chapter{X1 ∈ \{1, 2, 3, 4\} --\textgreater{} 4
+categories}\label{x1-1-2-3-4-4-categories}
+
+\bookmarksetup{startatroot}
+
+\chapter{X2 ∈ \{1, 2, 3, 4, 5, 6\} --\textgreater{} 6
+categories}\label{x2-1-2-3-4-5-6-6-categories}
+
+\bookmarksetup{startatroot}
+
+\chapter{X3 ∈ \{1, 2, 3\} --\textgreater{} 3
+categories}\label{x3-1-2-3-3-categories}
+
+\bookmarksetup{startatroot}
+
+\chapter{X1 * X2 * X3 = 4 * 6 * 3 = 72
+cells}\label{x1-x2-x3-4-6-3-72-cells}
+
+x1 \textless- c(1, 2, 3, 4) x2 \textless- c(1, 2, 3, 4, 5, 6) x3
+\textless- c(1, 2, 3)
+
+\bookmarksetup{startatroot}
+
+\chapter{How many cells does the largest possible model
+contain?}\label{how-many-cells-does-the-largest-possible-model-contain}
+
+total\_cells \textless- (length(x1) * length(x2) * length(x3)) \# (x1 *
+x2 * x3) print(paste(``The maximum number of cells within the model
+is:'', total\_cells)) print(paste(``This is because the largest possible
+model (the saturated model) requires a unique cell for every possible
+joint combination of the categories, calculated as 4 × 6 × 3 = 72
+cells.'')) print(paste(``These 72 cells represent the complete
+classification of all three covariates, spanning from (1, 1, 1) through
+(4, 6, 3), allowing the model to capture all of the independently
+predicted values of the combined covariate cell values.''))
+
+\bookmarksetup{startatroot}
+
+\chapter{How many parameters does the smallest possible model
+require?}\label{how-many-parameters-does-the-smallest-possible-model-require}
+
+parameters\_for\_smallest\_model \textless- 1 print(paste(``The minimum
+number of parameters within the model is:'',
+parameters\_for\_smallest\_model)) print(paste(``This is because the
+smallest possible model (the intercept-only model) which ignores all
+covariate information and assigns the same prediction value'', ``to
+every observation regardless of the combinations of the values of X1,
+X2, and X3.'')) print(paste(``At the same time, this model needs a
+intercept constant value that provides the same prediction value
+regardless of the combinations of the covariates values of x1, x2, and
+x3. This also helps estimate the mean of this smallest model.''))
+
+\bookmarksetup{startatroot}
+
+\chapter{If a training dataset of n=30 observations is drawn uniformly
+at}\label{if-a-training-dataset-of-n30-observations-is-drawn-uniformly-at}
+
+\bookmarksetup{startatroot}
+
+\chapter{random from this covariate
+space,}\label{random-from-this-covariate-space}
+
+\bookmarksetup{startatroot}
+
+\chapter{roughly how many cells would you expect to be
+unobserved?}\label{roughly-how-many-cells-would-you-expect-to-be-unobserved}
+
+\bookmarksetup{startatroot}
+
+\chapter{Set parameters}\label{set-parameters}
+
+set.seed(42) n \textless- 30
+
+\bookmarksetup{startatroot}
+
+\chapter{Mathematical Formula for the Expected Number of Unobserved
+Cells}\label{mathematical-formula-for-the-expected-number-of-unobserved-cells}
+
+\bookmarksetup{startatroot}
+
+\chapter{E(cells\_unobserved = UC) = total\_cells = M * (1 - 1 /
+total\_cells +
+M)\^{}n}\label{ecells_unobserved-uc-total_cells-m-1---1-total_cells-mn}
+
+cells\_unobserved\_expected \textless- total\_cells * (1 - 1 /
+total\_cells)\^{}n print(paste(``Theoretical expected unobserved
+cells:'', round(cells\_unobserved\_expected, 0)))
+
+\bookmarksetup{startatroot}
+
+\chapter{graph explanation to the observed and unobserved
+cells}\label{graph-explanation-to-the-observed-and-unobserved-cells}
+
+\bookmarksetup{startatroot}
+
+\chapter{Continuous Uniform
+Simulation}\label{continuous-uniform-simulation}
+
+\bookmarksetup{startatroot}
+
+\chapter{uniformly between 0 and 1 for n=30 observations for x, y, and
+z}\label{uniformly-between-0-and-1-for-n30-observations-for-x-y-and-z}
+
+idx\_x1 \textless- sample(x1, n, replace = TRUE) idx\_x2 \textless-
+sample(x2, n, replace = TRUE) idx\_x3 \textless- sample(x3, n, replace =
+TRUE) \# creating the cell matrix/grid grid\_matrix \textless-
+expand.grid( x1 = x1, x2 = x2, x3 = x3 ) \# Initialize observation count
+grid\_matrix\(Obs_Count <- 0
+# Looping throught the total n observations and filling the matrix/grid cells
+for(i in 1:n){
+  matched_row <- which(
+    grid_matrix\)x1 == idx\_x1{[}i{]} \& grid\_matrix\(x2 == idx_x2[i] &
+    grid_matrix\)x3 == idx\_x3{[}i{]} ) \# incrementing the observation
+count of matched values the covariates of x1=4, x2=6, and x3=3
+grid\_matrix\(Obs_Count[matched_row] <-
+    grid_matrix\)Obs\_Count{[}matched\_row{]} + 1 \}
+
+\bookmarksetup{startatroot}
+
+\chapter{Number of unobserved cells and observed
+cells}\label{number-of-unobserved-cells-and-observed-cells}
+
+simulated\_unobserved \textless- sum(grid\_matrix\(Obs_Count == 0)
+simulated_observed <- sum(grid_matrix\)Obs\_Count \textgreater{} 0)
+
+print(paste(``Simulated unobserved cells:'', simulated\_unobserved))
+print(paste(``Simulated observed cells:'', simulated\_observed))
+print(paste(``Difference between simulated and expected unobserved
+cells:'',round(simulated\_unobserved - cells\_unobserved\_expected, 0)))
+
+\bookmarksetup{startatroot}
+
+\chapter{3.)}\label{section-2}
+
+\bookmarksetup{startatroot}
+
+\chapter{Using the linear interpolation model, calculate the prediction
+ŷ(X0 =
+0.45)}\label{using-the-linear-interpolation-model-calculate-the-prediction-yx0-0.45}
+
+\bookmarksetup{startatroot}
+
+\chapter{Wa = (Xb - X0) / (Xb - Xa)}\label{wa-xb---x0-xb---xa}
+
+\bookmarksetup{startatroot}
+
+\chapter{Wb = (X0 - Xa) / (Xb - Xa)}\label{wb-x0---xa-xb---xa}
+
+\bookmarksetup{startatroot}
+
+\chapter{ŷ(X0) = Wa * ya + Wb * yb}\label{yx0-wa-ya-wb-yb}
+
+\bookmarksetup{startatroot}
+
+\chapter{given training points and the observed value of x0: x0=0.45, xa
+= 0.38, ya = 1.92, xb = 0.57, yb =
+2.04.}\label{given-training-points-and-the-observed-value-of-x0-x00.45-xa-0.38-ya-1.92-xb-0.57-yb-2.04.}
+
+x0 \textless- 0.45 ya \textless- 1.92 xa \textless- 0.38 xb \textless-
+0.57 yb \textless- 2.04 \# Show the weights Wa and Wb wa \textless- (xb
+- x0) / (xb - xa) wb \textless- (x0 - xa) / (xb - xa) \# setting the
+value of ŷ(X0) prediction\_y\_x0 \textless- wa * ya + wb * yb \#
+verifying that the weights of Wa and Wb sum to 1 print(paste(``The sum
+of the weights is:'', wa + wb)) print(paste(``Difference between the
+prediction value of ŷ(X0) and the total weights of wa \& wb:'',
+round(prediction\_y\_x0 - (wa + wb), 0)))
+
+\bookmarksetup{startatroot}
+
+\chapter{what is the relative magnitudes of the weights, tell you about
+how
+much}\label{what-is-the-relative-magnitudes-of-the-weights-tell-you-about-how-much}
+
+\bookmarksetup{startatroot}
+
+\chapter{each neighbor contributes to the
+prediction.}\label{each-neighbor-contributes-to-the-prediction.}
+
+\bookmarksetup{startatroot}
+
+\chapter{given that the neighbors are considered to be the two training
+observations that help show the prediction of
+ŷ(X0)}\label{given-that-the-neighbors-are-considered-to-be-the-two-training-observations-that-help-show-the-prediction-of-yx0}
+
+\bookmarksetup{startatroot}
+
+\chapter{and the neighbors are the left neighbor: wa=(Xa = 0.38, ya =
+1.92) and the right neighbor: wb=(Xb = 0.57, yb =
+2.04).}\label{and-the-neighbors-are-the-left-neighbor-waxa-0.38-ya-1.92-and-the-right-neighbor-wbxb-0.57-yb-2.04.}
+
+\bookmarksetup{startatroot}
+
+\chapter{At the same time, these neighbords are closets values to the
+observed value of x0 to the left and right of this observed
+value.}\label{at-the-same-time-these-neighbords-are-closets-values-to-the-observed-value-of-x0-to-the-left-and-right-of-this-observed-value.}
+
+\bookmarksetup{startatroot}
+
+\chapter{relative magnitude(s) of the
+weights}\label{relative-magnitudes-of-the-weights}
+
+print(paste(``Relative magnitude ratio for wa/wb:'', round(wa/wb), 2))
+print(paste(``Relative magnitude ratio for wb/wa:'', round(wb/wa), 2))
+print(paste(``Relative magnitude of the left neighbor:'', round(wa / (wa
++ wb), 2))) print(paste(``Relative magnitude of the right neighbor:'',
+round(wb / (wa + wb), 2))) print(paste(``Difference between the relative
+magnitude of the left neighbor and the right neighbor:'', round(wa / (wa
++ wb) - wb / (wa + wb), 0))) print(paste(``Is the left or the right
+neighbor larger or smaller?:'', ``The left neighbor is larger than the
+right neighbor?:'', wa \textgreater{} wb, '' The right neighbor is
+larger than the left neighbor?: ``, wb \textgreater{} wa)) if(wa
+\textgreater{} wb)\{ print(paste(''The left neighbor is larger than the
+right neighbor and this means that the relative magnitude of the left
+neighbor contributes more to the prediction of ŷ(X0) at a wa value of :
+``, round(wa, 2) * 100,''\%``)) print(paste(''This also means that the
+left neighbor wa is closer to the observed value of x0 than the right
+neighbor wb.'')) print(paste(``Which also means that this linear
+interpolation model is better at predicting ŷ(X0) at a wa value of :'',
+round(wa, 2) * 100, ``\%'')) \}else\{ print(paste(``The right neighbor
+is larger than the left neighbor and this means that the relative
+magnitude of the right neighbor contributes more to the prediction of
+ŷ(X0) at a wb value of :'', round(wb, 2) * 100, ``\%''))
+print(paste(``This also means that the right neighbor wb is closer to
+the observed value of x0 than the left neighbor wa.''))
+print(paste(``Which also means that this linear interpolation model is
+better at predicting ŷ(X0) at a wb value of :'', round(wb, 2) * 100,
+``\%'')) \}
+
+\bookmarksetup{startatroot}
+
+\chapter{4.) Using the following data, calculate the 3 nearest neigbhor
+prediction}\label{using-the-following-data-calculate-the-3-nearest-neigbhor-prediction}
+
+\bookmarksetup{startatroot}
+
+\chapter{for X0 = 0.2, 0.5, 0.7 by
+hand.}\label{for-x0-0.2-0.5-0.7-by-hand.}
+
+\bookmarksetup{startatroot}
+
+\chapter{x y}\label{x-y}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.22 2.14}\label{section-3}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.37 1.89}\label{section-4}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.57 1.99}\label{section-5}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.66 1.88}\label{section-6}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.03 2.26}\label{section-7}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.92 2.11}\label{section-8}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.77 1.92}\label{section-9}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.73 1.98}\label{section-10}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.11 2.47}\label{section-11}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.40 2.10}\label{section-12}
+
+\bookmarksetup{startatroot}
+
+\chapter{Before selecting the 3 closest k=3 neighbors, measuring the
+distance between the new observed point (x) and a known training point
+(y) across (n) different
+features.}\label{before-selecting-the-3-closest-k3-neighbors-measuring-the-distance-between-the-new-observed-point-x-and-a-known-training-point-y-across-n-different-features.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Distance Metrics Formulas:}\label{distance-metrics-formulas}
+
+\bookmarksetup{startatroot}
+
+\chapter{Euclidean Distance: Σ(√(xi-yi)\^{}2) - yi : sqrt((x2 - x1)\^{}2
++ (y2 -
+y1)\^{}2)}\label{euclidean-distance-ux3c3xi-yi2---yi-sqrtx2---x12-y2---y12}
+
+\bookmarksetup{startatroot}
+
+\chapter{Euclidean Distance in this context: Σ(x0-xi) - yi : \textbar x2
+-
+x1\textbar{}}\label{euclidean-distance-in-this-context-ux3c3x0-xi---yi-x2---x1}
+
+\bookmarksetup{startatroot}
+
+\chapter{Manhatten Distance: Σ\textbar xi - yi\textbar{} - yi :
+\textbar x2 - x1\textbar{} + \textbar y2 -
+y1\textbar{}}\label{manhatten-distance-ux3c3xi---yi---yi-x2---x1-y2---y1}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neighbors for x0 =
+0.2}\label{nearest-neighbors-for-x0-0.2}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neighbors for x0 =
+0.5}\label{nearest-neighbors-for-x0-0.5}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neighbors for x0 =
+0.7}\label{nearest-neighbors-for-x0-0.7}
+
+\bookmarksetup{startatroot}
+
+\chapter{where x0 = 0.2}\label{where-x0-0.2}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(xi) = Σ(x0-xi)}\label{fxi-ux3c3x0-xi}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.22) = 0.20 - 0.22 = \textbar-0.02\textbar{} = 0.02
+--\textgreater{} y = 2.14}\label{fx0.22-0.20---0.22--0.02-0.02-y-2.14}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.37) = 0.20 - 0.37 = \textbar-0.17\textbar{} = 0.17
+--\textgreater{} y = 1.89}\label{fx0.37-0.20---0.37--0.17-0.17-y-1.89}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.57) = 0.20 - 0.57 = \textbar-0.37\textbar{} = 0.37
+--\textgreater{} y = 1.99}\label{fx0.57-0.20---0.57--0.37-0.37-y-1.99}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.66) = 0.20 - 0.66 = \textbar-0.54\textbar{} = 0.54
+--\textgreater{} y = 1.88}\label{fx0.66-0.20---0.66--0.54-0.54-y-1.88}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.03) = 0.20 - 0.03 = \textbar0.17\textbar{} = 0.17
+--\textgreater{} y = 2.26}\label{fx0.03-0.20---0.03-0.17-0.17-y-2.26}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.92) = 0.20 - 0.92 = \textbar-0.72\textbar{} = 0.72
+--\textgreater{} y = 2.11}\label{fx0.92-0.20---0.92--0.72-0.72-y-2.11}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.77) = 0.20 - 0.77 = \textbar-0.43\textbar{} = 0.43
+--\textgreater{} y = 1.92}\label{fx0.77-0.20---0.77--0.43-0.43-y-1.92}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.73) = 0.20 - 0.73 = \textbar-0.46\textbar{} = 0.46
+--\textgreater{} y = 1.98}\label{fx0.73-0.20---0.73--0.46-0.46-y-1.98}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.11) = 0.20 - 0.11 = \textbar0.09\textbar{} = 0.09
+--\textgreater{} y = 2.47}\label{fx0.11-0.20---0.11-0.09-0.09-y-2.47}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.40) = 0.20 - 0.40 = \textbar-0.20\textbar{} = 0.20
+--\textgreater{} y = 2.10}\label{fx0.40-0.20---0.40--0.20-0.20-y-2.10}
+
+\bookmarksetup{startatroot}
+
+\chapter{where x0 = 0.5}\label{where-x0-0.5}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(xi) = Σ(x0-xi)}\label{fxi-ux3c3x0-xi-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.22) = 0.50 - 0.22 = \textbar0.28\textbar{} = 0.28
+--\textgreater{} y = 2.14}\label{fx0.22-0.50---0.22-0.28-0.28-y-2.14}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.37) = 0.50 - 0.37 = \textbar0.13\textbar{} = 0.13
+--\textgreater{} y = 1.89}\label{fx0.37-0.50---0.37-0.13-0.13-y-1.89}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.57) = 0.50 - 0.57 = \textbar-0.07\textbar{} = 0.07
+--\textgreater{} y = 1.99}\label{fx0.57-0.50---0.57--0.07-0.07-y-1.99}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.66) = 0.50 - 0.66 = \textbar-0.19\textbar{} = 0.19
+--\textgreater{} y = 1.88}\label{fx0.66-0.50---0.66--0.19-0.19-y-1.88}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.03) = 0.50 - 0.03 = \textbar0.47\textbar{} = 0.47
+--\textgreater{} y = 2.26}\label{fx0.03-0.50---0.03-0.47-0.47-y-2.26}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.92) = 0.50 - 0.92 = \textbar-0.58\textbar{} = 0.58
+--\textgreater{} y = 2.11}\label{fx0.92-0.50---0.92--0.58-0.58-y-2.11}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.77) = 0.50 - 0.77 = \textbar-0.23\textbar{} = 0.23
+--\textgreater{} y = 1.92}\label{fx0.77-0.50---0.77--0.23-0.23-y-1.92}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.73) = 0.50 - 0.73 = \textbar-0.27\textbar{} = 0.27
+--\textgreater{} y = 1.98}\label{fx0.73-0.50---0.73--0.27-0.27-y-1.98}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.11) = 0.50 - 0.11 = \textbar0.39\textbar{} = 0.39
+--\textgreater{} y = 2.47}\label{fx0.11-0.50---0.11-0.39-0.39-y-2.47}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.40) = 0.50 - 0.40 = \textbar-0.10\textbar{} = 0.10
+--\textgreater{} y = 2.10}\label{fx0.40-0.50---0.40--0.10-0.10-y-2.10}
+
+\bookmarksetup{startatroot}
+
+\chapter{where x0 = 0.7}\label{where-x0-0.7}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(xi) = Σ(x0-xi)}\label{fxi-ux3c3x0-xi-2}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.22) = 0.70 - 0.22 = \textbar0.48\textbar{} = 0.48
+--\textgreater{} y = 2.14}\label{fx0.22-0.70---0.22-0.48-0.48-y-2.14}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.37) = 0.70 - 0.37 = \textbar0.33\textbar{} = 0.33
+--\textgreater{} y = 1.89}\label{fx0.37-0.70---0.37-0.33-0.33-y-1.89}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.57) = 0.70 - 0.57 = \textbar0.13\textbar{} = 0.13
+--\textgreater{} y = 1.99}\label{fx0.57-0.70---0.57-0.13-0.13-y-1.99}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.66) = 0.70 - 0.66 = \textbar-0.02\textbar{} = 0.02
+--\textgreater{} y = 1.88}\label{fx0.66-0.70---0.66--0.02-0.02-y-1.88}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.03) = 0.70 - 0.03 = \textbar0.67\textbar{} = 0.67
+--\textgreater{} y = 2.26}\label{fx0.03-0.70---0.03-0.67-0.67-y-2.26}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.92) = 0.70 - 0.92 = \textbar-0.08\textbar{} = 0.08
+--\textgreater{} y = 2.11}\label{fx0.92-0.70---0.92--0.08-0.08-y-2.11}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.77) = 0.70 - 0.77 = \textbar-0.03\textbar{} = 0.03
+--\textgreater{} y = 1.92}\label{fx0.77-0.70---0.77--0.03-0.03-y-1.92}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.73) = 0.70 - 0.73 = \textbar-0.07\textbar{} = 0.07
+--\textgreater{} y = 1.98}\label{fx0.73-0.70---0.73--0.07-0.07-y-1.98}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.11) = 0.70 - 0.11 = \textbar0.59\textbar{} = 0.59
+--\textgreater{} y = 2.47}\label{fx0.11-0.70---0.11-0.59-0.59-y-2.47}
+
+\bookmarksetup{startatroot}
+
+\chapter{f(x=0.40) = 0.70 - 0.40 = \textbar0.30\textbar{} = 0.30
+--\textgreater{} y = 2.10}\label{fx0.40-0.70---0.40-0.30-0.30-y-2.10}
+
+\bookmarksetup{startatroot}
+
+\chapter{The top three closest neighbors for x0 = 0.2
+are:}\label{the-top-three-closest-neighbors-for-x0-0.2-are}
+
+\bookmarksetup{startatroot}
+
+\chapter{y = 2.14 due to ŷ(x = 0.22)=0.02, y = 2.47 due to ŷ(x =
+0.11)=0.09, y = 1.89 due to
+ŷ(x=0.37)=0.17}\label{y-2.14-due-to-yx-0.220.02-y-2.47-due-to-yx-0.110.09-y-1.89-due-to-yx0.370.17}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neigbhor prediction for x0 = 0.2 for ŷ(x0 = 0.2) =
+(2.14 + 2.47 + 1.89) / 3 = 2.1667 =
+2.17}\label{nearest-neigbhor-prediction-for-x0-0.2-for-yx0-0.2-2.14-2.47-1.89-3-2.1667-2.17}
+
+\bookmarksetup{startatroot}
+
+\chapter{The top three closest neighbors for x0 = 0.5
+are:}\label{the-top-three-closest-neighbors-for-x0-0.5-are}
+
+\bookmarksetup{startatroot}
+
+\chapter{ŷ(x=0.57)= 0.07 --\textgreater{} y = 1.99, ŷ(x = 0.37)=0.13
+--\textgreater{} y = 1.89, ŷ(x = 0.40)=0.10 --\textgreater{} y =
+2.10}\label{yx0.57-0.07-y-1.99-yx-0.370.13-y-1.89-yx-0.400.10-y-2.10}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neigbhor prediction for x0 = 0.5 for ŷ(x0 = 0.5) =
+(1.99 + 1.89 + 2.10) / 3 = 1.99333 =
+1.99}\label{nearest-neigbhor-prediction-for-x0-0.5-for-yx0-0.5-1.99-1.89-2.10-3-1.99333-1.99}
+
+\bookmarksetup{startatroot}
+
+\chapter{The top three closest neighbors for x0 = 0.7
+are:}\label{the-top-three-closest-neighbors-for-x0-0.7-are}
+
+\bookmarksetup{startatroot}
+
+\chapter{ŷ(x=0.66)= 0.02 --\textgreater{} y = 1.88, ŷ(x=0.77)=0.03
+--\textgreater{} y = 1.92, ŷ(x=0.73)=0.07 --\textgreater{} y =
+1.98}\label{yx0.66-0.02-y-1.88-yx0.770.03-y-1.92-yx0.730.07-y-1.98}
+
+\bookmarksetup{startatroot}
+
+\chapter{3 nearest neigbhor prediction for x0 = 0.7 for ŷ(x0 = 0.7) =
+(1.88 + 1.92 + 1.98) / 3 = 1.926667 =
+1.93}\label{nearest-neigbhor-prediction-for-x0-0.7-for-yx0-0.7-1.88-1.92-1.98-3-1.926667-1.93}
+
+\bookmarksetup{startatroot}
+
+\chapter{5.) Generate a plot of the 3 nearest neigbhor
+prediction}\label{generate-a-plot-of-the-3-nearest-neigbhor-prediction}
+
+\bookmarksetup{startatroot}
+
+\chapter{function overlayed on top of the scatterplot of x and
+y.}\label{function-overlayed-on-top-of-the-scatterplot-of-x-and-y.}
+
+\bookmarksetup{startatroot}
+
+\chapter{You may do this by hand or by
+code.}\label{you-may-do-this-by-hand-or-by-code.}
+
+\bookmarksetup{startatroot}
+
+\chapter{x y}\label{x-y-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.22 2.14}\label{section-13}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.37 1.89}\label{section-14}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.57 1.99}\label{section-15}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.66 1.88}\label{section-16}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.03 2.26}\label{section-17}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.92 2.11}\label{section-18}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.77 1.92}\label{section-19}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.73 1.98}\label{section-20}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.11 2.47}\label{section-21}
+
+\bookmarksetup{startatroot}
+
+\chapter{0.40 2.10}\label{section-22}
+
+data\_original \textless- data.frame( x = c(0.22, 0.37, 0.57, 0.66,
+0.03, 0.92, 0.77, 0.73, 0.11, 0.40), y = c(2.14, 1.89, 1.99, 1.88, 2.26,
+2.11, 1.92, 1.98, 2.47, 2.10) )
+
+x0\_values \textless- c(0.2, 0.5, 0.7)
+
+for (x0 in x0\_values) \{ smallest\_dist \textless- data\_original
+\%\textgreater\% mutate(dist = abs(x - x0)) \%\textgreater\%
+arrange(dist) \%\textgreater\% slice(1:3)
+
+predict\_y\_vals\_from\_x0 \textless- mean(smallest\_dist\$y)
+
+cat(``For X0 ='', x0, ``\n'') print(smallest\_dist{[}, c(``x'', ``y'',
+``dist''){]}) cat(``Prediction ŷ ='', round(predict\_y\_vals\_from\_x0,
+3), ``\n\n'') \}
+
+\bookmarksetup{startatroot}
+
+\chapter{Data from the table above}\label{data-from-the-table-above}
+
+x\_data\_new \textless- seq(0, 1, length.out = n)
+
+\bookmarksetup{startatroot}
+
+\chapter{3-NN prediction function using the ORIGINAL
+data}\label{nn-prediction-function-using-the-original-data}
+
+knn3\_pred \textless- function(x\_new, original\_data\_1, k=3) \{
+sapply(x\_new, function(xi) \{ data \textless- original\_data\_1
+\%\textgreater\% mutate(dist = abs(original\_data\_1\(x - xi))
+    mean((data %>% arrange(dist) %>% slice(1:k))
+\)y) \}) \}
+
+preds \textless- knn3\_pred(x\_data\_new, data\_original)
+
+\bookmarksetup{startatroot}
+
+\chapter{R scatter plot}\label{r-scatter-plot}
+
+plot(data\_original\(x, data_original\)y, pch = 16, col = ``steelblue'',
+cex = 1.5, main = ``3-Nearest Neighbor Prediction (k=3)'', xlab = ``X'',
+ylab = ``Y'', ylim = range(c(data\_original\$y, preds)))
+
+\bookmarksetup{startatroot}
+
+\chapter{Add the 3-NN prediction
+line}\label{add-the-3-nn-prediction-line}
+
+lines(x\_data\_new, preds, col = ``tomato'', lwd = 2)
+
+\bookmarksetup{startatroot}
+
+\chapter{Adding grid and legend}\label{adding-grid-and-legend}
+
+grid() legend(``topright'', legend = c(``New X Data: Training Data'',
+``3-NN Prediction (k=3) value from the original data''), col =
+c(``steelblue'', ``tomato''), pch = c(16, NA), lty = c(NA, 1), lwd =
+c(NA, 2), bty = ``n'')
+
+\#6.) In your own words, explain why the ``largest model'' \# --- which
+assigns an independent estimate to every covariate \# combination ---
+can be a poor choice in practice even though it \# fits the training
+data perfectly. \# Connect your answer to the concept of information
+sharing introduced \# in the chapter, and describe what characteristic
+of the data-generating \# process would make the largest model a
+reasonable choice.
+
+\bookmarksetup{startatroot}
+
+\chapter{When considering the topic of why the ``Largest Model''
+independently predicts and estimates the outcome for each cell in the
+combinations of covariates, it is important to recognize that the model
+assigns a separate prediction to every possible combination of covariate
+values (for example, x1 = 4 categories, x2 = 6 categories, and x3 = 3
+categories, resulting in 72 possible
+cells).}\label{when-considering-the-topic-of-why-the-largest-model-independently-predicts-and-estimates-the-outcome-for-each-cell-in-the-combinations-of-covariates-it-is-important-to-recognize-that-the-model-assigns-a-separate-prediction-to-every-possible-combination-of-covariate-values-for-example-x1-4-categories-x2-6-categories-and-x3-3-categories-resulting-in-72-possible-cells.}
+
+\bookmarksetup{startatroot}
+
+\chapter{The largest model can be a poor choice in practice because it
+simply tracks the mean outcome within each observed cell and does not
+share information across cells. While this allows the model to fit the
+training data perfectly, it does not provide a reliable way to make
+predictions for cells that are unobserved or contain very few
+observations. If some covariate combinations are not represented in the
+training data, then no cell-specific mean can be calculated for those
+combinations.}\label{the-largest-model-can-be-a-poor-choice-in-practice-because-it-simply-tracks-the-mean-outcome-within-each-observed-cell-and-does-not-share-information-across-cells.-while-this-allows-the-model-to-fit-the-training-data-perfectly-it-does-not-provide-a-reliable-way-to-make-predictions-for-cells-that-are-unobserved-or-contain-very-few-observations.-if-some-covariate-combinations-are-not-represented-in-the-training-data-then-no-cell-specific-mean-can-be-calculated-for-those-combinations.}
+
+\bookmarksetup{startatroot}
+
+\chapter{This lack of information sharing can result in overfitting. The
+model may appear to perform extremely well on the observed training data
+because each cell is estimated independently, but its predictions may
+not generalize well to new data. In other words, the apparent error on
+the training data may be very small, while the prediction error on
+future observations may be much
+larger.}\label{this-lack-of-information-sharing-can-result-in-overfitting.-the-model-may-appear-to-perform-extremely-well-on-the-observed-training-data-because-each-cell-is-estimated-independently-but-its-predictions-may-not-generalize-well-to-new-data.-in-other-words-the-apparent-error-on-the-training-data-may-be-very-small-while-the-prediction-error-on-future-observations-may-be-much-larger.}
+
+\bookmarksetup{startatroot}
+
+\chapter{When considering the concept of Information Sharing in this
+context, information sharing describes how observations contribute to
+predictions beyond their own cell. The best models often lie between the
+largest model (no information sharing) and the smallest model (maximum
+information sharing). These models allow observations to influence
+predictions in neighboring cells or groups, either locally (such as
+nearest-neighbor methods) or globally (such as regression
+models).}\label{when-considering-the-concept-of-information-sharing-in-this-context-information-sharing-describes-how-observations-contribute-to-predictions-beyond-their-own-cell.-the-best-models-often-lie-between-the-largest-model-no-information-sharing-and-the-smallest-model-maximum-information-sharing.-these-models-allow-observations-to-influence-predictions-in-neighboring-cells-or-groups-either-locally-such-as-nearest-neighbor-methods-or-globally-such-as-regression-models.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Keeping this in mind, the largest model would be considered
+reasonable if the data-generating process truly produced independent
+outcomes for every covariate combination and there were sufficient
+observations within every cell to estimate the cell-specific mean
+accurately. In that situation, little or no information sharing would be
+needed because each cell could be reliably estimated using its own
+observed
+data.}\label{keeping-this-in-mind-the-largest-model-would-be-considered-reasonable-if-the-data-generating-process-truly-produced-independent-outcomes-for-every-covariate-combination-and-there-were-sufficient-observations-within-every-cell-to-estimate-the-cell-specific-mean-accurately.-in-that-situation-little-or-no-information-sharing-would-be-needed-because-each-cell-could-be-reliably-estimated-using-its-own-observed-data.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Finally, the largest model would be acceptable when all
+covariate combinations are well represented in the dataset and each cell
+contains enough observations to produce stable predictions. Under those
+conditions, the model could accurately describe the data-generating
+process without needing to borrow information from neighboring cells or
+groups.}\label{finally-the-largest-model-would-be-acceptable-when-all-covariate-combinations-are-well-represented-in-the-dataset-and-each-cell-contains-enough-observations-to-produce-stable-predictions.-under-those-conditions-the-model-could-accurately-describe-the-data-generating-process-without-needing-to-borrow-information-from-neighboring-cells-or-groups.}
+
+\bookmarksetup{startatroot}
+
+\chapter{```}\label{section-23}
+
+\bookmarksetup{startatroot}
+
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{Date: 06/22/2026}\label{date-06222026}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 5 Homework}\label{module-5-homework}
+
+\bookmarksetup{startatroot}
+
+\chapter{```\{r\}}\label{r-4}
+
+require(FNN) require(dplyr) require(ggplot2) require(ranger)
+require(rms) require(nnet) library(FNN) library(dplyr) library(ggplot2)
+library(ranger) library(rms) library(nnet)
+
+abalone\_data \textless- read.csv(
+``https://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data'',
+header = FALSE, col.names =
+c(``sex'',``length'',``diameter'',``height'',
+``whole\_wt'',``shucked\_wt'',``viscera\_wt'',``shell\_wt'',``rings''))
+
+abalone\_data\(sex <- factor(
+  abalone_data\)sex, levels = c(``F'', ``I'', ``M''), labels =
+c(``Female'', ``Infant'', ``Male'') )
+
+abalone\_data\(sex <- factor(abalone_data\)sex)
+
+predictors \textless- c(``length'', ``diameter'', ``height'',
+``whole\_wt'', ``shucked\_wt'', ``viscera\_wt'', ``shell\_wt'')
+
+\bookmarksetup{startatroot}
+
+\chapter{1.) Fit all five model types to the Abalone data using a 70/30
+training-test
+split:}\label{fit-all-five-model-types-to-the-abalone-data-using-a-7030-training-test-split}
+
+\bookmarksetup{startatroot}
+
+\chapter{Training-Test Split (70/30)}\label{training-test-split-7030}
+
+set.seed(123)
+
+total\_rows\_in\_abalone\_data \textless- nrow(abalone\_data)
+
+training\_test\_split\_70\_30 \textless- sample(
+seq\_len(total\_rows\_in\_abalone\_data), size = floor(0.70 *
+total\_rows\_in\_abalone\_data) )
+
+training\_data\_70 \textless-
+abalone\_data{[}training\_test\_split\_70\_30, {]} testing\_data\_30
+\textless- abalone\_data{[}-training\_test\_split\_70\_30, {]}
+
+\bookmarksetup{startatroot}
+
+\chapter{* KNN (FNN::knn.reg(), choose k using cross-validation or a
+reasonable
+default)}\label{knn-fnnknn.reg-choose-k-using-cross-validation-or-a-reasonable-default}
+
+y\_training\_data\_rings \textless- training\_data\_70\(rings
+y_testing_data_rings  <- testing_data_30\)rings
+
+x\_training\_data \textless- training\_data\_70{[}, predictors{]}
+x\_testing\_data \textless- testing\_data\_30{[}, predictors{]}
+
+\bookmarksetup{startatroot}
+
+\chapter{Choosing k values using
+cross-validation}\label{choosing-k-values-using-cross-validation}
+
+k\_values\_to\_test \textless- seq(1, 20, by = 1)
+
+cross\_validation\_errors \textless- sapply(k\_values\_to\_test,
+function(k) \{ preds \textless- knn.reg(train = x\_training\_data, y =
+y\_training\_data\_rings, test = x\_training\_data, k = k)\$pred
+mean((preds - y\_training\_data\_rings)\^{}2) \})
+
+\bookmarksetup{startatroot}
+
+\chapter{determines the best k value from how the cross-validation error
+values show which k has the smallest distance from the predicted values
+to the observed
+values}\label{determines-the-best-k-value-from-how-the-cross-validation-error-values-show-which-k-has-the-smallest-distance-from-the-predicted-values-to-the-observed-values}
+
+best\_k \textless-
+k\_values\_to\_test{[}min(which(cross\_validation\_errors ==
+min(cross\_validation\_errors))){]}
+
+\bookmarksetup{startatroot}
+
+\chapter{Final KNN with best k}\label{final-knn-with-best-k}
+
+final\_knn\_predictions \textless- knn.reg( train = x\_training\_data,
+test = x\_testing\_data, y = y\_training\_data\_rings, k = best\_k
+)\$pred
+
+\bookmarksetup{startatroot}
+
+\chapter{* Random forest (ranger::ranger(), default
+hyperparameters)}\label{random-forest-rangerranger-default-hyperparameters}
+
+random\_forest\_model\_training \textless- ranger( formula = rings
+\textasciitilde{} ., data = training\_data\_70, num.trees = 500,
+respect.unordered.factors = ``order'' )
+
+random\_forest\_model\_testing \textless- ranger( formula = rings
+\textasciitilde{} ., data = testing\_data\_30, num.trees = 500,
+respect.unordered.factors = ``order'' )
+
+random\_forest\_training\_predictions \textless-
+predict(random\_forest\_model\_training, data =
+training\_data\_70)\(predictions
+random_forest_testing_predictions <- predict(random_forest_model_testing, data = testing_data_30)\)predictions
+
+\bookmarksetup{startatroot}
+
+\chapter{* Ordinal regression with Restricted Cubic Splines (RCS)
+(rms::orm() with rcs()
+terms)}\label{ordinal-regression-with-restricted-cubic-splines-rcs-rmsorm-with-rcs-terms}
+
+orm\_fit \textless- orm(rings \textasciitilde{} sex + rcs(length) +
+rcs(diameter) + rcs(height) + rcs(whole\_wt) + rcs(shucked\_wt) +
+rcs(viscera\_wt) + rcs(shell\_wt), data = training\_data\_70 )
+
+orm\_predictions\_training\_data \textless- predict(orm\_fit, newdata =
+training\_data\_70, type = ``mean'') orm\_predictions\_testing\_data
+\textless- predict(orm\_fit, newdata = testing\_data\_30, type =
+``mean'')
+
+\bookmarksetup{startatroot}
+
+\chapter{* Linear regression with RCS (rms::ols() with rcs()
+terms)}\label{linear-regression-with-rcs-rmsols-with-rcs-terms}
+
+dd \textless- datadist(training\_data\_70) options(datadist = `dd')
+
+lm\_fit \textless- ols(rings \textasciitilde{} sex + rcs(length) +
+rcs(diameter) + rcs(height) + rcs(whole\_wt) + rcs(shucked\_wt) +
+rcs(viscera\_wt) + rcs(shell\_wt), data = training\_data\_70, x = TRUE,
+y = TRUE)
+
+lm\_testing\_predictions \textless- predict(lm\_fit, newdata =
+testing\_data\_30)
+
+\bookmarksetup{startatroot}
+
+\chapter{* Neural network (nnet::nnet(), linout =
+TRUE)}\label{neural-network-nnetnnet-linout-true}
+
+train\_nn \textless- training\_data\_70 test\_nn \textless-
+testing\_data\_30
+
+means \textless- sapply(train\_nn{[}, predictors{]}, mean) sds
+\textless- sapply(train\_nn{[}, predictors{]}, sd)
+
+train\_nn{[}, predictors{]} \textless- scale(train\_nn{[},
+predictors{]}, center = means, scale = sds) test\_nn{[}, predictors{]}
+\textless- scale(test\_nn{[}, predictors{]}, center = means, scale =
+sds)
+
+x\_train\_nn \textless- model.matrix(rings \textasciitilde{} ., data =
+train\_nn){[}, -1{]} x\_test\_nn \textless- model.matrix(rings
+\textasciitilde{} ., data = test\_nn){[}, -1{]}
+
+set.seed(123)
+
+nn\_fit \textless- nnet(x = x\_train\_nn, y = train\_nn\$rings, size =
+5, linout = TRUE, maxit = 500, trace = FALSE)
+
+nn\_pred \textless- as.vector(predict(nn\_fit, x\_test\_nn))
+
+\bookmarksetup{startatroot}
+
+\chapter{2. For each fitted model, compute on the test
+set:}\label{for-each-fitted-model-compute-on-the-test-set}
+
+\bookmarksetup{startatroot}
+
+\chapter{* A calibration plot (predicted vs.~observed, with a loess
+smooth and the line of
+identity)}\label{a-calibration-plot-predicted-vs.-observed-with-a-loess-smooth-and-the-line-of-identity}
+
+\bookmarksetup{startatroot}
+
+\chapter{* Mean squared error (MSE)}\label{mean-squared-error-mse}
+
+\bookmarksetup{startatroot}
+
+\chapter{KNN}\label{knn}
+
+\bookmarksetup{startatroot}
+
+\chapter{Root Mean Squared Error}\label{root-mean-squared-error}
+
+final\_knn\_prediction\_RMSE\_testing \textless-
+sqrt(mean((final\_knn\_predictions - y\_testing\_data\_rings)\^{}2))
+final\_knn\_prediction\_RMSE\_training \textless-
+sqrt(mean((final\_knn\_predictions - y\_training\_data\_rings)\^{}2))
+cat(``Final KNN Root Mean Squared Error (RMSE) for Testing Data ='',
+round(final\_knn\_prediction\_RMSE\_testing, 4), ``\n'') cat(``Final KNN
+Root Mean Squared Error (RMSE) for Training Data ='',
+round(final\_knn\_prediction\_RMSE\_training, 4), ``\n'') \# Calibration
+Plot knn\_results \textless- data.frame( Actual =
+as.numeric(y\_testing\_data\_rings), Predicted =
+as.numeric(final\_knn\_predictions) ) ggplot(knn\_results, aes(x =
+Actual, y = Predicted)) + geom\_point(alpha = 0.5, color =
+``steelblue'') + geom\_smooth(method = ``loess'', color = ``red'', se =
+FALSE) + geom\_abline(slope = 1, intercept = 0, linetype = ``dashed'',
+color = ``black'') + labs(title = paste(``KNN Calibration Plot (best k
+='', best\_k, ``)''), x = ``Actual Rings or Age of the Abalone Data
+Subjects/Individuals'', y = ``Predicted Rings or Age of the Abalone Data
+Subjects/Individuals'') + theme\_minimal()
+
+\bookmarksetup{startatroot}
+
+\chapter{Random Forest}\label{random-forest}
+
+\bookmarksetup{startatroot}
+
+\chapter{Root Mean Squared Error
+value}\label{root-mean-squared-error-value}
+
+random\_forest\_rmse\_testing \textless-
+sqrt(mean((random\_forest\_testing\_predictions -
+y\_testing\_data\_rings)\^{}2)) random\_forest\_rmse\_training
+\textless- sqrt(mean((random\_forest\_training\_predictions -
+y\_training\_data\_rings)\^{}2)) cat(``\nRandom Forest Training RMSE
+='', round(random\_forest\_rmse\_training, 4), ``\n'')
+cat(``\nRandom Forest Testing RMSE ='',
+round(random\_forest\_rmse\_testing, 4), ``\n'') \# calibration plot
+rf\_results\_testing \textless- data.frame( Actual\_Rings\_testing =
+y\_testing\_data\_rings, Predicted\_testing =
+random\_forest\_testing\_predictions ) ggplot(rf\_results\_testing,
+aes(x = Actual\_Rings\_testing, y = Predicted\_testing)) +
+geom\_point(alpha = 0.5, color = ``steelblue'') + geom\_smooth(method =
+``loess'', color = ``red'', se = FALSE, linewidth = 1.2) +
+geom\_abline(slope = 1, intercept = 0, linetype = ``dashed'', color =
+``black'', linewidth = 1) + labs(title = ``Random Forest Calibration
+Plot (Test Set)'', subtitle = paste(``Test RMSE ='',
+round(random\_forest\_rmse\_testing, 4)), x = ``Actual Rings'', y =
+``Predicted Rings'') + theme\_minimal()
+
+\bookmarksetup{startatroot}
+
+\chapter{Ordinal Regression (ORM +
+RCS)}\label{ordinal-regression-orm-rcs}
+
+\bookmarksetup{startatroot}
+
+\chapter{Root Mean Squared Error
+value}\label{root-mean-squared-error-value-1}
+
+orm\_rmse\_testing \textless- sqrt(mean((orm\_predictions\_testing\_data
+- y\_testing\_data\_rings)\^{}2)) cat(``\nOrdinal Regression Testing
+RMSE ='', round(orm\_rmse\_testing, 4), ``\n'') orm\_rmse\_training
+\textless- sqrt(mean((orm\_predictions\_training\_data -
+y\_training\_data\_rings)\^{}2)) cat(``\nOrdinal Regression Training
+RMSE ='', round(orm\_rmse\_training, 4), ``\n'') \# calibration plot
+ordinal\_results\_testing \textless- data.frame( Actual =
+y\_testing\_data\_rings, Predicted = orm\_predictions\_testing\_data )
+ggplot(ordinal\_results\_testing, aes(x = Actual, y = Predicted)) +
+geom\_point(alpha = 0.5, color = ``steelblue'') + geom\_smooth(method =
+``loess'', color = ``red'', se = FALSE) + geom\_abline(slope = 1,
+intercept = 0, linetype = ``dashed'', color = ``black'') + labs(title =
+``Ordinal Regression (RCS) Calibration Plot - Testing Data'', x =
+``Observed Rings'', y = ``Predicted Rings'') + theme\_minimal()
+
+\bookmarksetup{startatroot}
+
+\chapter{Linear Regression (OLS + RCS)}\label{linear-regression-ols-rcs}
+
+\bookmarksetup{startatroot}
+
+\chapter{Root Mean Squared Error}\label{root-mean-squared-error-1}
+
+lm\_rmse\_testing \textless- sqrt(mean((lm\_testing\_predictions -
+y\_testing\_data\_rings)\^{}2)) cat(``Linear Regression (OLS + RCS) Test
+RMSE ='', round(lm\_rmse\_testing, 4), ``\n'')
+
+lm\_rmse\_training \textless- sqrt(mean((predict(lm\_fit) -
+y\_training\_data\_rings)\^{}2)) cat(``Linear Regression (OLS + RCS)
+Training RMSE ='', round(lm\_rmse\_training, 4), ``\n'')
+
+\bookmarksetup{startatroot}
+
+\chapter{calibration plot}\label{calibration-plot}
+
+lm\_results\_testing \textless- data.frame( Actual\_Rings\_testing =
+y\_testing\_data\_rings, Predicted\_testing = lm\_testing\_predictions )
+ggplot(lm\_results\_testing, aes(x = Actual\_Rings\_testing, y =
+Predicted\_testing)) + geom\_point(alpha = 0.5, color = ``steelblue'') +
+geom\_smooth(method = ``loess'', color = ``red'', se = FALSE, linewidth
+= 1.2) + geom\_abline(slope = 1, intercept = 0, linetype = ``dashed'',
+color = ``black'', linewidth = 1) + labs(title = ``Linear Regression
+(OLS + RCS) Calibration Plot - Test Set'', subtitle = paste(``Test RMSE
+='', round(lm\_rmse\_testing, 4)), x = ``Actual Rings'', y = ``Predicted
+Rings'') + theme\_minimal()
+
+\bookmarksetup{startatroot}
+
+\chapter{Neural Network}\label{neural-network}
+
+\bookmarksetup{startatroot}
+
+\chapter{Root Mean Squared Error}\label{root-mean-squared-error-2}
+
+nn\_rmse \textless- sqrt(mean((nn\_pred -
+y\_testing\_data\_rings)\^{}2)) cat(``Neural Network RMSE ='',
+round(nn\_rmse, 4), ``\n'')
+
+\bookmarksetup{startatroot}
+
+\chapter{calibration plot}\label{calibration-plot-1}
+
+nn\_results\_testing \textless- data.frame( Actual =
+y\_testing\_data\_rings, Predicted = nn\_pred )
+ggplot(nn\_results\_testing, aes(x = Actual, y = Predicted)) +
+geom\_point(alpha = 0.5, color = ``steelblue'') + geom\_smooth(method =
+``loess'', color = ``red'', se = FALSE) + geom\_abline(slope = 1,
+intercept = 0, linetype = ``dashed'', color = ``black'') + labs(title =
+``Neural Network Calibration Plot (Testing Data)'', x = ``Observed
+Rings'', y = ``Predicted Rings'') + theme\_minimal()
+
+\bookmarksetup{startatroot}
+
+\chapter{3. Written reflection: Which model performs best on the Abalone
+data,}\label{written-reflection-which-model-performs-best-on-the-abalone-data}
+
+\bookmarksetup{startatroot}
+
+\chapter{and which definition of best are you using to decide? What are
+some of
+the}\label{and-which-definition-of-best-are-you-using-to-decide-what-are-some-of-the}
+
+\bookmarksetup{startatroot}
+
+\chapter{different considerations that might lead to different choices
+about which prediction model to
+use?}\label{different-considerations-that-might-lead-to-different-choices-about-which-prediction-model-to-use}
+
+\bookmarksetup{startatroot}
+
+\chapter{Given the MSE and Calibration plots values and conclusions, it
+was clear to mean and to
+others}\label{given-the-mse-and-calibration-plots-values-and-conclusions-it-was-clear-to-mean-and-to-others}
+
+\bookmarksetup{startatroot}
+
+\chapter{that the Random Forest model performed the best in terms of
+predicting the age of the Abalone data in cross comparison to the
+actual}\label{that-the-random-forest-model-performed-the-best-in-terms-of-predicting-the-age-of-the-abalone-data-in-cross-comparison-to-the-actual}
+
+\bookmarksetup{startatroot}
+
+\chapter{observations of the age of the Abalone witihin the data. This
+is evidenced by the fact that the Random Forest model had the
+lowest}\label{observations-of-the-age-of-the-abalone-witihin-the-data.-this-is-evidenced-by-the-fact-that-the-random-forest-model-had-the-lowest}
+
+\bookmarksetup{startatroot}
+
+\chapter{RMSE values for both the training and testing data which means
+that the predictions were very close to the actual
+observations}\label{rmse-values-for-both-the-training-and-testing-data-which-means-that-the-predictions-were-very-close-to-the-actual-observations}
+
+\bookmarksetup{startatroot}
+
+\chapter{in terms of all of the non-linear relationships of the Abalone
+rings(age) values with all of the variables values of the data (both
+numeric and
+non-numeric).}\label{in-terms-of-all-of-the-non-linear-relationships-of-the-abalone-ringsage-values-with-all-of-the-variables-values-of-the-data-both-numeric-and-non-numeric.}
+
+\bookmarksetup{startatroot}
+
+\chapter{This conclusions that the Random Forest model performing the
+best in term of
+predictions}\label{this-conclusions-that-the-random-forest-model-performing-the-best-in-term-of-predictions}
+
+\bookmarksetup{startatroot}
+
+\chapter{also helped enforce my definition that it was the best model to
+use due to how the Random Forest model was able to efficiently predict
+the age of the Abalone data and is
+very}\label{also-helped-enforce-my-definition-that-it-was-the-best-model-to-use-due-to-how-the-random-forest-model-was-able-to-efficiently-predict-the-age-of-the-abalone-data-and-is-very}
+
+\bookmarksetup{startatroot}
+
+\chapter{scalable and adaptable to new testing data and even with
+predicting the outcome values given the actual training data
+observations.}\label{scalable-and-adaptable-to-new-testing-data-and-even-with-predicting-the-outcome-values-given-the-actual-training-data-observations.}
+
+\bookmarksetup{startatroot}
+
+\chapter{It is even important to note that the calibration plot of the
+Random Forest model showed the predictions were close in distance from
+the actual observations of the
+data.}\label{it-is-even-important-to-note-that-the-calibration-plot-of-the-random-forest-model-showed-the-predictions-were-close-in-distance-from-the-actual-observations-of-the-data.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Which this meant that the Random Forest model prediction
+ring(age) values/counts were very close to the actual observations of
+the data and the model's predictions
+matched}\label{which-this-meant-that-the-random-forest-model-prediction-ringage-valuescounts-were-very-close-to-the-actual-observations-of-the-data-and-the-models-predictions-matched}
+
+\bookmarksetup{startatroot}
+
+\chapter{the identity line of the calibration plot that means that seems
+to fit the model perfectly along with avoiding over and under fitting
+when dealing with new
+data.}\label{the-identity-line-of-the-calibration-plot-that-means-that-seems-to-fit-the-model-perfectly-along-with-avoiding-over-and-under-fitting-when-dealing-with-new-data.}
+
+\bookmarksetup{startatroot}
+
+\chapter{However, it is important to note that the best model in terms
+of accurate predictions would need to be a model that is robust and able
+to keep accurate predictions in the face of new testing
+data.}\label{however-it-is-important-to-note-that-the-best-model-in-terms-of-accurate-predictions-would-need-to-be-a-model-that-is-robust-and-able-to-keep-accurate-predictions-in-the-face-of-new-testing-data.}
+
+\bookmarksetup{startatroot}
+
+\chapter{In this case of the 70-30 split of the data and considering the
+robustness of the models, Random Forest Models would actually not be the
+best model since when I altered the data or entered new data the
+predictions dramatically
+shifted.}\label{in-this-case-of-the-70-30-split-of-the-data-and-considering-the-robustness-of-the-models-random-forest-models-would-actually-not-be-the-best-model-since-when-i-altered-the-data-or-entered-new-data-the-predictions-dramatically-shifted.}
+
+\bookmarksetup{startatroot}
+
+\chapter{As a result of this reality, the next models that I would
+consider to be a good model for prediction would be the Oridinal
+Regression and the Linear Regression (OLS + RCS)
+models.}\label{as-a-result-of-this-reality-the-next-models-that-i-would-consider-to-be-a-good-model-for-prediction-would-be-the-oridinal-regression-and-the-linear-regression-ols-rcs-models.}
+
+\bookmarksetup{startatroot}
+
+\chapter{Within those models, the Oridinal Regression model performed
+the best in terms of accurate predictions through its RMSE calculations
+and the Linear Regression (OLS + RCS) model performed the best in terms
+of interpretability since its predictors
+had}\label{within-those-models-the-oridinal-regression-model-performed-the-best-in-terms-of-accurate-predictions-through-its-rmse-calculations-and-the-linear-regression-ols-rcs-model-performed-the-best-in-terms-of-interpretability-since-its-predictors-had}
+
+\bookmarksetup{startatroot}
+
+\chapter{a deep influence on its calibration plot outputs (in other
+words its predictor variables gave the expected accurate predictions in
+term of the number of rings of the Abalone data and they were accurate
+against the training data in the
+model).}\label{a-deep-influence-on-its-calibration-plot-outputs-in-other-words-its-predictor-variables-gave-the-expected-accurate-predictions-in-term-of-the-number-of-rings-of-the-abalone-data-and-they-were-accurate-against-the-training-data-in-the-model.}
+
+\bookmarksetup{startatroot}
+
+\chapter{It is also important to note that when I tested these models on
+the training data, the Oridinal Regression model performed the best and
+showed adaptability when confronted when I ran the test data against
+this model which showed a semi-good performance in dealing with over and
+underfitting.}\label{it-is-also-important-to-note-that-when-i-tested-these-models-on-the-training-data-the-oridinal-regression-model-performed-the-best-and-showed-adaptability-when-confronted-when-i-ran-the-test-data-against-this-model-which-showed-a-semi-good-performance-in-dealing-with-over-and-underfitting.}
+
+\bookmarksetup{startatroot}
+
+\chapter{At the same time, the Linear Regression (OLS + RCS) model
+performed better than the Ordinal Regression Model in terms of its
+calibration models which means that the predictions of the regression
+actually closely matched the observed ring(age) values/counts of the
+Abalone
+data.}\label{at-the-same-time-the-linear-regression-ols-rcs-model-performed-better-than-the-ordinal-regression-model-in-terms-of-its-calibration-models-which-means-that-the-predictions-of-the-regression-actually-closely-matched-the-observed-ringage-valuescounts-of-the-abalone-data.}
+
+\bookmarksetup{startatroot}
+
+\chapter{In conclusion, the best ways that I would describe a good
+prediction model is that it does need a lower MSE and RMSE amount and
+needs a plot such as a calibration plot that reinforces the conclusions
+that the predictions ring(age) values/counts are close to the actual
+observations of the
+data,}\label{in-conclusion-the-best-ways-that-i-would-describe-a-good-prediction-model-is-that-it-does-need-a-lower-mse-and-rmse-amount-and-needs-a-plot-such-as-a-calibration-plot-that-reinforces-the-conclusions-that-the-predictions-ringage-valuescounts-are-close-to-the-actual-observations-of-the-data}
+
+\bookmarksetup{startatroot}
+
+\chapter{while still being adaptable to new testing data and out of
+sample data to be considered an efficient and robust prediction
+model.}\label{while-still-being-adaptable-to-new-testing-data-and-out-of-sample-data-to-be-considered-an-efficient-and-robust-prediction-model.}
+
+\bookmarksetup{startatroot}
+
+\chapter{```}\label{section-24}
+
+\bookmarksetup{startatroot}
+
 \chapter{Summary}\label{summary}
 
 In summary, this book has no content whatsoever.

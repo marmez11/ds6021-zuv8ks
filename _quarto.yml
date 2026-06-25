@@ -10,6 +10,9 @@ book:
     - intro.qmd
     - HW1.qmd
     - HW2.qmd
+    - HW3.qmd
+    - HW4.qmd
+    - HW5.qmd
     - summary.qmd
     - references.qmd
 
