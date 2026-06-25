@@ -1,0 +1,135 @@
+# Homework 2: Data Plots on Measures of Performance
+
+This Chapter will focus on the topics surrounding Visualizing Data Models
+
+Topics includes:
+
+- Discrimination (Somer’s D/C-index)
+- Calibration plot
+- Residual plots
+- Proper scoring rules
+- Expected squared error
+- Expected absolute error
+- Error distribution
+Stratification across subgroups
+
+  
+
+# Module 2 homework
+1. In your repo, create the HW2.qmd and add it to your book (_quarto.yml).
+2. For each prediction rule, create two calibration curves: one for x3=0 and another for x3=1.
+
+# Installing the properties and packages if needed:
+# ```{r}
+#install.packages("pak")
+#pak::pak("thomasgstewart/ds6021b")
+#pak::pak("thomasgstewart/ds6021c")
+library(ds6021b)
+library(ds6021c)
+
+set.seed(23583)
+data_for_predictionModel1 <- external_data(n=100)
+
+# All prediction models for all prediction rules and create two calibration curves: one for x3=0 and another for x3=1.
+data <- external_data(1000)
+
+# calibration curve for x3=0 and x3=1
+x3_0 <- data$x3 == 0
+x3_1 <- data$x3 == 1
+# Create side-by-side plotting area
+par(mfrow = c(1,2))
+# Loop through each prediction rule and create calibration curves for x3=0 and x3=1
+for (fi in c("f1", "f2", "f3", "f4", "f5")) {
+    # Create calibration curve for x3=0
+    plot(get(fi)(data[x3_0, ]), data[x3_0, ]$y,
+         xlab = paste("Predicted", fi, " values"),
+         ylab = paste("Observed Y values from the Predicted ", fi, " values"),
+         main = paste("Prediction Rule Model: ", fi, "at (x3=0)"),
+         col = "#aa4848", type = "p")
+    lines(lowess(get(fi)(data[x3_0, ]), data[x3_0, ]$y), col = "black")
+    abline(0, 1, lty = 2, lwd = 2, col = "blue")
+    # calibration curve for x3=1
+    plot(get(fi)(data[x3_1, ]), data[x3_1, ]$y,
+         xlab = paste("Predicted", fi, " values"),
+         ylab = paste("Observed Y values from the Predicted ", fi, " values"),
+         main = paste("Prediction Rule Model: ", fi, " at (x3=1)"),
+         col = "#aa4848", type = "p")
+    lines(lowess(get(fi)(data[x3_1, ]), data[x3_1, ]$y), col = "black")
+    abline(0, 1, lty = 2, lwd = 2, col = "darkgreen")
+}
+
+3. For each prediction rule, create a visualization of the residual distribution.
+for (fi in c("f1","f2", "f3", "f4", "f5")) {
+  resid_value <- get(fi)(data) - data$y
+  hist(resid_value,
+       freq = FALSE,
+       main = paste("Residuals model values for the Prediction Rule Model: ", fi),
+       xlab = paste("Residual values (predicted value (f1, f2, f3, f4, f5) of y  - observed value of y)"),
+       ylab = paste("Probabilities of the Y values from the Predicted ", fi, " values"),
+       col = "#aa4848", border = "black",
+       breaks = 30)
+       # Plot the density curve
+    lines(density(resid_value), col = "blue")
+}
+
+4. For each prediction rule, calculate expected squared error, expected absolute error, and the 90th quantile. Place the calculated quantities in a visualization for easy comparison. (You may want to create a different visualization for each summary measure.)
+
+# Expected squared error
+mean_squared_error_vals <- sapply(c("f1","f2","f3","f4","f5"), function(fi) {
+  mean((get(fi)(data) - data$y)^2)
+})
+
+plot(1:5, mean_squared_error_vals,
+        xlab = "Prediction Rules (f1, f2, f3, f4, f5)",
+        ylab = "Mean Squared Error for each Prediction Rule Model",
+        main = "Expected Squared Error by each Prediction Rule Model",
+        col = "#0c27bf",
+        ylim = c(0,max(mean_squared_error_vals)),
+        pch = 16,
+        cex = 1.5,
+        xaxt = "n")
+axis(1, 1:5, c("f1","f2","f3","f4","f5"))   
+
+# Expected absolute error
+mae_vals <- sapply(c("f1","f2","f3","f4","f5"), function(fi) {
+  mean(abs(get(fi)(data) - data$y))
+})
+
+plot(1:5, mae_vals,
+        xlab = "Prediction Rules (f1, f2, f3, f4, f5)",
+        ylab = "Mean Absolute Error for each Prediction Rule Model",
+        main = "Expected Absolute Error by each Prediction Rule Model",
+        col = "#098001",
+        ylim = c(0,max(mae_vals)),
+        pch = 16,
+        cex = 1.5,
+        xaxt = "n")
+axis(1, 1:5, c("f1","f2","f3","f4","f5"))
+# 90th quantile
+quantile_90th_vals <- sapply(c("f1","f2","f3","f4","f5"), function(fi) {
+  quantile(abs(get(fi)(data) - data$y), 0.9)
+})
+
+plot(1:5, quantile_90th_vals,
+        xlab = "Prediction Rules (f1, f2, f3, f4, f5)",
+        ylab = "90th Quantile for each Prediction Rule Model",
+        main = "90th Quantile by each Prediction Rule Model",
+        col = "#ff0000",
+        ylim = c(0,max(quantile_90th_vals)),
+        pch = 16,
+        cex = 1.5,
+        xaxt = "n")
+axis(1, 1:5, c("f1","f2","f3","f4","f5"))
+# ```
+
+5. Describe a measure of model performance from the other section.
+
+After going through all of the sections of this homework assignment, I found that each graph and predictual rule model revealed some unique details and insights about the measure of performances and how these models are used to help make accurate predictions and decions from these models. 
+
+Starting with the calibration curves, these curves are used to evaluate the performance of a Predictive model by comparing the Predicted (f1, f2, f3, f4, f5) probabilities of all x related data whose data that matches the x3 values of 0 and 1 to the observed Observed Y values from the Predicted (f1, f2, f3, f4, f5) values. The first solid line of the calibration curves for x3=0 along with x3=1 helped to showed how the data points were correlated in a smoother linear way to be represent the relationship between the predicted probabilities and the observed frequencies. While the second dashed line in the calibration curves for x3=0 along with x3=1 best represents the reference line of the calibration curve that helps to represent the ideal straight linear relationship between the predicted probabilities and the observed frequencies. Altogether, these calibration curves for x3=0 along with x3=1 helps us better understand how well the predicted probabilities from the model align with the actual observed outcomes to see which relationships in the data better represents the ideal calibration of how data is predicted and observed in the models. From here, we can make better decisions based on the accurate prediciton calibrations of the models and we could also use these models to judge the performances of data in models in a precise and calibrated way.
+
+Going on into the residual distribution visualization, this histogram model helps us understand the distribution of residuals, which are the differences between the predicted values from the models and the observed values specified in the y variable in the data. After graphing this histogram, we can see how well the model fits the data into an almost perfect bell curve distribution of the residuals which helps to conclude that the model's predictions are well fitted to the observed data since the highest frequency of residual values are clustered around zero. This also means that this model's predictions are most perfectly the same value as the observed y values of the data. If the model was skewed or sparsely distributed into disjointed clusters, then the data of the residuals would not be well fitted to the observed data and this would lead to poor performance and inaccurate assessments of the data. It is also important to note that the density curve of the residuals that I added helps reinforce the accuracy and reliability of the model's predictions by showing the overall shape of the residual distribution. Altogether, this histogram of residuals for each prediction rule model (f1, f2, f3, f4, f5) helps us understand how well the model fits the data and whether there are any patterns or biases in the predictions along with the data. On top of that, this histogram of residuals for each prediction rule model (f1, f2, f3, f4, f5) helps us finalize that data predictions could be relied upon in decision making surrounding the precise calibration of the data in its later usage and how it does not deviate away from any previous observed data values.
+
+Finally for the measure of performances of calculate expected squared error, expected absolute error, and the 90th quantile, anyone could see by these visualizations that the reliability of the data predictions of these models could be used to determine accuracy and validity of the data. For example, within the Expected Squared Error visualization, we can see that the model reveals that all of the squared error mean values of each prediction rule (f1, f2, f3, f4, f5) are relatively close to each other since the cover in the 1 probability range of the y axis. However, the model with the lowest mean squared error is the most accurate model in terms of its predictions being close to the observed values on the y axis. It is important to know that there is one mean squared error value in the prediction rule f1 that is the highest which would indicate some potential biased and inaccurates prediction values to the other prediction rules along with being slightly less accurate than the other prediction rules. Regardless though, the mean squared error values reveals that all of the predictions are close in value to their observed values and thus are closely accurate predictions along with having a linear relationship regardless if there is no relationship line to connect them together. When viewing the expected absolute error rate visualization, we can seem a similar linear pattern in the data where all of the prediction values of each prediction rule (f1, f2, f3, f4, f5) are relatively close to each other since the cover in the 0.8 probability range of the y axis. Thus, it would be easy for anyone to conclude that all of the prediction results of the predicted value to the observed data values are relatively close to each other and thus are closely accurate predictions. Finally for the visualization describing the 90th quantile, we can see that all of the prediction values of each prediction rule (f1, f2, f3, f4, f5) are relatively close to each other since the cover in the 1.5 probability range of the y axis. Thus, it would be easy for anyone to conclude that all of the prediction results of the predicted value to the observed data values are relatively close to each other and thus are closely accurate predictions. 
+
+Altogether, these visualizations of expected squared error, expected absolute error, and the 90th quantile help us understand which models are more accurate and reliable in their predictions and which models may be less accurate and reliable. This information can be used to make informed decisions about which models to use for future decisions, predictions and analysis in comparison to other models.

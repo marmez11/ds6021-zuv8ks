@@ -1,0 +1,167 @@
+# Module 3 homework: Internal measures of performance
+
+This Chapter will focus on the topics surrounding Internal measures of performance
+
+Topics includes:
+
+- Apparent error
+- Estimating the error rate and its uncertainty
+- K-fold CV
+-- Bootstrap
+-- 0.632 & 0.632+
+- Optimism
+
+  
+
+# Module 3 homework
+Module 3 homework
+1. In your repo, create HW3.qmd and add it to your book (_quarto.yml).
+2. Calculate the apparent MAE and external MAE for all 100 models in m using their corresponding training datasets in td. Create a scatter plot with apparent MAE on the x-axis and external MAE on the y-axis. Use a large external dataset to calculate MAE. Describe what you observe.
+
+# Installing the properties and packages if needed:
+# ```{r}
+install.packages("pak", quiet = TRUE)
+pak::pak("thomasgstewart/ds6021d")
+library(ds6021d)
+
+# 2.) Calculate the apparent MAE and external MAE for all 100 models in m
+# using their corresponding training datasets in td.
+# Create a scatter plot with apparent MAE on the x-axis and external MAE on
+# the y-axis. Use a large external dataset to calculate MAE.
+# Describe what you observe.
+vector_for_apparent_MAE_100_models <- rep(NA, 100)
+vectors_for_external_MAE_100_models <- rep(NA, 100)
+set.seed(2343)
+
+
+for(index in seq_along(vector_for_apparent_MAE_100_models)){
+    m_functions <- m[[index]]
+    td_internal_training_data <- td[[index]]
+    
+    td_internal_training_predition_data_funct_y_out <- m_functions(td_internal_training_data)
+    td_internal_training_y_data <- td_internal_training_data$y
+    apparent_rate_MAE <- mean(abs(td_internal_training_predition_data_funct_y_out - td_internal_training_y_data))
+    vector_for_apparent_MAE_100_models[index] <- apparent_rate_MAE
+    
+    external_data_vals <- external_data(10000)  # larger external set
+    external_data_vals_funct_y_out <- m_functions(external_data_vals)
+    external_rate_MAE <- mean(abs(external_data_vals_funct_y_out - external_data_vals$y))
+    vectors_for_external_MAE_100_models[index] <- external_rate_MAE
+}
+
+plot(x = vector_for_apparent_MAE_100_models,
+     y = vectors_for_external_MAE_100_models,
+     main = "Apparent MAE vs External MAE",
+     xlab = "Apparent MAE (Training)",
+     ylab = "External MAE (Test)",
+     pch = 19,
+     col = "steelblue",
+     cex = 1.2)
+
+# 3.) For each of the 100 models, compute the optimism
+# for MAE (apparent MAE minus external MAE).
+# Plot the distribution of optimism.
+# Calculate the mean optimism for MAE.
+# Is the distribution roughly symmetric or skewed?
+# What does the figure tell you about using apparent error
+# as a performance estimate?
+vector_for_optimism_MAE_100_models <- rep(NA, 100)
+for(index in seq_along(vector_for_apparent_MAE_100_models)){
+    vector_for_optimism_MAE_100_models[index] <- vector_for_apparent_MAE_100_models[index] - vectors_for_external_MAE_100_models[index]
+}
+mean_optimism_for_MAE_100_models <- mean(vector_for_optimism_MAE_100_models)
+
+hist(vector_for_optimism_MAE_100_models,
+     main = "Distribution of Optimism (Apparent MAE - External MAE)",
+     xlab = "Optimism for MAE",
+     col = "lightblue",
+     border = "darkblue")
+abline(v = mean_optimism_for_MAE_100_models, col = "red", lwd = 2)
+text(x = mean_optimism_for_MAE_100_models,
+     y = -0.5,
+     labels = paste("Mean =", round(mean_optimism_for_MAE_100_models, 5)),
+     col = "red")
+
+# 4.) Select td[[1]] as your working dataset.
+# Implement 10-fold CV for the regression model
+# in the section 3 examples and record the resulting
+# MAE estimate.
+new_train_data <- td[[1]]
+number_of_rows_training_data <- nrow(new_train_data)
+k_val <- 10
+set.seed(123)
+folds_randomized <- sample(rep(1:k_val, length.out = number_of_rows_training_data))
+
+cv_mae <- rep(NA, k_val)
+for(k in 1:k_val){
+    val_idx_of_CV <- which(folds_randomized == k)
+    train_idx_of_CV <- which(folds_randomized != k)
+    
+    train_fold_of_CV <- new_train_data[train_idx_of_CV, ]
+    val_fold_of_CV <- new_train_data[val_idx_of_CV, ]
+    
+    linear_model_of_fold_of_CV <- lm(y ~ ., data = train_fold_of_CV)
+    predict_y_val_of_fold_of_CV <- predict(linear_model_of_fold_of_CV, newdata = val_fold_of_CV)
+    
+    cv_mae[k] <- mean(abs(predict_y_val_of_fold_of_CV - val_fold_of_CV$y))
+    
+    cat("10-fold CV for the regression model: Fold number: ", k, ", MAE =", round(cv_mae[k], 4), "\n")
+}
+
+# mean of 10-fold CV for MAE
+mean_of_10_fold_CV_for_MAE <- mean(cv_mae)
+print(mean_of_10_fold_CV_for_MAE)
+
+# 5.) Using td[[1]], implement the bootstrap optimism estimator with B=200
+# bootstrap samples. Report the apparent MAE, the estimated optimism,
+# and the corrected MAE.
+# Compare the corrected MAE to the true external error (computed with a large external dataset).
+b_val <- 200
+set.seed(42352)
+optimism_b <- rep(NA, b_val)
+
+m_function <- m[[1]]
+new_training_predition_data_funct_y_output <- m_function(new_train_data)
+
+apparent_error_mae <- mean(abs(new_training_predition_data_funct_y_output - new_train_data$y))  # using original m[[1]]
+
+for (b in 1:b_val){
+    idx_training_data <- sample(1:number_of_rows_training_data, replace = TRUE)
+    bootstrap_training_data <- new_train_data[idx_training_data, ]
+    
+    linearly_fittted_model_b_value <- lm(y ~ ., data = bootstrap_training_data)
+    
+    # In-sample on bootstrap
+    predicted_y_value_b_value_training_data_bootstrap_in_sample <- predict(linearly_fittted_model_b_value, newdata = bootstrap_training_data)
+    mae_optimism_in_sample_b_value <- mean(abs(predicted_y_value_b_value_training_data_bootstrap_in_sample - bootstrap_training_data$y))
+    
+    # original training data
+    predicted_y_value_b_value_training_data_bootstrap_original <- predict(linearly_fittted_model_b_value, newdata = new_train_data)
+    mae_optimism_original_b_value <- mean(abs(predicted_y_value_b_value_training_data_bootstrap_original - new_train_data$y))
+    
+    # optimism for bootstrap formula
+    optimism_b[b] <- mae_optimism_in_sample_b_value - mae_optimism_original_b_value
+}
+
+# corrected optimism bootstrap MAE
+bootstrap_corrected_mae <- apparent_error_mae - mean(optimism_b)
+
+# True external error
+large_external <- external_data(20000)
+true_external_error_mae <- mean(abs(predict(lm(y ~ ., data = new_train_data), newdata = large_external) - large_external$y))
+
+cat("Apparent MAE:", round(apparent_error_mae, 5), "\n")
+cat("Bootstrap optimism:", round(mean(optimism_b), 5), "\n")
+cat("Corrected MAE:", round(bootstrap_corrected_mae, 5), "\n")
+cat("True external MAE:", round(true_external_error_mae, 5), "\n")
+
+hist(optimism_b,
+     main = "Bootstrap estimates of optimism",
+     xlab = "Optimism (in-sample MAE − original MAE)",
+     freq = FALSE)
+abline(v = mean(optimism_b), col = "blue", lwd = 2)
+text(x = mean(optimism_b),
+     y = 0,
+     labels = paste("Mean =", round(mean_optimism, 5)),
+     col = "blue")
+# ```
