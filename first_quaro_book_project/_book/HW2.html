@@ -187,10 +187,11 @@ window.Quarto = {
   <ul>
   <li><a href="#module-2-homework" id="toc-module-2-homework" class="nav-link active" data-scroll-target="#module-2-homework"><span class="header-section-number">4</span> Module 2 homework</a></li>
   <li><a href="#installing-the-properties-and-packages-if-needed" id="toc-installing-the-properties-and-packages-if-needed" class="nav-link" data-scroll-target="#installing-the-properties-and-packages-if-needed"><span class="header-section-number">5</span> Installing the properties and packages if needed:</a></li>
-  <li><a href="#all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." id="toc-all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." class="nav-link" data-scroll-target="#all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31."><span class="header-section-number">6</span> All prediction models for all prediction rules and create two calibration curves: one for x3=0 and another for x3=1.</a></li>
-  <li><a href="#calibration-curve-for-x30-and-x31" id="toc-calibration-curve-for-x30-and-x31" class="nav-link" data-scroll-target="#calibration-curve-for-x30-and-x31"><span class="header-section-number">7</span> calibration curve for x3=0 and x3=1</a></li>
-  <li><a href="#expected-squared-error" id="toc-expected-squared-error" class="nav-link" data-scroll-target="#expected-squared-error"><span class="header-section-number">8</span> Expected squared error</a></li>
-  <li><a href="#expected-absolute-error" id="toc-expected-absolute-error" class="nav-link" data-scroll-target="#expected-absolute-error"><span class="header-section-number">9</span> Expected absolute error</a></li>
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">6</span> ```{r}</a></li>
+  <li><a href="#all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." id="toc-all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." class="nav-link" data-scroll-target="#all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31."><span class="header-section-number">7</span> All prediction models for all prediction rules and create two calibration curves: one for x3=0 and another for x3=1.</a></li>
+  <li><a href="#calibration-curve-for-x30-and-x31" id="toc-calibration-curve-for-x30-and-x31" class="nav-link" data-scroll-target="#calibration-curve-for-x30-and-x31"><span class="header-section-number">8</span> calibration curve for x3=0 and x3=1</a></li>
+  <li><a href="#expected-squared-error" id="toc-expected-squared-error" class="nav-link" data-scroll-target="#expected-squared-error"><span class="header-section-number">9</span> Expected squared error</a></li>
+  <li><a href="#expected-absolute-error" id="toc-expected-absolute-error" class="nav-link" data-scroll-target="#expected-absolute-error"><span class="header-section-number">10</span> Expected absolute error</a></li>
   </ul>
 </nav>
     </div>
@@ -236,15 +237,18 @@ window.Quarto = {
 </section>
 <section id="installing-the-properties-and-packages-if-needed" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Installing the properties and packages if needed:</h1>
+</section>
+<section id="r" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> ```{r}</h1>
 <p>#install.packages(“pak”) #pak::pak(“thomasgstewart/ds6021b”) #pak::pak(“thomasgstewart/ds6021c”) library(ds6021b) library(ds6021c)</p>
 <p>set.seed(23583) data_for_predictionModel1 &lt;- external_data(n=100)</p>
 </section>
-<section id="all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> All prediction models for all prediction rules and create two calibration curves: one for x3=0 and another for x3=1.</h1>
+<section id="all-prediction-models-for-all-prediction-rules-and-create-two-calibration-curves-one-for-x30-and-another-for-x31." class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> All prediction models for all prediction rules and create two calibration curves: one for x3=0 and another for x3=1.</h1>
 <p>data &lt;- external_data(1000)</p>
 </section>
-<section id="calibration-curve-for-x30-and-x31" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> calibration curve for x3=0 and x3=1</h1>
+<section id="calibration-curve-for-x30-and-x31" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> calibration curve for x3=0 and x3=1</h1>
 <p>x3_0 &lt;- data<span class="math inline">\(x3 == 0
 x3_1 &lt;- data\)</span>x3 == 1 # Create side-by-side plotting area par(mfrow = c(1,2)) # Loop through each prediction rule and create calibration curves for x3=0 and x3=1 for (fi in c(“f1”, “f2”, “f3”, “f4”, “f5”)) { # Create calibration curve for x3=0 plot(get(fi)(data[x3_0, ]), data[x3_0, ]<span class="math inline">\(y,
          xlab = paste("Predicted", fi, " values"),
@@ -262,16 +266,19 @@ x3_1 &lt;- data\)</span>x3 == 1 # Create side-by-side plotting area par(mfrow = 
 <li><p>For each prediction rule, calculate expected squared error, expected absolute error, and the 90th quantile. Place the calculated quantities in a visualization for easy comparison. (You may want to create a different visualization for each summary measure.)</p></li>
 </ol>
 </section>
-<section id="expected-squared-error" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Expected squared error</h1>
+<section id="expected-squared-error" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Expected squared error</h1>
 <p>mean_squared_error_vals &lt;- sapply(c(“f1”,“f2”,“f3”,“f4”,“f5”), function(fi) { mean((get(fi)(data) - data$y)^2) })</p>
 <p>plot(1:5, mean_squared_error_vals, xlab = “Prediction Rules (f1, f2, f3, f4, f5)”, ylab = “Mean Squared Error for each Prediction Rule Model”, main = “Expected Squared Error by each Prediction Rule Model”, col = “#0c27bf”, ylim = c(0,max(mean_squared_error_vals)), pch = 16, cex = 1.5, xaxt = “n”) axis(1, 1:5, c(“f1”,“f2”,“f3”,“f4”,“f5”))</p>
 </section>
-<section id="expected-absolute-error" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Expected absolute error</h1>
+<section id="expected-absolute-error" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Expected absolute error</h1>
 <p>mae_vals &lt;- sapply(c(“f1”,“f2”,“f3”,“f4”,“f5”), function(fi) { mean(abs(get(fi)(data) - data$y)) })</p>
 <p>plot(1:5, mae_vals, xlab = “Prediction Rules (f1, f2, f3, f4, f5)”, ylab = “Mean Absolute Error for each Prediction Rule Model”, main = “Expected Absolute Error by each Prediction Rule Model”, col = “#098001”, ylim = c(0,max(mae_vals)), pch = 16, cex = 1.5, xaxt = “n”) axis(1, 1:5, c(“f1”,“f2”,“f3”,“f4”,“f5”)) # 90th quantile quantile_90th_vals &lt;- sapply(c(“f1”,“f2”,“f3”,“f4”,“f5”), function(fi) { quantile(abs(get(fi)(data) - data$y), 0.9) })</p>
-<p>plot(1:5, quantile_90th_vals, xlab = “Prediction Rules (f1, f2, f3, f4, f5)”, ylab = “90th Quantile for each Prediction Rule Model”, main = “90th Quantile by each Prediction Rule Model”, col = “#ff0000”, ylim = c(0,max(quantile_90th_vals)), pch = 16, cex = 1.5, xaxt = “n”) axis(1, 1:5, c(“f1”,“f2”,“f3”,“f4”,“f5”)) ’’’ 5. Describe a measure of model performance from the other section.</p>
+<p>plot(1:5, quantile_90th_vals, xlab = “Prediction Rules (f1, f2, f3, f4, f5)”, ylab = “90th Quantile for each Prediction Rule Model”, main = “90th Quantile by each Prediction Rule Model”, col = “#ff0000”, ylim = c(0,max(quantile_90th_vals)), pch = 16, cex = 1.5, xaxt = “n”) axis(1, 1:5, c(“f1”,“f2”,“f3”,“f4”,“f5”)) # ```</p>
+<ol start="5" type="1">
+<li>Describe a measure of model performance from the other section.</li>
+</ol>
 <p>After going through all of the sections of this homework assignment, I found that each graph and predictual rule model revealed some unique details and insights about the measure of performances and how these models are used to help make accurate predictions and decions from these models.</p>
 <p>Starting with the calibration curves, these curves are used to evaluate the performance of a Predictive model by comparing the Predicted (f1, f2, f3, f4, f5) probabilities of all x related data whose data that matches the x3 values of 0 and 1 to the observed Observed Y values from the Predicted (f1, f2, f3, f4, f5) values. The first solid line of the calibration curves for x3=0 along with x3=1 helped to showed how the data points were correlated in a smoother linear way to be represent the relationship between the predicted probabilities and the observed frequencies. While the second dashed line in the calibration curves for x3=0 along with x3=1 best represents the reference line of the calibration curve that helps to represent the ideal straight linear relationship between the predicted probabilities and the observed frequencies. Altogether, these calibration curves for x3=0 along with x3=1 helps us better understand how well the predicted probabilities from the model align with the actual observed outcomes to see which relationships in the data better represents the ideal calibration of how data is predicted and observed in the models. From here, we can make better decisions based on the accurate prediciton calibrations of the models and we could also use these models to judge the performances of data in models in a precise and calibrated way.</p>
 <p>Going on into the residual distribution visualization, this histogram model helps us understand the distribution of residuals, which are the differences between the predicted values from the models and the observed values specified in the y variable in the data. After graphing this histogram, we can see how well the model fits the data into an almost perfect bell curve distribution of the residuals which helps to conclude that the model’s predictions are well fitted to the observed data since the highest frequency of residual values are clustered around zero. This also means that this model’s predictions are most perfectly the same value as the observed y values of the data. If the model was skewed or sparsely distributed into disjointed clusters, then the data of the residuals would not be well fitted to the observed data and this would lead to poor performance and inaccurate assessments of the data. It is also important to note that the density curve of the residuals that I added helps reinforce the accuracy and reliability of the model’s predictions by showing the overall shape of the residual distribution. Altogether, this histogram of residuals for each prediction rule model (f1, f2, f3, f4, f5) helps us understand how well the model fits the data and whether there are any patterns or biases in the predictions along with the data. On top of that, this histogram of residuals for each prediction rule model (f1, f2, f3, f4, f5) helps us finalize that data predictions could be relied upon in decision making surrounding the precise calibration of the data in its later usage and how it does not deviate away from any previous observed data values.</p>
