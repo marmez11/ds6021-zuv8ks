@@ -1,0 +1,326 @@
+
+# Name: Maxwell Braseth 
+# Date: 06/30/2026
+# Module 6 Homework
+
+
+```{r}
+# Loading the insurance.csv data
+insurance_data <- read.csv("data/insurance.csv", encoding = "UTF-8")
+library(MASS)
+library(rms)
+
+# 1.) Write down the linear regression model 
+# mathematically. Use matrix notation Y = Xβ + ε.
+# Identify each component: what is Y, what 
+# columns are in X, what does each element of β
+# represent?
+
+# Y = Xβ + ε
+# Y = dependent variable --> response or obsered dependent response variable
+# X = independent variable --> Design matrix
+# β = coefficient --> (X^T X)^-1 X^T Y
+# X^T = transpose of the matrix
+# (X^T X)^-1 --> inverse of the matrix product X^T * X
+#   * example of an inverse of a matrix: a^-1 = 1/a --> a = [a, b, c, d] and a^-1 = [1/a, 1/b, 1/c, 1/d] or A^-1 = 1/|A| * Adj(A) = 1/(ad-bc) * [d, -b, -c, a]
+# ε = error -- > # ε = Y - Xβ = ŷ - y
+# ŷ = predicted value of y = Xβ
+
+# Set factor levels
+insurance_data$sex    <- factor(insurance_data$sex,    levels = c("female", "male"))
+insurance_data$region <- factor(insurance_data$region, levels = c("northeast", "northwest", "southeast", "southwest"))
+insurance_data$smoker <- factor(insurance_data$smoker, levels = c("no", "yes"))
+
+# creating design matrices to combine together all of the independent predictor variables of x
+sex_matrix    <- model.matrix(~ 0 + sex,    data = insurance_data)
+region_matrix <- model.matrix(~ 0 + region, data = insurance_data)
+smoker_matrix <- model.matrix(~ 0 + smoker, data = insurance_data)
+age_matrix     <- as.matrix(insurance_data$age)
+bmi_matrix     <- as.matrix(insurance_data$bmi)
+children_matrix <- as.matrix(insurance_data$children)
+
+# Combine all of the x variables within matrices format into full design matrix
+# what are columns are in X and what does they represent?
+# These x variables are the independent predictor variables that influences the linear regression relationship of showing how 
+# the features of individuals (such as age, sex, bmi, number of children, etc...) affect the cost of health insurance charges in a positive or negative way.
+x <- cbind(
+  sex_matrix, 
+  region_matrix, 
+  smoker_matrix, 
+  age_matrix, 
+  bmi_matrix, 
+  children_matrix
+)
+
+# Give clear column names
+colnames(x) <- c(
+  "sexfemale", "sexmale",
+  "regionnortheast", "regionnorthwest", "regionsoutheast", "regionsouthwest",
+  "smokerno", "smokeryes",
+  "age", "bmi", "children"
+)
+# Y dependent variable for all x independent variables
+y <- insurance_data$charges
+
+# Use generalized inverse for the Coefficient Estimate equation (X^T * X)^-1 * X^T * Y
+# (X^T X)^-1 X^T Y
+b <- ginv(t(x) %*% x) %*% t(x) %*% y
+
+# assigning the column and row names
+rownames(b) <- colnames(x)
+colnames(b) <- "β Coefficient Estimate"
+
+
+# For all of the columns are in X, what does each element of β represent?
+
+# For each element of β in combination with the columns of x (age, bmi, children, etc...),
+# the element of β tells us how much that particular column in X contributes and influences the calculation of the predicted value of Y.
+# In this case though, we are using the linear combinations of the columns describing the features of the individuals (age, bmi, children, etc...)
+# along with the elements of β (to increase or decrease weight or influence) to calculate the predicted values of y or in this case the charges of health insurance.
+# In otherwords, the linear combinations of the columns of x and the elements of β helps determine which features of the individuals has more or less influence on the predicted insurance charges for these individuals.
+
+
+# ŷ = Xβ
+predicted_y <- x %*% b
+
+# ε = Y - Xβ = ŷ - y
+e1 <- y - predicted_y
+e2 <- y - x %*% b
+print("error 1 vs error 2 equal ?: ")
+print(head(mean(e1)) == (head(mean(e2))))
+
+
+# What is Y in this scenario?
+# the Y dependent variable is the observed dependent response variable that we are trying to predict or estimate.
+# In this case, the Y dependent variable is the cost of health insurance charges that is dependent on the variables/features of the individuals (age, sex, bmi, number of children, etc...)
+# along with determining how the linear combinations of the coefficient elements (β) helps indicate and determine the impact/weight from which these individuals features of x (age, sex, bmi, number of children, etc...)
+# actually has on specific predicted calculation costs of health insurance charges of these individuals.
+
+# linear regression model : Y = Xβ + ε
+linear_regression_model_y <- (x %*% b) + e1
+
+# Show breakdown for first 5 Linear Regression Model values along with the predicted y and epison value ε
+breakdown_of_linear_regression_model <- data.frame(
+  Observed_Y_Linear_Regression_value = round(linear_regression_model_y, 2),
+  Predicted_Y_value = round(predicted_y, 2),
+  Error_ε_value = round(e1, 2)
+)
+coefficient_breakdown <- data.frame(
+  Predictor_Feature_of_Individuals_X = rownames(b),
+  Coefficient_β_value = round(b[, 1], 2)
+)
+
+
+colnames(breakdown_of_linear_regression_model) <- c(
+  "Observed_Y_Linear_Regression_For_Insurance_Charges",
+  "Predicted_Y_value",
+  "Error_ε_value"
+)
+
+print("Linear Regression Model for Insurance Charges for Individuals:")
+print(head(breakdown_of_linear_regression_model, 10))
+
+print("β Coefficient Estimates by Feature of Individuals (X):")
+print(coefficient_breakdown)
+
+
+# 2. Explain in words how the model answers the research question.
+# Which coefficient directly addresses whether smoking is associated with 
+# higher charges, and what does its magnitude represent?
+
+smokeryes_coef <- b["smokeryes", ]
+bmi_coef <- b["bmi", ]
+age_coef <- b["age", ]
+children_coef <- b["children", ]
+
+max_values_df_smokeryes <- data.frame(
+  Item = c(
+    "Max_SmokerYes_Coefficient_Overall",
+    "Max_Observed_Y_Linear_Regression_value",
+    "Max_Predicted_Y_value"
+  ),
+  Value = c(
+    max(smokeryes_coef),
+    max(y),
+    max(predicted_y)
+  )
+)
+max_values_df_bmi <- data.frame(
+  Item = c(
+    "Max_BMI_Coefficient_Overall",
+    "Max_Observed_Y_Linear_Regression_value",
+    "Max_Predicted_Y_value"
+  ),
+  Value = c(
+    max(bmi_coef),
+    max(y),
+    max(predicted_y)
+  )
+)
+max_values_df_age <- data.frame(
+  Item = c(
+    "Max_Age_Coefficient_Overall",
+    "Max_Observed_Y_Linear_Regression_value",
+    "Max_Predicted_Y_value"
+  ),
+  Value = c(
+    max(age_coef),
+    max(y),
+    max(predicted_y)
+  )
+)
+max_values_df_children <- data.frame(
+  Item = c(
+    "Max_children_Coefficient_Overall",
+    "Max_Observed_Y_Linear_Regression_value",
+    "Max_Predicted_Y_value"
+  ),
+  Value = c(
+    max(children_coef),
+    max(y),
+    max(predicted_y)
+  )
+)
+
+print(max_values_df_smokeryes)
+print(max_values_df_bmi)
+print(max_values_df_age)
+print(max_values_df_children)
+
+# After some evaluations of the model along with the summary code above, this model definitely addresses the research question,
+# which is whether smoking is associated with higher charges, and what does its magnitude represent.
+# The highest coefficient β estimate for Smoker Yes is 11657.67, which when compared with the other coefficients β estimates for the remaining x features/variables
+# such as BMI, Age, and Number of Children (339.1935, 256.8564, 475.5005), which indicates that smoking is associated with higher coefficient value which in turn shows that
+# smoking is associated with the prediction of the highest or greater cost of health insurance charges of $63770.4280.
+
+# Finally in terms of its magnitude representation, the highest coefficient β estimate for Smoker Yes 
+# which is 11657.67 basically indicates that the feature of smoking is one of the most influential/impactful
+# feature that contributes to predicting the insurance charges of the individuals in this data set. Altogether,
+# any of the highest coefficient β estimates for any feature of the individuals is heavily influential in the predicting of the health insurance charges of the individuals of this data set.
+
+
+# 3. Fit the model in R using lm(). Report the estimated coefficients, 
+# their standard errors, and a confidence interval for the smoking coefficient. 
+# Write one sentence interpreting the smoking coefficient in the context of the research question.
+
+lm_fit <- lm(charges ~ age + bmi + children + sex + smoker + region,
+             data = insurance_data)
+
+coefficient_breakdown_lm <- data.frame(
+  Predictor = rownames(coef(summary(lm_fit))),
+  Estimate = coef(summary(lm_fit))[,1],
+  Std_Error = coef(summary(lm_fit))[,2],
+  stringsAsFactors = FALSE
+)
+
+cat("====β coefficient estimates and standard errors for Smoking (lm version)====\n")
+print(coefficient_breakdown_lm["smokeryes", 2:3])
+
+cat("====95% CI for Smoking====\n")
+smoking_ci <- confint(lm_fit, "smokeryes", level = 0.95)
+print(round(smoking_ci,4))
+
+# The best one sentence interpretation of the smoking coefficient in the context of the research question of "which is whether smoking is associated with higher charges and what does its magnitude represent" is the following.
+# From the lm() fitted model, the smoker's coefficient β estimate, the smoker's standard error along with the Confidence Interval of 95% all having high values and these high values all signals that smoking is highly associated 
+# with how these values helps predict the cost of health insurance charges of the individuals in this data set just like the answer given in question 2.
+
+
+# 4. Refit the model using rms::ols() instead of lm(). Compare the coefficient table from both fits. 
+# Then compute a 95% confidence interval for the smoking coefficient from lm() (using confint()) 
+# and from ols() (using summary()). Are the intervals identical? 
+#What additional output does ols() provide that lm() does not?
+
+# datadist setup
+dd <- datadist(insurance_data)
+options(datadist = "dd")
+
+# Fitting ols model
+ols_fit <- ols(charges ~ age + bmi + children + sex + smoker + region, 
+               data = insurance_data, x = TRUE, y = TRUE)
+
+# Coefficient tables for both lm() and ols()
+cat("\n========== lm() Coefficients ==========\n")
+lm_coef <- summary(lm_fit)$coefficients
+print(round(lm_coef, 4))
+
+cat("\n========== rms::ols() Summary ==========\n")
+ols_summary <- summary(ols_fit)
+ols_df <- as.data.frame(ols_summary)
+print(ols_df)
+
+
+cat("\n========== Equality Testing for smoker coefficient and 95% CI ==========\n")
+
+# Find smoker for both lm() and ols()
+lm_smoker_name  <- grep("smoker", rownames(lm_coef), ignore.case = TRUE, value = TRUE)
+ols_smoker_name <- grep("smoker", rownames(ols_df),   ignore.case = TRUE, value = TRUE)
+
+# Getting the smoker coefficient β
+lm_est_coefficient   <- lm_coef[lm_smoker_name, "Estimate"]
+ols_eff_coefficient  <- ols_df[ols_smoker_name, "Effect"]
+
+lm_ci    <- confint(lm_fit, lm_smoker_name, level = 0.95)
+ols_ci_lower <- ols_df[ols_smoker_name, "Lower 0.95"]
+ols_ci_upper <- ols_df[ols_smoker_name, "Upper 0.95"]
+
+# Tests
+cat("Smoker coefficient comparison:\n")
+cat(sprintf("lm()  Estimate : %.6f\n", lm_est_coefficient))
+cat(sprintf("ols() Effect   : %.6f\n", ols_eff_coefficient))
+cat("Are they equal?   ", all.equal(lm_est_coefficient, ols_eff_coefficient, tolerance = 1e-8), "\n\n")
+
+cat("95% Confidence Intervals:\n")
+cat(sprintf("lm()  CI: [%.6f, %.6f]\n", lm_ci[1], lm_ci[2]))
+cat(sprintf("ols() CI: [%.6f, %.6f]\n", ols_ci_lower, ols_ci_upper))
+cat("Are CIs equal?    ", 
+    all.equal(lm_ci[1], ols_ci_lower, tolerance = 1e-8) && 
+    all.equal(lm_ci[2], ols_ci_upper, tolerance = 1e-8), "\n")
+
+
+# What additional output does ols() provide that lm() does not?
+
+# When cross comparing the outputs of ols() and lm(), we can see that ols() provides a number of different
+# features/statistical measures that give different statistical aggregated measures about the data that lm() does not have.
+# For example, ols() provides features/variables such as Lower 0.95 and Upper 0.95 that shows the lower and upper bonds of a 95% confidence interval
+# along with Low and High features/variables that highlights the maximum and minimum values of the data along with a Diff = Difference feature that outlines
+# the difference between the maximum and minimum values in the ols() outputs and finally it has a Type feature that highlights the type of the data.
+# While the output of lm() only uniquely posseses the t value and Pr(>|t|) features/variables that highlights the p-value of a observation that is higher than the t-test statistic value and
+# the actual t-statistic value of the data.
+# The only features/variables that these outputs actually shares is the Estimate and Std. Error features/variables along with the Effect and S.E. features/variables that is partically the same features/variables
+# which is that they are the Coefficient β and Standard Error features/variables for each model.
+
+
+# 5. The dataset includes region as a categorical predictor with four levels. 
+# How many indicator variables does R create? Which level is the reference? 
+# Refit the model using cell means coding for region (-1 in the formula) and 
+# verify that the predicted values are identical to the reference cell model.
+
+# Cell means linear model for the reference coding ONLY for the region feature/variable
+lm_cellmeans_for_only_region <- lm(
+  charges ~ age + bmi + children + sex + smoker + region - 1,
+  data = insurance_data
+)
+
+cat("\n========== Coefficients (Cell Means Model) ==========\n")
+print(round(coef(lm_cellmeans_for_only_region), 4))
+
+# Predictions from both models
+pred_reference <- predict(lm_fit)
+pred_cellmeans <- predict(lm_cellmeans_for_only_region)
+
+cat("\n========== Prediction Comparison ==========\n")
+cat("Predictions identical? ",
+  isTRUE(all.equal(pred_reference,
+                   pred_cellmeans,
+                   tolerance = 1e-8)),"\n")
+
+
+# How many indicator variables does R create?
+
+# Since this code references the region feature/variable as a categorical feature/variable for the model fit, then 
+# the predictor indicator variables that is generated for the region feature/variable is 3 since there is one indicator variable 
+# generated to serve as a reference level/feature/variable for the region feature/variable. Since this is a region feature/variable generation focused model,
+# The three indicator variables generated from the levels of the region feature/variable are regionnorthwest, regionsoutheast and regionsouthwest along with the 
+# regionnortheast indicator variable that serves as the reference level/feature/variable for the code.
+
+```

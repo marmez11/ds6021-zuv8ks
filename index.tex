@@ -65,6 +65,46 @@
 \fi
 \makeatother
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \usepackage{longtable,booktabs,array}
 \newcounter{none} % for unnumbered tables
@@ -2238,6 +2278,700 @@ model.}\label{while-still-being-adaptable-to-new-testing-data-and-out-of-sample-
 \bookmarksetup{startatroot}
 
 \chapter{```}\label{section-24}
+
+\bookmarksetup{startatroot}
+
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-2}
+
+\bookmarksetup{startatroot}
+
+\chapter{Date: 06/30/2026}\label{date-06302026}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 6 Homework}\label{module-6-homework}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loading the insurance.csv data}
+\NormalTok{insurance\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/insurance.csv"}\NormalTok{, }\AttributeTok{encoding =} \StringTok{"UTF{-}8"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(MASS)}
+\FunctionTok{library}\NormalTok{(rms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: Hmisc
+\end{verbatim}
+
+\begin{verbatim}
+
+Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    format.pval, units
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1.) Write down the linear regression model }
+\CommentTok{\# mathematically. Use matrix notation Y = Xβ + ε.}
+\CommentTok{\# Identify each component: what is Y, what }
+\CommentTok{\# columns are in X, what does each element of β}
+\CommentTok{\# represent?}
+
+\CommentTok{\# Y = Xβ + ε}
+\CommentTok{\# Y = dependent variable {-}{-}\textgreater{} response or obsered dependent response variable}
+\CommentTok{\# X = independent variable {-}{-}\textgreater{} Design matrix}
+\CommentTok{\# β = coefficient {-}{-}\textgreater{} (X\^{}T X)\^{}{-}1 X\^{}T Y}
+\CommentTok{\# X\^{}T = transpose of the matrix}
+\CommentTok{\# (X\^{}T X)\^{}{-}1 {-}{-}\textgreater{} inverse of the matrix product X\^{}T * X}
+\CommentTok{\#   * example of an inverse of a matrix: a\^{}{-}1 = 1/a {-}{-}\textgreater{} a = [a, b, c, d] and a\^{}{-}1 = [1/a, 1/b, 1/c, 1/d] or A\^{}{-}1 = 1/|A| * Adj(A) = 1/(ad{-}bc) * [d, {-}b, {-}c, a]}
+\CommentTok{\# ε = error {-}{-} \textgreater{} \# ε = Y {-} Xβ = ŷ {-} y}
+\CommentTok{\# ŷ = predicted value of y = Xβ}
+
+\CommentTok{\# Set factor levels}
+\NormalTok{insurance\_data}\SpecialCharTok{$}\NormalTok{sex    }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{sex,    }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"female"}\NormalTok{, }\StringTok{"male"}\NormalTok{))}
+\NormalTok{insurance\_data}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{region, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"northeast"}\NormalTok{, }\StringTok{"northwest"}\NormalTok{, }\StringTok{"southeast"}\NormalTok{, }\StringTok{"southwest"}\NormalTok{))}
+\NormalTok{insurance\_data}\SpecialCharTok{$}\NormalTok{smoker }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{smoker, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"no"}\NormalTok{, }\StringTok{"yes"}\NormalTok{))}
+
+\CommentTok{\# creating design matrices to combine together all of the independent predictor variables of x}
+\NormalTok{sex\_matrix    }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ sex,    }\AttributeTok{data =}\NormalTok{ insurance\_data)}
+\NormalTok{region\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ region, }\AttributeTok{data =}\NormalTok{ insurance\_data)}
+\NormalTok{smoker\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ smoker, }\AttributeTok{data =}\NormalTok{ insurance\_data)}
+\NormalTok{age\_matrix     }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{age)}
+\NormalTok{bmi\_matrix     }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{bmi)}
+\NormalTok{children\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(insurance\_data}\SpecialCharTok{$}\NormalTok{children)}
+
+\CommentTok{\# Combine all of the x variables within matrices format into full design matrix}
+\CommentTok{\# what are columns are in X and what does they represent?}
+\CommentTok{\# These x variables are the independent predictor variables that influences the linear regression relationship of showing how }
+\CommentTok{\# the features of individuals (such as age, sex, bmi, number of children, etc...) affect the cost of health insurance charges in a positive or negative way.}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}
+\NormalTok{  sex\_matrix, }
+\NormalTok{  region\_matrix, }
+\NormalTok{  smoker\_matrix, }
+\NormalTok{  age\_matrix, }
+\NormalTok{  bmi\_matrix, }
+\NormalTok{  children\_matrix}
+\NormalTok{)}
+
+\CommentTok{\# Give clear column names}
+\FunctionTok{colnames}\NormalTok{(x) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"sexfemale"}\NormalTok{, }\StringTok{"sexmale"}\NormalTok{,}
+  \StringTok{"regionnortheast"}\NormalTok{, }\StringTok{"regionnorthwest"}\NormalTok{, }\StringTok{"regionsoutheast"}\NormalTok{, }\StringTok{"regionsouthwest"}\NormalTok{,}
+  \StringTok{"smokerno"}\NormalTok{, }\StringTok{"smokeryes"}\NormalTok{,}
+  \StringTok{"age"}\NormalTok{, }\StringTok{"bmi"}\NormalTok{, }\StringTok{"children"}
+\NormalTok{)}
+\CommentTok{\# Y dependent variable for all x independent variables}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ insurance\_data}\SpecialCharTok{$}\NormalTok{charges}
+
+\CommentTok{\# Use generalized inverse for the Coefficient Estimate equation (X\^{}T * X)\^{}{-}1 * X\^{}T * Y}
+\CommentTok{\# (X\^{}T X)\^{}{-}1 X\^{}T Y}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{ginv}\NormalTok{(}\FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%}\NormalTok{ x) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%}\NormalTok{ y}
+
+\CommentTok{\# assigning the column and row names}
+\FunctionTok{rownames}\NormalTok{(b) }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(x)}
+\FunctionTok{colnames}\NormalTok{(b) }\OtherTok{\textless{}{-}} \StringTok{"β Coefficient Estimate"}
+
+
+\CommentTok{\# For all of the columns are in X, what does each element of β represent?}
+
+\CommentTok{\# For each element of β in combination with the columns of x (age, bmi, children, etc...),}
+\CommentTok{\# the element of β tells us how much that particular column in X contributes and influences the calculation of the predicted value of Y.}
+\CommentTok{\# In this case though, we are using the linear combinations of the columns describing the features of the individuals (age, bmi, children, etc...)}
+\CommentTok{\# along with the elements of β (to increase or decrease weight or influence) to calculate the predicted values of y or in this case the charges of health insurance.}
+\CommentTok{\# In otherwords, the linear combinations of the columns of x and the elements of β helps determine which features of the individuals has more or less influence on the predicted insurance charges for these individuals.}
+
+
+\CommentTok{\# ŷ = Xβ}
+\NormalTok{predicted\_y }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%*\%}\NormalTok{ b}
+
+\CommentTok{\# ε = Y {-} Xβ = ŷ {-} y}
+\NormalTok{e1 }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ predicted\_y}
+\NormalTok{e2 }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ x }\SpecialCharTok{\%*\%}\NormalTok{ b}
+\FunctionTok{print}\NormalTok{(}\StringTok{"error 1 vs error 2 equal ?: "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "error 1 vs error 2 equal ?: "
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{head}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e1)) }\SpecialCharTok{==}\NormalTok{ (}\FunctionTok{head}\NormalTok{(}\FunctionTok{mean}\NormalTok{(e2))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# What is Y in this scenario?}
+\CommentTok{\# the Y dependent variable is the observed dependent response variable that we are trying to predict or estimate.}
+\CommentTok{\# In this case, the Y dependent variable is the cost of health insurance charges that is dependent on the variables/features of the individuals (age, sex, bmi, number of children, etc...)}
+\CommentTok{\# along with determining how the linear combinations of the coefficient elements (β) helps indicate and determine the impact/weight from which these individuals features of x (age, sex, bmi, number of children, etc...)}
+\CommentTok{\# actually has on specific predicted calculation costs of health insurance charges of these individuals.}
+
+\CommentTok{\# linear regression model : Y = Xβ + ε}
+\NormalTok{linear\_regression\_model\_y }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{\%*\%}\NormalTok{ b) }\SpecialCharTok{+}\NormalTok{ e1}
+
+\CommentTok{\# Show breakdown for first 5 Linear Regression Model values along with the predicted y and epison value ε}
+\NormalTok{breakdown\_of\_linear\_regression\_model }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Observed\_Y\_Linear\_Regression\_value =} \FunctionTok{round}\NormalTok{(linear\_regression\_model\_y, }\DecValTok{2}\NormalTok{),}
+  \AttributeTok{Predicted\_Y\_value =} \FunctionTok{round}\NormalTok{(predicted\_y, }\DecValTok{2}\NormalTok{),}
+\NormalTok{  Error\_ε}\AttributeTok{\_value =} \FunctionTok{round}\NormalTok{(e1, }\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{coefficient\_breakdown }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Predictor\_Feature\_of\_Individuals\_X =} \FunctionTok{rownames}\NormalTok{(b),}
+\NormalTok{  Coefficient\_β}\AttributeTok{\_value =} \FunctionTok{round}\NormalTok{(b[, }\DecValTok{1}\NormalTok{], }\DecValTok{2}\NormalTok{)}
+\NormalTok{)}
+
+
+\FunctionTok{colnames}\NormalTok{(breakdown\_of\_linear\_regression\_model) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"Observed\_Y\_Linear\_Regression\_For\_Insurance\_Charges"}\NormalTok{,}
+  \StringTok{"Predicted\_Y\_value"}\NormalTok{,}
+  \StringTok{"Error\_ε\_value"}
+\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(}\StringTok{"Linear Regression Model for Insurance Charges for Individuals:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Linear Regression Model for Insurance Charges for Individuals:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{head}\NormalTok{(breakdown\_of\_linear\_regression\_model, }\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   Observed_Y_Linear_Regression_For_Insurance_Charges Predicted_Y_value
+1                                            16884.92          25293.71
+2                                             1725.55           3448.60
+3                                             4449.46           6706.99
+4                                            21984.47           3754.83
+5                                             3866.86           5592.49
+6                                             3756.62           3719.83
+7                                             8240.59          10659.96
+8                                             7281.51           8047.91
+9                                             6406.41           8502.97
+10                                           28923.14          11884.64
+   Error_ε_value
+1       -8408.79
+2       -1723.05
+3       -2257.53
+4       18229.64
+5       -1725.64
+6          36.80
+7       -2419.37
+8        -766.41
+9       -2096.56
+10      17038.50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"β Coefficient Estimates by Feature of Individuals (X):"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "β Coefficient Estimates by Feature of Individuals (X):"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(coefficient\_breakdown)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                Predictor_Feature_of_Individuals_X Coefficient_β_value
+sexfemale                                sexfemale             -201.12
+sexmale                                    sexmale             -332.43
+regionnortheast                    regionnortheast              453.62
+regionnorthwest                    regionnorthwest              100.66
+regionsoutheast                    regionsoutheast             -581.40
+regionsouthwest                    regionsouthwest             -506.43
+smokerno                                  smokerno           -12191.04
+smokeryes                                smokeryes            11657.49
+age                                            age              256.86
+bmi                                            bmi              339.19
+children                                  children              475.50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Explain in words how the model answers the research question.}
+\CommentTok{\# Which coefficient directly addresses whether smoking is associated with }
+\CommentTok{\# higher charges, and what does its magnitude represent?}
+
+\NormalTok{smokeryes\_coef }\OtherTok{\textless{}{-}}\NormalTok{ b[}\StringTok{"smokeryes"}\NormalTok{, ]}
+\NormalTok{bmi\_coef }\OtherTok{\textless{}{-}}\NormalTok{ b[}\StringTok{"bmi"}\NormalTok{, ]}
+\NormalTok{age\_coef }\OtherTok{\textless{}{-}}\NormalTok{ b[}\StringTok{"age"}\NormalTok{, ]}
+\NormalTok{children\_coef }\OtherTok{\textless{}{-}}\NormalTok{ b[}\StringTok{"children"}\NormalTok{, ]}
+
+\NormalTok{max\_values\_df\_smokeryes }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Item =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Max\_SmokerYes\_Coefficient\_Overall"}\NormalTok{,}
+    \StringTok{"Max\_Observed\_Y\_Linear\_Regression\_value"}\NormalTok{,}
+    \StringTok{"Max\_Predicted\_Y\_value"}
+\NormalTok{  ),}
+  \AttributeTok{Value =} \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{max}\NormalTok{(smokeryes\_coef),}
+    \FunctionTok{max}\NormalTok{(y),}
+    \FunctionTok{max}\NormalTok{(predicted\_y)}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{max\_values\_df\_bmi }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Item =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Max\_BMI\_Coefficient\_Overall"}\NormalTok{,}
+    \StringTok{"Max\_Observed\_Y\_Linear\_Regression\_value"}\NormalTok{,}
+    \StringTok{"Max\_Predicted\_Y\_value"}
+\NormalTok{  ),}
+  \AttributeTok{Value =} \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{max}\NormalTok{(bmi\_coef),}
+    \FunctionTok{max}\NormalTok{(y),}
+    \FunctionTok{max}\NormalTok{(predicted\_y)}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{max\_values\_df\_age }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Item =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Max\_Age\_Coefficient\_Overall"}\NormalTok{,}
+    \StringTok{"Max\_Observed\_Y\_Linear\_Regression\_value"}\NormalTok{,}
+    \StringTok{"Max\_Predicted\_Y\_value"}
+\NormalTok{  ),}
+  \AttributeTok{Value =} \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{max}\NormalTok{(age\_coef),}
+    \FunctionTok{max}\NormalTok{(y),}
+    \FunctionTok{max}\NormalTok{(predicted\_y)}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{max\_values\_df\_children }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Item =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Max\_children\_Coefficient\_Overall"}\NormalTok{,}
+    \StringTok{"Max\_Observed\_Y\_Linear\_Regression\_value"}\NormalTok{,}
+    \StringTok{"Max\_Predicted\_Y\_value"}
+\NormalTok{  ),}
+  \AttributeTok{Value =} \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{max}\NormalTok{(children\_coef),}
+    \FunctionTok{max}\NormalTok{(y),}
+    \FunctionTok{max}\NormalTok{(predicted\_y)}
+\NormalTok{  )}
+\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(max\_values\_df\_smokeryes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                    Item    Value
+1      Max_SmokerYes_Coefficient_Overall 11657.49
+2 Max_Observed_Y_Linear_Regression_value 63770.43
+3                  Max_Predicted_Y_value 40834.81
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(max\_values\_df\_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                    Item      Value
+1            Max_BMI_Coefficient_Overall   339.1935
+2 Max_Observed_Y_Linear_Regression_value 63770.4280
+3                  Max_Predicted_Y_value 40834.8087
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(max\_values\_df\_age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                    Item      Value
+1            Max_Age_Coefficient_Overall   256.8564
+2 Max_Observed_Y_Linear_Regression_value 63770.4280
+3                  Max_Predicted_Y_value 40834.8087
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(max\_values\_df\_children)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                    Item      Value
+1       Max_children_Coefficient_Overall   475.5005
+2 Max_Observed_Y_Linear_Regression_value 63770.4280
+3                  Max_Predicted_Y_value 40834.8087
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# After some evaluations of the model along with the summary code above, this model definitely addresses the research question,}
+\CommentTok{\# which is whether smoking is associated with higher charges, and what does its magnitude represent.}
+\CommentTok{\# The highest coefficient β estimate for Smoker Yes is 11657.67, which when compared with the other coefficients β estimates for the remaining x features/variables}
+\CommentTok{\# such as BMI, Age, and Number of Children (339.1935, 256.8564, 475.5005), which indicates that smoking is associated with higher coefficient value which in turn shows that}
+\CommentTok{\# smoking is associated with the prediction of the highest or greater cost of health insurance charges of $63770.4280.}
+
+\CommentTok{\# Finally in terms of its magnitude representation, the highest coefficient β estimate for Smoker Yes }
+\CommentTok{\# which is 11657.67 basically indicates that the feature of smoking is one of the most influential/impactful}
+\CommentTok{\# feature that contributes to predicting the insurance charges of the individuals in this data set. Altogether,}
+\CommentTok{\# any of the highest coefficient β estimates for any feature of the individuals is heavily influential in the predicting of the health insurance charges of the individuals of this data set.}
+
+
+\CommentTok{\# 3. Fit the model in R using lm(). Report the estimated coefficients, }
+\CommentTok{\# their standard errors, and a confidence interval for the smoking coefficient. }
+\CommentTok{\# Write one sentence interpreting the smoking coefficient in the context of the research question.}
+
+\NormalTok{lm\_fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(charges }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ children }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ smoker }\SpecialCharTok{+}\NormalTok{ region,}
+             \AttributeTok{data =}\NormalTok{ insurance\_data)}
+
+\NormalTok{coefficient\_breakdown\_lm }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Predictor =} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(lm\_fit))),}
+  \AttributeTok{Estimate =} \FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(lm\_fit))[,}\DecValTok{1}\NormalTok{],}
+  \AttributeTok{Std\_Error =} \FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(lm\_fit))[,}\DecValTok{2}\NormalTok{],}
+  \AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}
+\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====β coefficient estimates and standard errors for Smoking (lm version)====}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+====β coefficient estimates and standard errors for Smoking (lm version)====
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(coefficient\_breakdown\_lm[}\StringTok{"smokeryes"}\NormalTok{, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          Estimate Std_Error
+smokeryes 23848.53  413.1534
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"====95\% CI for Smoking====}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+====95% CI for Smoking====
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{smoking\_ci }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(lm\_fit, }\StringTok{"smokeryes"}\NormalTok{, }\AttributeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(smoking\_ci,}\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             2.5 %   97.5 %
+smokeryes 23038.03 24659.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The best one sentence interpretation of the smoking coefficient in the context of the research question of "which is whether smoking is associated with higher charges and what does its magnitude represent" is the following.}
+\CommentTok{\# From the lm() fitted model, the smoker\textquotesingle{}s coefficient β estimate, the smoker\textquotesingle{}s standard error along with the Confidence Interval of 95\% all having high values and these high values all signals that smoking is highly associated }
+\CommentTok{\# with how these values helps predict the cost of health insurance charges of the individuals in this data set just like the answer given in question 2.}
+
+
+\CommentTok{\# 4. Refit the model using rms::ols() instead of lm(). Compare the coefficient table from both fits. }
+\CommentTok{\# Then compute a 95\% confidence interval for the smoking coefficient from lm() (using confint()) }
+\CommentTok{\# and from ols() (using summary()). Are the intervals identical? }
+\CommentTok{\#What additional output does ols() provide that lm() does not?}
+
+\CommentTok{\# datadist setup}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(insurance\_data)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"dd"}\NormalTok{)}
+
+\CommentTok{\# Fitting ols model}
+\NormalTok{ols\_fit }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(charges }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ children }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ smoker }\SpecialCharTok{+}\NormalTok{ region, }
+               \AttributeTok{data =}\NormalTok{ insurance\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Coefficient tables for both lm() and ols()}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{========== lm() Coefficients ==========}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+========== lm() Coefficients ==========
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_coef }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(lm\_fit)}\SpecialCharTok{$}\NormalTok{coefficients}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(lm\_coef, }\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                   Estimate Std. Error  t value Pr(>|t|)
+(Intercept)     -11938.5386   987.8192 -12.0858   0.0000
+age                256.8564    11.8988  21.5867   0.0000
+bmi                339.1935    28.5995  11.8601   0.0000
+children           475.5005   137.8041   3.4506   0.0006
+sexmale           -131.3144   332.9454  -0.3944   0.6933
+smokeryes        23848.5345   413.1534  57.7232   0.0000
+regionnorthwest   -352.9639   476.2758  -0.7411   0.4588
+regionsoutheast  -1035.0220   478.6922  -2.1622   0.0308
+regionsouthwest   -960.0510   477.9330  -2.0088   0.0448
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{========== rms::ols() Summary ==========}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+========== rms::ols() Summary ==========
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ols\_summary }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(ols\_fit)}
+\NormalTok{ols\_df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(ols\_summary)}
+\FunctionTok{print}\NormalTok{(ols\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                  Low     High   Diff.      Effect     S.E.
+age                          27.00000 51.00000 24.0000  6164.55246 285.5724
+bmi                          26.29625 34.69375  8.3975  2848.37703 240.1641
+children                      0.00000  2.00000  2.0000   951.00109 275.6082
+sex - female:male             2.00000  1.00000      NA   131.31436 332.9454
+smoker - yes:no               1.00000  2.00000      NA 23848.53454 413.1534
+region - northeast:southeast  3.00000  1.00000      NA  1035.02205 478.6922
+region - northwest:southeast  3.00000  2.00000      NA   682.05815 478.9592
+region - southwest:southeast  3.00000  4.00000      NA    74.97106 470.6386
+                              Lower 0.95 Upper 0.95 Type
+age                           5604.33068  6724.7742    1
+bmi                           2377.23505  3319.5190    1
+children                       410.32657  1491.6756    1
+sex - female:male             -521.84155   784.4703    1
+smoker - yes:no              23038.03071 24659.0384    1
+region - northeast:southeast    95.94733  1974.0968    1
+region - northwest:southeast  -257.54026  1621.6566    1
+region - southwest:southeast  -848.30457   998.2467    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{========== Equality Testing for smoker coefficient and 95\% CI ==========}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+========== Equality Testing for smoker coefficient and 95% CI ==========
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Find smoker for both lm() and ols()}
+\NormalTok{lm\_smoker\_name  }\OtherTok{\textless{}{-}} \FunctionTok{grep}\NormalTok{(}\StringTok{"smoker"}\NormalTok{, }\FunctionTok{rownames}\NormalTok{(lm\_coef), }\AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{value =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{ols\_smoker\_name }\OtherTok{\textless{}{-}} \FunctionTok{grep}\NormalTok{(}\StringTok{"smoker"}\NormalTok{, }\FunctionTok{rownames}\NormalTok{(ols\_df),   }\AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{value =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Getting the smoker coefficient β}
+\NormalTok{lm\_est\_coefficient   }\OtherTok{\textless{}{-}}\NormalTok{ lm\_coef[lm\_smoker\_name, }\StringTok{"Estimate"}\NormalTok{]}
+\NormalTok{ols\_eff\_coefficient  }\OtherTok{\textless{}{-}}\NormalTok{ ols\_df[ols\_smoker\_name, }\StringTok{"Effect"}\NormalTok{]}
+
+\NormalTok{lm\_ci    }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(lm\_fit, lm\_smoker\_name, }\AttributeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\NormalTok{ols\_ci\_lower }\OtherTok{\textless{}{-}}\NormalTok{ ols\_df[ols\_smoker\_name, }\StringTok{"Lower 0.95"}\NormalTok{]}
+\NormalTok{ols\_ci\_upper }\OtherTok{\textless{}{-}}\NormalTok{ ols\_df[ols\_smoker\_name, }\StringTok{"Upper 0.95"}\NormalTok{]}
+
+\CommentTok{\# Tests}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Smoker coefficient comparison:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Smoker coefficient comparison:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"lm()  Estimate : \%.6f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, lm\_est\_coefficient))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lm()  Estimate : 23848.534542
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"ols() Effect   : \%.6f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, ols\_eff\_coefficient))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ols() Effect   : 23848.534542
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Are they equal?   "}\NormalTok{, }\FunctionTok{all.equal}\NormalTok{(lm\_est\_coefficient, ols\_eff\_coefficient, }\AttributeTok{tolerance =} \FloatTok{1e{-}8}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Are they equal?    TRUE 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"95\% Confidence Intervals:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+95% Confidence Intervals:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"lm()  CI: [\%.6f, \%.6f]}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, lm\_ci[}\DecValTok{1}\NormalTok{], lm\_ci[}\DecValTok{2}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lm()  CI: [23038.030705, 24659.038379]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"ols() CI: [\%.6f, \%.6f]}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, ols\_ci\_lower, ols\_ci\_upper))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ols() CI: [23038.030705, 24659.038379]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Are CIs equal?    "}\NormalTok{, }
+    \FunctionTok{all.equal}\NormalTok{(lm\_ci[}\DecValTok{1}\NormalTok{], ols\_ci\_lower, }\AttributeTok{tolerance =} \FloatTok{1e{-}8}\NormalTok{) }\SpecialCharTok{\&\&} 
+    \FunctionTok{all.equal}\NormalTok{(lm\_ci[}\DecValTok{2}\NormalTok{], ols\_ci\_upper, }\AttributeTok{tolerance =} \FloatTok{1e{-}8}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Are CIs equal?     TRUE 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# What additional output does ols() provide that lm() does not?}
+
+\CommentTok{\# When cross comparing the outputs of ols() and lm(), we can see that ols() provides a number of different}
+\CommentTok{\# features/statistical measures that give different statistical aggregated measures about the data that lm() does not have.}
+\CommentTok{\# For example, ols() provides features/variables such as Lower 0.95 and Upper 0.95 that shows the lower and upper bonds of a 95\% confidence interval}
+\CommentTok{\# along with Low and High features/variables that highlights the maximum and minimum values of the data along with a Diff = Difference feature that outlines}
+\CommentTok{\# the difference between the maximum and minimum values in the ols() outputs and finally it has a Type feature that highlights the type of the data.}
+\CommentTok{\# While the output of lm() only uniquely posseses the t value and Pr(\textgreater{}|t|) features/variables that highlights the p{-}value of a observation that is higher than the t{-}test statistic value and}
+\CommentTok{\# the actual t{-}statistic value of the data.}
+\CommentTok{\# The only features/variables that these outputs actually shares is the Estimate and Std. Error features/variables along with the Effect and S.E. features/variables that is partically the same features/variables}
+\CommentTok{\# which is that they are the Coefficient β and Standard Error features/variables for each model.}
+
+
+\CommentTok{\# 5. The dataset includes region as a categorical predictor with four levels. }
+\CommentTok{\# How many indicator variables does R create? Which level is the reference? }
+\CommentTok{\# Refit the model using cell means coding for region ({-}1 in the formula) and }
+\CommentTok{\# verify that the predicted values are identical to the reference cell model.}
+
+\CommentTok{\# Cell means linear model for the reference coding ONLY for the region feature/variable}
+\NormalTok{lm\_cellmeans\_for\_only\_region }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}
+\NormalTok{  charges }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ bmi }\SpecialCharTok{+}\NormalTok{ children }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ smoker }\SpecialCharTok{+}\NormalTok{ region }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{data =}\NormalTok{ insurance\_data}
+\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{========== Coefficients (Cell Means Model) ==========}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+========== Coefficients (Cell Means Model) ==========
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(lm\_cellmeans\_for\_only\_region), }\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+            age             bmi        children       sexfemale         sexmale 
+       256.8564        339.1935        475.5005     -11938.5386     -12069.8529 
+      smokeryes regionnorthwest regionsoutheast regionsouthwest 
+     23848.5345       -352.9639      -1035.0220       -960.0510 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predictions from both models}
+\NormalTok{pred\_reference }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lm\_fit)}
+\NormalTok{pred\_cellmeans }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lm\_cellmeans\_for\_only\_region)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{========== Prediction Comparison ==========}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+========== Prediction Comparison ==========
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Predictions identical? "}\NormalTok{,}
+  \FunctionTok{isTRUE}\NormalTok{(}\FunctionTok{all.equal}\NormalTok{(pred\_reference,}
+\NormalTok{                   pred\_cellmeans,}
+                   \AttributeTok{tolerance =} \FloatTok{1e{-}8}\NormalTok{)),}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Predictions identical?  TRUE 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How many indicator variables does R create?}
+
+\CommentTok{\# Since this code references the region feature/variable as a categorical feature/variable for the model fit, then }
+\CommentTok{\# the predictor indicator variables that is generated for the region feature/variable is 3 since there is one indicator variable }
+\CommentTok{\# generated to serve as a reference level/feature/variable for the region feature/variable. Since this is a region feature/variable generation focused model,}
+\CommentTok{\# The three indicator variables generated from the levels of the region feature/variable are regionnorthwest, regionsoutheast and regionsouthwest along with the }
+\CommentTok{\# regionnortheast indicator variable that serves as the reference level/feature/variable for the code.}
+\end{Highlighting}
+\end{Shaded}
 
 \bookmarksetup{startatroot}
 
