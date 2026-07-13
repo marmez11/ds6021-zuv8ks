@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Module 3 homework: Internal measures of performance – DS_6021_Predictive_Modeling_Maxwell_Braseth_First_Quarto_Project</title>
+<title>hw8 – DS_6021_Predictive_Modeling_Maxwell_Braseth_First_Quarto_Project</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./HW4.html" rel="next">
-<link href="./HW2.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./HW7.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./HW3.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 3 homework: Internal measures of performance</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./HW8.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">HW8.html</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -136,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./HW3.html" class="sidebar-item-text sidebar-link active">
+  <a href="./HW3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 3 homework: Internal measures of performance</span></span></a>
   </div>
 </li>
@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./HW8.html" class="sidebar-item-text sidebar-link">
+  <a href="./HW8.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">HW8.html</span></span></a>
   </div>
 </li>
@@ -187,201 +187,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#module-3-homework" id="toc-module-3-homework" class="nav-link active" data-scroll-target="#module-3-homework"><span class="header-section-number">5</span> Module 3 homework</a></li>
-  <li><a href="#installing-the-properties-and-packages-if-needed" id="toc-installing-the-properties-and-packages-if-needed" class="nav-link" data-scroll-target="#installing-the-properties-and-packages-if-needed"><span class="header-section-number">6</span> Installing the properties and packages if needed:</a></li>
-  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">7</span> ```{r}</a></li>
-  <li><a href="#calculate-the-apparent-mae-and-external-mae-for-all-100-models-in-m" id="toc-calculate-the-apparent-mae-and-external-mae-for-all-100-models-in-m" class="nav-link" data-scroll-target="#calculate-the-apparent-mae-and-external-mae-for-all-100-models-in-m"><span class="header-section-number">8</span> 2.) Calculate the apparent MAE and external MAE for all 100 models in m</a></li>
-  <li><a href="#using-their-corresponding-training-datasets-in-td." id="toc-using-their-corresponding-training-datasets-in-td." class="nav-link" data-scroll-target="#using-their-corresponding-training-datasets-in-td."><span class="header-section-number">9</span> using their corresponding training datasets in td.</a></li>
-  <li><a href="#create-a-scatter-plot-with-apparent-mae-on-the-x-axis-and-external-mae-on" id="toc-create-a-scatter-plot-with-apparent-mae-on-the-x-axis-and-external-mae-on" class="nav-link" data-scroll-target="#create-a-scatter-plot-with-apparent-mae-on-the-x-axis-and-external-mae-on"><span class="header-section-number">10</span> Create a scatter plot with apparent MAE on the x-axis and external MAE on</a></li>
-  <li><a href="#the-y-axis.-use-a-large-external-dataset-to-calculate-mae." id="toc-the-y-axis.-use-a-large-external-dataset-to-calculate-mae." class="nav-link" data-scroll-target="#the-y-axis.-use-a-large-external-dataset-to-calculate-mae."><span class="header-section-number">11</span> the y-axis. Use a large external dataset to calculate MAE.</a></li>
-  <li><a href="#describe-what-you-observe." id="toc-describe-what-you-observe." class="nav-link" data-scroll-target="#describe-what-you-observe."><span class="header-section-number">12</span> Describe what you observe.</a></li>
-  <li><a href="#for-each-of-the-100-models-compute-the-optimism" id="toc-for-each-of-the-100-models-compute-the-optimism" class="nav-link" data-scroll-target="#for-each-of-the-100-models-compute-the-optimism"><span class="header-section-number">13</span> 3.) For each of the 100 models, compute the optimism</a></li>
-  <li><a href="#for-mae-apparent-mae-minus-external-mae." id="toc-for-mae-apparent-mae-minus-external-mae." class="nav-link" data-scroll-target="#for-mae-apparent-mae-minus-external-mae."><span class="header-section-number">14</span> for MAE (apparent MAE minus external MAE).</a></li>
-  <li><a href="#plot-the-distribution-of-optimism." id="toc-plot-the-distribution-of-optimism." class="nav-link" data-scroll-target="#plot-the-distribution-of-optimism."><span class="header-section-number">15</span> Plot the distribution of optimism.</a></li>
-  <li><a href="#calculate-the-mean-optimism-for-mae." id="toc-calculate-the-mean-optimism-for-mae." class="nav-link" data-scroll-target="#calculate-the-mean-optimism-for-mae."><span class="header-section-number">16</span> Calculate the mean optimism for MAE.</a></li>
-  <li><a href="#is-the-distribution-roughly-symmetric-or-skewed" id="toc-is-the-distribution-roughly-symmetric-or-skewed" class="nav-link" data-scroll-target="#is-the-distribution-roughly-symmetric-or-skewed"><span class="header-section-number">17</span> Is the distribution roughly symmetric or skewed?</a></li>
-  <li><a href="#what-does-the-figure-tell-you-about-using-apparent-error" id="toc-what-does-the-figure-tell-you-about-using-apparent-error" class="nav-link" data-scroll-target="#what-does-the-figure-tell-you-about-using-apparent-error"><span class="header-section-number">18</span> What does the figure tell you about using apparent error</a></li>
-  <li><a href="#as-a-performance-estimate" id="toc-as-a-performance-estimate" class="nav-link" data-scroll-target="#as-a-performance-estimate"><span class="header-section-number">19</span> as a performance estimate?</a></li>
-  <li><a href="#select-td1-as-your-working-dataset." id="toc-select-td1-as-your-working-dataset." class="nav-link" data-scroll-target="#select-td1-as-your-working-dataset."><span class="header-section-number">20</span> 4.) Select td[[1]] as your working dataset.</a></li>
-  <li><a href="#implement-10-fold-cv-for-the-regression-model" id="toc-implement-10-fold-cv-for-the-regression-model" class="nav-link" data-scroll-target="#implement-10-fold-cv-for-the-regression-model"><span class="header-section-number">21</span> Implement 10-fold CV for the regression model</a></li>
-  <li><a href="#in-the-section-3-examples-and-record-the-resulting" id="toc-in-the-section-3-examples-and-record-the-resulting" class="nav-link" data-scroll-target="#in-the-section-3-examples-and-record-the-resulting"><span class="header-section-number">22</span> in the section 3 examples and record the resulting</a></li>
-  <li><a href="#mae-estimate." id="toc-mae-estimate." class="nav-link" data-scroll-target="#mae-estimate."><span class="header-section-number">23</span> MAE estimate.</a></li>
-  <li><a href="#mean-of-10-fold-cv-for-mae" id="toc-mean-of-10-fold-cv-for-mae" class="nav-link" data-scroll-target="#mean-of-10-fold-cv-for-mae"><span class="header-section-number">24</span> mean of 10-fold CV for MAE</a></li>
-  <li><a href="#using-td1-implement-the-bootstrap-optimism-estimator-with-b200" id="toc-using-td1-implement-the-bootstrap-optimism-estimator-with-b200" class="nav-link" data-scroll-target="#using-td1-implement-the-bootstrap-optimism-estimator-with-b200"><span class="header-section-number">25</span> 5.) Using td[[1]], implement the bootstrap optimism estimator with B=200</a></li>
-  <li><a href="#bootstrap-samples.-report-the-apparent-mae-the-estimated-optimism" id="toc-bootstrap-samples.-report-the-apparent-mae-the-estimated-optimism" class="nav-link" data-scroll-target="#bootstrap-samples.-report-the-apparent-mae-the-estimated-optimism"><span class="header-section-number">26</span> bootstrap samples. Report the apparent MAE, the estimated optimism,</a></li>
-  <li><a href="#and-the-corrected-mae." id="toc-and-the-corrected-mae." class="nav-link" data-scroll-target="#and-the-corrected-mae."><span class="header-section-number">27</span> and the corrected MAE.</a></li>
-  <li><a href="#compare-the-corrected-mae-to-the-true-external-error-computed-with-a-large-external-dataset." id="toc-compare-the-corrected-mae-to-the-true-external-error-computed-with-a-large-external-dataset." class="nav-link" data-scroll-target="#compare-the-corrected-mae-to-the-true-external-error-computed-with-a-large-external-dataset."><span class="header-section-number">28</span> Compare the corrected MAE to the true external error (computed with a large external dataset).</a></li>
-  <li><a href="#corrected-optimism-bootstrap-mae" id="toc-corrected-optimism-bootstrap-mae" class="nav-link" data-scroll-target="#corrected-optimism-bootstrap-mae"><span class="header-section-number">29</span> corrected optimism bootstrap MAE</a></li>
-  <li><a href="#true-external-error" id="toc-true-external-error" class="nav-link" data-scroll-target="#true-external-error"><span class="header-section-number">30</span> True external error</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 3 homework: Internal measures of performance</span></h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
 
-
-<p>This Chapter will focus on the topics surrounding Internal measures of performance</p>
-<p>Topics includes:</p>
-<ul>
-<li>Apparent error</li>
-<li>Estimating the error rate and its uncertainty</li>
-<li>K-fold CV – Bootstrap – 0.632 &amp; 0.632+</li>
-<li>Optimism</li>
-</ul>
-<section id="module-3-homework" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Module 3 homework</h1>
-<p>Module 3 homework 1. In your repo, create HW3.qmd and add it to your book (_quarto.yml). 2. Calculate the apparent MAE and external MAE for all 100 models in m using their corresponding training datasets in td. Create a scatter plot with apparent MAE on the x-axis and external MAE on the y-axis. Use a large external dataset to calculate MAE. Describe what you observe.</p>
-</section>
-<section id="installing-the-properties-and-packages-if-needed" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Installing the properties and packages if needed:</h1>
-</section>
-<section id="r" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> ```{r}</h1>
-<p>install.packages(“pak”, quiet = TRUE) pak::pak(“thomasgstewart/ds6021d”) library(ds6021d)</p>
-</section>
-<section id="calculate-the-apparent-mae-and-external-mae-for-all-100-models-in-m" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> 2.) Calculate the apparent MAE and external MAE for all 100 models in m</h1>
-</section>
-<section id="using-their-corresponding-training-datasets-in-td." class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> using their corresponding training datasets in td.</h1>
-</section>
-<section id="create-a-scatter-plot-with-apparent-mae-on-the-x-axis-and-external-mae-on" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Create a scatter plot with apparent MAE on the x-axis and external MAE on</h1>
-</section>
-<section id="the-y-axis.-use-a-large-external-dataset-to-calculate-mae." class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> the y-axis. Use a large external dataset to calculate MAE.</h1>
-</section>
-<section id="describe-what-you-observe." class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> Describe what you observe.</h1>
-<p>vector_for_apparent_MAE_100_models &lt;- rep(NA, 100) vectors_for_external_MAE_100_models &lt;- rep(NA, 100) set.seed(2343)</p>
-<p>for(index in seq_along(vector_for_apparent_MAE_100_models)){ m_functions &lt;- m[[index]] td_internal_training_data &lt;- td[[index]]</p>
-<pre><code>td_internal_training_predition_data_funct_y_out &lt;- m_functions(td_internal_training_data)
-td_internal_training_y_data &lt;- td_internal_training_data$y
-apparent_rate_MAE &lt;- mean(abs(td_internal_training_predition_data_funct_y_out - td_internal_training_y_data))
-vector_for_apparent_MAE_100_models[index] &lt;- apparent_rate_MAE
-
-external_data_vals &lt;- external_data(10000)  # larger external set
-external_data_vals_funct_y_out &lt;- m_functions(external_data_vals)
-external_rate_MAE &lt;- mean(abs(external_data_vals_funct_y_out - external_data_vals$y))
-vectors_for_external_MAE_100_models[index] &lt;- external_rate_MAE</code></pre>
-<p>}</p>
-<p>plot(x = vector_for_apparent_MAE_100_models, y = vectors_for_external_MAE_100_models, main = “Apparent MAE vs External MAE”, xlab = “Apparent MAE (Training)”, ylab = “External MAE (Test)”, pch = 19, col = “steelblue”, cex = 1.2)</p>
-</section>
-<section id="for-each-of-the-100-models-compute-the-optimism" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> 3.) For each of the 100 models, compute the optimism</h1>
-</section>
-<section id="for-mae-apparent-mae-minus-external-mae." class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> for MAE (apparent MAE minus external MAE).</h1>
-</section>
-<section id="plot-the-distribution-of-optimism." class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> Plot the distribution of optimism.</h1>
-</section>
-<section id="calculate-the-mean-optimism-for-mae." class="level1" data-number="16">
-<h1 data-number="16"><span class="header-section-number">16</span> Calculate the mean optimism for MAE.</h1>
-</section>
-<section id="is-the-distribution-roughly-symmetric-or-skewed" class="level1" data-number="17">
-<h1 data-number="17"><span class="header-section-number">17</span> Is the distribution roughly symmetric or skewed?</h1>
-</section>
-<section id="what-does-the-figure-tell-you-about-using-apparent-error" class="level1" data-number="18">
-<h1 data-number="18"><span class="header-section-number">18</span> What does the figure tell you about using apparent error</h1>
-</section>
-<section id="as-a-performance-estimate" class="level1" data-number="19">
-<h1 data-number="19"><span class="header-section-number">19</span> as a performance estimate?</h1>
-<p>vector_for_optimism_MAE_100_models &lt;- rep(NA, 100) for(index in seq_along(vector_for_apparent_MAE_100_models)){ vector_for_optimism_MAE_100_models[index] &lt;- vector_for_apparent_MAE_100_models[index] - vectors_for_external_MAE_100_models[index] } mean_optimism_for_MAE_100_models &lt;- mean(vector_for_optimism_MAE_100_models)</p>
-<p>hist(vector_for_optimism_MAE_100_models, main = “Distribution of Optimism (Apparent MAE - External MAE)”, xlab = “Optimism for MAE”, col = “lightblue”, border = “darkblue”) abline(v = mean_optimism_for_MAE_100_models, col = “red”, lwd = 2) text(x = mean_optimism_for_MAE_100_models, y = -0.5, labels = paste(“Mean =”, round(mean_optimism_for_MAE_100_models, 5)), col = “red”)</p>
-</section>
-<section id="select-td1-as-your-working-dataset." class="level1" data-number="20">
-<h1 data-number="20"><span class="header-section-number">20</span> 4.) Select td[[1]] as your working dataset.</h1>
-</section>
-<section id="implement-10-fold-cv-for-the-regression-model" class="level1" data-number="21">
-<h1 data-number="21"><span class="header-section-number">21</span> Implement 10-fold CV for the regression model</h1>
-</section>
-<section id="in-the-section-3-examples-and-record-the-resulting" class="level1" data-number="22">
-<h1 data-number="22"><span class="header-section-number">22</span> in the section 3 examples and record the resulting</h1>
-</section>
-<section id="mae-estimate." class="level1" data-number="23">
-<h1 data-number="23"><span class="header-section-number">23</span> MAE estimate.</h1>
-<p>new_train_data &lt;- td[[1]] number_of_rows_training_data &lt;- nrow(new_train_data) k_val &lt;- 10 set.seed(123) folds_randomized &lt;- sample(rep(1:k_val, length.out = number_of_rows_training_data))</p>
-<p>cv_mae &lt;- rep(NA, k_val) for(k in 1:k_val){ val_idx_of_CV &lt;- which(folds_randomized == k) train_idx_of_CV &lt;- which(folds_randomized != k)</p>
-<pre><code>train_fold_of_CV &lt;- new_train_data[train_idx_of_CV, ]
-val_fold_of_CV &lt;- new_train_data[val_idx_of_CV, ]
-
-linear_model_of_fold_of_CV &lt;- lm(y ~ ., data = train_fold_of_CV)
-predict_y_val_of_fold_of_CV &lt;- predict(linear_model_of_fold_of_CV, newdata = val_fold_of_CV)
-
-cv_mae[k] &lt;- mean(abs(predict_y_val_of_fold_of_CV - val_fold_of_CV$y))
-
-cat("10-fold CV for the regression model: Fold number: ", k, ", MAE =", round(cv_mae[k], 4), "\n")</code></pre>
-<p>}</p>
-</section>
-<section id="mean-of-10-fold-cv-for-mae" class="level1" data-number="24">
-<h1 data-number="24"><span class="header-section-number">24</span> mean of 10-fold CV for MAE</h1>
-<p>mean_of_10_fold_CV_for_MAE &lt;- mean(cv_mae) print(mean_of_10_fold_CV_for_MAE)</p>
-</section>
-<section id="using-td1-implement-the-bootstrap-optimism-estimator-with-b200" class="level1" data-number="25">
-<h1 data-number="25"><span class="header-section-number">25</span> 5.) Using td[[1]], implement the bootstrap optimism estimator with B=200</h1>
-</section>
-<section id="bootstrap-samples.-report-the-apparent-mae-the-estimated-optimism" class="level1" data-number="26">
-<h1 data-number="26"><span class="header-section-number">26</span> bootstrap samples. Report the apparent MAE, the estimated optimism,</h1>
-</section>
-<section id="and-the-corrected-mae." class="level1" data-number="27">
-<h1 data-number="27"><span class="header-section-number">27</span> and the corrected MAE.</h1>
-</section>
-<section id="compare-the-corrected-mae-to-the-true-external-error-computed-with-a-large-external-dataset." class="level1" data-number="28">
-<h1 data-number="28"><span class="header-section-number">28</span> Compare the corrected MAE to the true external error (computed with a large external dataset).</h1>
-<p>b_val &lt;- 200 set.seed(42352) optimism_b &lt;- rep(NA, b_val)</p>
-<p>m_function &lt;- m[[1]] new_training_predition_data_funct_y_output &lt;- m_function(new_train_data)</p>
-<p>apparent_error_mae &lt;- mean(abs(new_training_predition_data_funct_y_output - new_train_data$y)) # using original m[[1]]</p>
-<p>for (b in 1:b_val){ idx_training_data &lt;- sample(1:number_of_rows_training_data, replace = TRUE) bootstrap_training_data &lt;- new_train_data[idx_training_data, ]</p>
-<pre><code>linearly_fittted_model_b_value &lt;- lm(y ~ ., data = bootstrap_training_data)
-
-# In-sample on bootstrap
-predicted_y_value_b_value_training_data_bootstrap_in_sample &lt;- predict(linearly_fittted_model_b_value, newdata = bootstrap_training_data)
-mae_optimism_in_sample_b_value &lt;- mean(abs(predicted_y_value_b_value_training_data_bootstrap_in_sample - bootstrap_training_data$y))
-
-# original training data
-predicted_y_value_b_value_training_data_bootstrap_original &lt;- predict(linearly_fittted_model_b_value, newdata = new_train_data)
-mae_optimism_original_b_value &lt;- mean(abs(predicted_y_value_b_value_training_data_bootstrap_original - new_train_data$y))
-
-# optimism for bootstrap formula
-optimism_b[b] &lt;- mae_optimism_in_sample_b_value - mae_optimism_original_b_value</code></pre>
-<p>}</p>
-</section>
-<section id="corrected-optimism-bootstrap-mae" class="level1" data-number="29">
-<h1 data-number="29"><span class="header-section-number">29</span> corrected optimism bootstrap MAE</h1>
-<p>bootstrap_corrected_mae &lt;- apparent_error_mae - mean(optimism_b)</p>
-</section>
-<section id="true-external-error" class="level1" data-number="30">
-<h1 data-number="30"><span class="header-section-number">30</span> True external error</h1>
-<p>large_external &lt;- external_data(20000) true_external_error_mae &lt;- mean(abs(predict(lm(y ~ ., data = new_train_data), newdata = large_external) - large_external$y))</p>
-<p>cat(“Apparent MAE:”, round(apparent_error_mae, 5), “”) cat(“Bootstrap optimism:”, round(mean(optimism_b), 5), “”) cat(“Corrected MAE:”, round(bootstrap_corrected_mae, 5), “”) cat(“True external MAE:”, round(true_external_error_mae, 5), “”)</p>
-<p>hist(optimism_b, main = “Bootstrap estimates of optimism”, xlab = “Optimism (in-sample MAE − original MAE)”, freq = FALSE) abline(v = mean(optimism_b), col = “blue”, lwd = 2) text(x = mean(optimism_b), y = 0, labels = paste(“Mean =”, round(mean_optimism, 5)), col = “blue”) # ```</p>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -786,13 +600,13 @@ optimism_b[b] &lt;- mae_optimism_in_sample_b_value - mae_optimism_original_b_val
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./HW2.html" class="pagination-link" aria-label="Homework 2: Data Plots on Measures of Performance">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Homework 2: Data Plots on Measures of Performance</span></span>
+      <a href="./HW7.html" class="pagination-link" aria-label="Name: Maxwell Braseth">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Name: Maxwell Braseth</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./HW4.html" class="pagination-link" aria-label="Name: Maxwell Braseth">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Name: Maxwell Braseth</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

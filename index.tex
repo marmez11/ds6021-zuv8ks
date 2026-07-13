@@ -2975,6 +2975,528 @@ Predictions identical?  TRUE
 
 \bookmarksetup{startatroot}
 
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-3}
+
+\bookmarksetup{startatroot}
+
+\chapter{Date: 07/11/2026}\label{date-07112026}
+
+\bookmarksetup{startatroot}
+
+\chapter{Course : DS 6021 - Machine Learning I - Introduction to
+Predictive
+Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive-modeling}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 7 Homework}\label{module-7-homework}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# installing packages}
+\CommentTok{\#install.packages("ISLR")}
+\CommentTok{\#install.packages("car")}
+\CommentTok{\#install.packages("splines")}
+\CommentTok{\#install.packages("rms")}
+\CommentTok{\#install.packages("ggplot2")}
+\CommentTok{\#install.packages("FNN")}
+
+\CommentTok{\# loading packages into the program}
+\FunctionTok{require}\NormalTok{(ISLR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: ISLR
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: car
+\end{verbatim}
+
+\begin{verbatim}
+Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(splines)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: splines
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(rms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: rms
+\end{verbatim}
+
+\begin{verbatim}
+Loading required package: Hmisc
+\end{verbatim}
+
+\begin{verbatim}
+
+Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    format.pval, units
+\end{verbatim}
+
+\begin{verbatim}
+
+Attaching package: 'rms'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:car':
+
+    Predict, vif
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(FNN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: FNN
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{library}\NormalTok{(splines)}
+\FunctionTok{library}\NormalTok{(rms)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(FNN)}
+
+\CommentTok{\# load Wage dataset}
+\FunctionTok{data}\NormalTok{(Wage)}
+
+\CommentTok{\# Task 1. Fit a linear model with age (and any relevant covariates,}
+\CommentTok{\# such as education or race) as predictors. }
+\CommentTok{\# Create a partial effect plot of age and a component + residual plot (crPlots from the car package). }
+\CommentTok{\# Does the relationship between age and wage look linear?}
+
+\CommentTok{\# Rename all the columns of the Wage dataset}
+\FunctionTok{colnames}\NormalTok{(Wage) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"age"}\NormalTok{, }\StringTok{"marital\_status"}\NormalTok{, }\StringTok{"race"}\NormalTok{, }\StringTok{"education"}\NormalTok{, }\StringTok{"region"}\NormalTok{,}
+ \StringTok{"job\_class"}\NormalTok{, }\StringTok{"health\_status"}\NormalTok{, }\StringTok{"health\_insurance"}\NormalTok{, }\StringTok{"log\_wage"}\NormalTok{, }\StringTok{"wages"}\NormalTok{)}
+
+\CommentTok{\# fitting a linear model with age and wage as predictors along with other relevant covariates such as education, etc...}
+\NormalTok{lm\_age }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{data =}\NormalTok{ Wage)}
+
+\CommentTok{\# creating a partial effect plot and component + residual plots to visualize this relationship}
+\FunctionTok{crPlots}\NormalTok{(lm\_age,}
+       \AttributeTok{main =} \StringTok{"The Partial Effect Plot and a Component + Residual Plot: Wages by Age"}\NormalTok{,}
+       \AttributeTok{ylab =} \StringTok{"Wages ($)"}\NormalTok{,}
+       \AttributeTok{col =} \StringTok{"steelblue"}\NormalTok{,}
+       \AttributeTok{pch =} \DecValTok{16}\NormalTok{,}
+       \AttributeTok{lwd =} \FloatTok{2.5}\NormalTok{,}
+       \AttributeTok{smooth =}\NormalTok{ loessLine,}
+       \AttributeTok{span =} \FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning in applyDefaults(smooth, defaults = list(smoother = loessLine, var =
+FALSE), : unnamed smooth arguments, will be ignored
+\end{verbatim}
+
+\begin{verbatim}
+Warning in plot.window(...): "span" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+Warning in plot.xy(xy, type, ...): "span" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+Warning in axis(side = side, at = at, labels = labels, ...): "span" is not a
+graphical parameter
+Warning in axis(side = side, at = at, labels = labels, ...): "span" is not a
+graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+Warning in box(...): "span" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+Warning in title(...): "span" is not a graphical parameter
+\end{verbatim}
+
+\begin{verbatim}
+Warning in applyDefaults(smooth, defaults = list(smoother = loessLine, var =
+FALSE), : unnamed smooth arguments, will be ignored
+Warning in applyDefaults(smooth, defaults = list(smoother = loessLine, var =
+FALSE), : unnamed smooth arguments, will be ignored
+Warning in applyDefaults(smooth, defaults = list(smoother = loessLine, var =
+FALSE), : unnamed smooth arguments, will be ignored
+Warning in applyDefaults(smooth, defaults = list(smoother = loessLine, var =
+FALSE), : unnamed smooth arguments, will be ignored
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW7_files/figure-pdf/unnamed-chunk-1-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Does the relationship between age and wage look linear?}
+
+\CommentTok{\# From the partial effect plot and component + residual plots listed above, }
+\CommentTok{\# it appears that the relationship between age and wage does not appear to be strictly linear and mostly non{-}linear. }
+\CommentTok{\# In fact, the partial effect plot that shows the relationship between age and wages shows a large collection of data points that clusters together around the ages from 10{-}70 years old, but the clusters of the data}
+\CommentTok{\# are not smooth and linear. Instead, the shape of the data points distribution is more scattered and does not appear to follow a straight line, but }
+\CommentTok{\# instead appears to show the data points being blotched together and randomly scattered in a way that does not follow a linear pattern. }
+\CommentTok{\# The only thing to note is that the Purple (solid) line that represents the LOESS (locally weighted smoothing) in this plot shows that}
+\CommentTok{\# the data points do not appear to follow a linear pattern due to how the LOESS curve bends slightly downward and even deviated away from the }
+\CommentTok{\# linear dottted Blue (dotted) line that represents the linear regression line implied by the fitted model to show the relationship of wages and ages along with the other }
+\CommentTok{\# covariates (education, race, job class, marital status, etc..). From these details, it can be concluded that the relationship between age and wages is not linear along}
+\CommentTok{\# with the other covariates with being non{-}linear, not smooth and does not have good relationships between the wages and ages along with the covariates.}
+
+
+\CommentTok{\# Task 2. Fit a model replacing the linear age term with a 4{-}knot restricted cubic spline (rcs(age, 4)}
+\CommentTok{\# from the rms package). Create a partial effect plot of the RCS term. }
+\CommentTok{\# How does the implied curve differ from the linear fit?}
+
+\CommentTok{\# Wage data being restructured to ensure that the column names are consistent with the previous code and to avoid any potential issues with column name mismatches.}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(Wage)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"dd"}\NormalTok{)}
+
+\CommentTok{\# fitting a model replacing the linear age term with a 4{-}knot restricted cubic spline}
+\NormalTok{rcs\_4\_cubic\_spline\_model }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{  wages }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(age, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+  \AttributeTok{data =}\NormalTok{ Wage, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}
+\NormalTok{)}
+
+\CommentTok{\# Also fit linear version of the model from task 1 for comparison}
+\NormalTok{linear\_rms }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{  wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+  \AttributeTok{data =}\NormalTok{ Wage, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}
+\NormalTok{)}
+
+\CommentTok{\# Partial effects (both models hold other covariates at datadist reference values)}
+\NormalTok{p\_spline }\OtherTok{\textless{}{-}} \FunctionTok{Predict}\NormalTok{(rcs\_4\_cubic\_spline\_model, age, }\AttributeTok{conf.int =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{p\_linear }\OtherTok{\textless{}{-}} \FunctionTok{Predict}\NormalTok{(linear\_rms, age, }\AttributeTok{conf.int =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Knot locations (for annotation)}
+\NormalTok{knots }\OtherTok{\textless{}{-}} \FunctionTok{rcspline.eval}\NormalTok{(Wage}\SpecialCharTok{$}\NormalTok{age, }\AttributeTok{nk =} \DecValTok{4}\NormalTok{, }\AttributeTok{knots.only =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# Partial effects for the knot locations to at knots locations}
+\NormalTok{p\_knots }\OtherTok{\textless{}{-}} \FunctionTok{Predict}\NormalTok{(rcs\_4\_cubic\_spline\_model, }\AttributeTok{age =}\NormalTok{ knots)}
+
+\CommentTok{\# plotting the partial effect plot}
+\FunctionTok{plot}\NormalTok{(p\_spline}\SpecialCharTok{$}\NormalTok{age, p\_spline}\SpecialCharTok{$}\NormalTok{yhat,}
+     \AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{2.8}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkorange"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Age (years)"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Partial Effect on Wages ($)"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Partial Effect of Age on Wages}\SpecialCharTok{\textbackslash{}n}\StringTok{Linear vs 4{-}Knot Restricted Cubic Spline Curve"}\NormalTok{)}
+
+\CommentTok{\# Linear partial effect placed into the plot for comparison}
+\FunctionTok{lines}\NormalTok{(p\_linear}\SpecialCharTok{$}\NormalTok{age, p\_linear}\SpecialCharTok{$}\NormalTok{yhat, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{2.2}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# Setting Knots linear lines}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =}\NormalTok{ knots, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{lwd =} \FloatTok{1.6}\NormalTok{)}
+\CommentTok{\# Add knot points}
+\FunctionTok{points}\NormalTok{(p\_knots}\SpecialCharTok{$}\NormalTok{age, p\_knots}\SpecialCharTok{$}\NormalTok{yhat, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{cex =} \FloatTok{1.3}\NormalTok{)}
+\CommentTok{\# Add knot labels}
+\FunctionTok{text}\NormalTok{(p\_knots}\SpecialCharTok{$}\NormalTok{age, p\_knots}\SpecialCharTok{$}\NormalTok{yhat, }\AttributeTok{labels =} \FunctionTok{round}\NormalTok{(knots, }\DecValTok{1}\NormalTok{), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{pos =} \DecValTok{3}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.85}\NormalTok{)}
+
+\CommentTok{\# setting the legend to determine the curved and linear partial effect values along with the knot values in the plot}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{,}
+       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"RCS Partial Effect (4 knots)"}\NormalTok{, }
+                  \StringTok{"Linear Partial Effect"}\NormalTok{, }\StringTok{"Knot locations"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkorange"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{),}
+       \AttributeTok{lwd =} \FunctionTok{c}\NormalTok{(}\FloatTok{2.8}\NormalTok{, }\FloatTok{2.2}\NormalTok{, }\FloatTok{1.6}\NormalTok{),}
+       \AttributeTok{lty =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{),}
+       \AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\DecValTok{19}\NormalTok{),}
+       \AttributeTok{bty =} \StringTok{"n"}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW7_files/figure-pdf/unnamed-chunk-1-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How does the implied curve differ from the linear fit?}
+\CommentTok{\# The implied curve from the 4{-}knot restricted cubic spline (RCS) model (orange line) differs from the linear fit model (blue line) in several ways.}
+\CommentTok{\# The Restricted Cubic Spline (RCS) model allows for more flexibility in capturing the relationship between age and wages, }
+\CommentTok{\# resulting in a curve that can bend and adapt to the data. On top of that, the RCS model can capture non{-}linear patterns and }
+\CommentTok{\# the knots at the specified locations in the model allows a slight rate of change and/or slope change to occur in the relationship }
+\CommentTok{\# to where the data values in the relationship could experience a sudden exponential increase vertically, a slight increase and then decrease to create a small curve that signals}
+\CommentTok{\# a regression back to the previous linear relationship between the wages and ages, a sudden plateau where the data values in the relationship could experience a sudden decrease in a curved shape}
+\CommentTok{\# and finally another sudden decrease in values that will show the relationship of the ages and wages to be weaker than usual in the relationship.}
+\CommentTok{\# In comparision to the original linear fit relationship, which shows a constant linear and positive rate of change across all ages to wages. The only thing to note is that}
+\CommentTok{\# the linear fitted model tends to base its postive linear relationship on the data values that actually have a positive linear relationship between the ages and wages}
+\CommentTok{\# which is reflected in how all of the data values of the blue line starts around wages of 92.5 and goes up vertically as the line goes through all of the ages in comparison to the}
+\CommentTok{\# orange line which starts its wages measures around 72.5 and its line experience many changes (both vertically and horizontally) as the data line relationship goes through all of the ages values.}
+\CommentTok{\# Altogether, the RCS model provides a more nuanced and accurate representation of the relationship between age and wages along with the other covariates in the model in comparison to the linear fit model}
+\CommentTok{\# of task 1 which only reflects a somewhat artificial relationship between age and wages along with the covariates in the model.}
+
+
+\CommentTok{\# Task 3. Compute the cross{-}validated MSE for both models using k{-}fold cross{-}validation (following the approach from earlier modules)}
+\CommentTok{\#. Does the spline model offer a meaningful improvement in predictive accuracy?}
+
+\NormalTok{total\_rows\_in\_wages\_data }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(Wage)}
+
+\CommentTok{\# new restructuring of Wage data}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(Wage)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"dd"}\NormalTok{)}
+
+\CommentTok{\# setting k{-}fold cross{-}validation k values}
+\NormalTok{k\_vals }\OtherTok{\textless{}{-}} \DecValTok{20}                            
+\NormalTok{folds }\OtherTok{\textless{}{-}}\NormalTok{ folds }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_vals, }\AttributeTok{length.out =}\NormalTok{ total\_rows\_in\_wages\_data))}
+
+\CommentTok{\# Function that computes MSE for one fold}
+\NormalTok{compute\_k\_cross\_validation\_mse\_value }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fold\_num) \{}
+  \CommentTok{\# setting the training and testing data}
+\NormalTok{  train\_data }\OtherTok{\textless{}{-}}\NormalTok{ Wage[folds }\SpecialCharTok{!=}\NormalTok{ fold\_num, ]}
+\NormalTok{  test\_data  }\OtherTok{\textless{}{-}}\NormalTok{ Wage[folds }\SpecialCharTok{==}\NormalTok{ fold\_num, ]}
+  
+  \CommentTok{\# Fit BOTH models on training data}
+\NormalTok{  fit\_lin }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{    wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+    \AttributeTok{data =}\NormalTok{ train\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}
+\NormalTok{  )}
+  
+\NormalTok{  fit\_rcs }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{    wages }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(age, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+    \AttributeTok{data =}\NormalTok{ train\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}     \CommentTok{\# ← FIXED: now using train\_data}
+\NormalTok{  )}
+  
+  \CommentTok{\# Predict on the }\AlertTok{TEST}\CommentTok{ data}
+\NormalTok{  pred\_lin }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit\_lin, }\AttributeTok{newdata =}\NormalTok{ test\_data)}
+\NormalTok{  pred\_rcs }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit\_rcs, }\AttributeTok{newdata =}\NormalTok{ test\_data)}
+  \CommentTok{\# Return MSEs}
+  \FunctionTok{c}\NormalTok{(}
+    \AttributeTok{linear\_mse =} \FunctionTok{mean}\NormalTok{((pred\_lin }\SpecialCharTok{{-}}\NormalTok{ test\_data}\SpecialCharTok{$}\NormalTok{wages)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
+    \AttributeTok{rcs\_mse    =} \FunctionTok{mean}\NormalTok{((pred\_rcs }\SpecialCharTok{{-}}\NormalTok{ test\_data}\SpecialCharTok{$}\NormalTok{wages)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{\# Apply the function to each fold}
+\NormalTok{cv\_results }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_vals, compute\_k\_cross\_validation\_mse\_value)}
+
+\CommentTok{\# Convert results to data frame and calculate averages}
+\NormalTok{cv\_results\_df }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind, cv\_results)}
+
+\NormalTok{mean\_cv\_mse\_linear }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(cv\_results\_df[, }\StringTok{"linear\_mse"}\NormalTok{])}
+\NormalTok{mean\_cv\_mse\_rcs    }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(cv\_results\_df[, }\StringTok{"rcs\_mse"}\NormalTok{])}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Linear Model CV MSE:   "}\NormalTok{, }\FunctionTok{round}\NormalTok{(mean\_cv\_mse\_linear, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Linear Model CV MSE:    1237.87 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"RCS Spline Model CV MSE:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(mean\_cv\_mse\_rcs, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+RCS Spline Model CV MSE: 1212.47 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Difference between models (RCS {-} Linear):"}\NormalTok{, }\FunctionTok{round}\NormalTok{(mean\_cv\_mse\_rcs }\SpecialCharTok{{-}}\NormalTok{ mean\_cv\_mse\_linear, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Difference between models (RCS - Linear): -25.41 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Percentage improvement:"}\NormalTok{, }\FunctionTok{round}\NormalTok{((mean\_cv\_mse\_rcs }\SpecialCharTok{{-}}\NormalTok{ mean\_cv\_mse\_linear) }\SpecialCharTok{/}\NormalTok{ mean\_cv\_mse\_linear }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{), }\StringTok{"\%}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Percentage improvement: -2.05 %
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Does the spline model offer a meaningful improvement in predictive accuracy in comparison with the linear model?}
+
+\CommentTok{\# From the calculations that we see from this code, it would be easy to interpret that the Spline or RCS model}
+\CommentTok{\# does not offer a meaningful improvement in predictive accuracy because the difference between the two models is }
+\CommentTok{\# noticable even if it is noticably small. When the age and wage data from the Linear (training) model and RCS (testing) spline model is loaded into}
+\CommentTok{\# the compute\_k\_cross\_validation\_mse\_value function along with the specified k value (1{-}20 in total), we can start to see that}
+\CommentTok{\# training data and testing data are very different and as they attempt to predict each other\textquotesingle{}s y values with each iteration of k,}
+\CommentTok{\# they usually produce wage y values that are different from each other. In particular, the predicted y values from the RCS (testing) spline model and}
+\CommentTok{\# the Linear (training) model are always differing from each other regardless of the k value used in this cross valdidation process which in term }
+\CommentTok{\# means that there is always a difference in the calculated MSE values between the two models. In this context though, the MSE Cross Validation value for}
+\CommentTok{\# the RCS (testing) spline model is much smaller than the MSE Cross Validation value for the linear model.}
+\CommentTok{\# As a result of these results, we can conclude the that the Spline or RCS model does not offer a meaningful improvement in predictive accuracy in comparison with the linear model,}
+\CommentTok{\# at least in the terms of believing that predictive accuracy is determined by the pureness of the linear line of data that these models are suppose to follow.}
+\CommentTok{\# From another context though, the Spline or RCS model does offer a more nuanced and complex predictive accuracy in terms of calculating a K{-}Fold Cross Validation MSE value}
+\CommentTok{\# that takes under the consideration all of the values and changes that comes with the covariates still left in the models when considering that a RCS model is able to capture non{-}linear behavior}
+\CommentTok{\# in its model in comparison to the linear model that only seems to be seeking out}
+\CommentTok{\# a pure linear relationship between the ages and wages along with the other covariates in the models.}
+
+
+\CommentTok{\#Task 4. Create a calibration plot for both models. Does either model show systematic }
+\CommentTok{\# miscalibration across the predicted range?}
+
+\CommentTok{\# New Wage data being restructured to avoid column and row mismatches}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(Wage)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"dd"}\NormalTok{)}
+
+\CommentTok{\# recreating Linear and RCS spline models for task 4}
+
+\CommentTok{\# fitting a model for 4{-}knot restricted cubic spline}
+\NormalTok{rcs\_spline\_model }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{  wages }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(age, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+  \AttributeTok{data =}\NormalTok{ Wage, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}
+\NormalTok{)}
+
+\CommentTok{\# fitting a model for being linear from task 1}
+\NormalTok{linear\_rms }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(}
+\NormalTok{  wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ job\_class }\SpecialCharTok{+}\NormalTok{ marital\_status,}
+  \AttributeTok{data =}\NormalTok{ Wage, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}
+\NormalTok{)}
+
+\CommentTok{\# Predictions for partial effect plots for age}
+\NormalTok{rcs\_spline\_prediction }\OtherTok{\textless{}{-}} \FunctionTok{Predict}\NormalTok{(rcs\_4\_cubic\_spline\_model, age, }\AttributeTok{conf.int =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{linear\_prediction }\OtherTok{\textless{}{-}} \FunctionTok{Predict}\NormalTok{(linear\_rms, age, }\AttributeTok{conf.int =} \ConstantTok{FALSE}\NormalTok{)}
+
+\NormalTok{calibration\_of\_training\_testing\_models\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{original\_observed\_values =}\NormalTok{ Wage}\SpecialCharTok{$}\NormalTok{wages,}
+  \AttributeTok{prediction\_linear\_values =}\NormalTok{ linear\_prediction}\SpecialCharTok{$}\NormalTok{yhat,}
+  \AttributeTok{predictions\_RCS\_spline =}\NormalTok{ rcs\_spline\_prediction}\SpecialCharTok{$}\NormalTok{yhat}
+\NormalTok{)}
+
+\NormalTok{make\_calib\_plot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, pred\_var, title) \{}
+  \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes\_string}\NormalTok{(}\AttributeTok{x =}\NormalTok{ pred\_var, }\AttributeTok{y =} \StringTok{"original\_observed\_values"}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray25"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"loess"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =} \DecValTok{1}\NormalTok{, }\AttributeTok{intercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =}\NormalTok{ title,}
+      \AttributeTok{subtitle =} \StringTok{"Loess smooth (blue) vs. perfect calibration (dashed line)"}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{"Predicted Wages ($)"}\NormalTok{,}
+      \AttributeTok{y =} \StringTok{"Observed Wages ($)"}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{11}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}
+      \AttributeTok{panel.grid.major =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey80"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.35}\NormalTok{),}
+      \AttributeTok{panel.grid.minor =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey90"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.2}\NormalTok{),}
+      \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{13}\NormalTok{),}
+      \AttributeTok{legend.position =} \StringTok{"none"}
+\NormalTok{    )}
+\NormalTok{\}}
+
+
+
+\NormalTok{linear\_model\_calibration }\OtherTok{\textless{}{-}} \FunctionTok{make\_calib\_plot}\NormalTok{(calibration\_of\_training\_testing\_models\_df, }\StringTok{"prediction\_linear\_values"}\NormalTok{, }\StringTok{"Calibration: Linear Model (Training Data Model)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+i Please use tidy evaluation idioms with `aes()`.
+i See also `vignette("ggplot2-in-packages")` for more information.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rcs\_spline\_model\_calibration }\OtherTok{\textless{}{-}} \FunctionTok{make\_calib\_plot}\NormalTok{(calibration\_of\_training\_testing\_models\_df, }\StringTok{"predictions\_RCS\_spline"}\NormalTok{, }\StringTok{"Calibration: 4{-}Knot RCS Spline Model (Testing Data Model)"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(linear\_model\_calibration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW7_files/figure-pdf/unnamed-chunk-1-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(rcs\_spline\_model\_calibration)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW7_files/figure-pdf/unnamed-chunk-1-4.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# miscalibration across the predicted range?}
+\CommentTok{\# After the creation of the calibration plots for both models and the data model that houses all of the data from the models in the code above,}
+\CommentTok{\# it would become clear to anyone that there is a huge systematic miscalibration across the predicted range for the linear model in comparison to the 4{-}knot restricted cubic spline model.}
+\CommentTok{\# This systematic miscalibration is expressed in the how the 4{-}knot restricted cubic spline model tends to have a line that bends and curves across all of the scattered data values/points of}
+\CommentTok{\# the entire distribution observed vs predicted wages data while the pure linear model only shows a pure linear relationship line between the predicted and observed wages data values. From these details,}
+\CommentTok{\# it would be clear to say that there is a miscalibration or misalignment in the conclusions of these two lines and both of the lines are attempting to tell a different story about the predicted vs observed}
+\CommentTok{\# values of wages. Upon some further evaluations of this data model and its other models, it then become clear to me that the closest accurate calibration of this data model would be the}
+\CommentTok{\# 4{-}knot restricted cubic spline model considering that the non{-}linear and non{-}normality relationship between the predicted and observed wages data shows a more nuanced and somewhat accurate}
+\CommentTok{\# representation of how the observed data is very close to the precticted wages data since the data across the whole data model is very scattered, shapeless and non{-}linear.}
+\CommentTok{\# Altogether though, this data model reveals a huge disconnect and an ability to show a good and accurate calibration plot between the predicted and observed values of wages}
+\CommentTok{\# regardless of the linear or 4{-}knot restricted cubic spline model used. In conclusion, there does not really seem to be huge systematic miscalibration in the data lines of these models at all, but instead }
+\CommentTok{\# there does not seem to be any good calibration plot (regardless of the model) to show how the predicted values of wages are close to the observed values of wages and thus there is not good relationship between the predicted and observed values of wages.}
+
+
+\CommentTok{\#Task 5. State a final conclusion: should the nonlinear spline term be retained, }
+\CommentTok{\# or is the linear model adequate? Address practical predictive improvement }
+\CommentTok{\#(from MSE and calibration).}
+
+\CommentTok{\# In conclusion, the nonlinear 4{-}knot restricted cubic spline model/term should be retained and should be considered to be a somewhat good model to interpret}
+\CommentTok{\# the non{-}linear relationship between the predicted and observed values of wages along with interpreting that the wages and ages variables are connected in some way. }
+\CommentTok{\# The linear model in this context would not be considered to be a good model to interpret any of the data within this context considering that the linear model is}
+\CommentTok{\# only seeking to seek out a pure linear relationship between the ages and wages along with the other covariates in the models and only seeks a linear}
+\CommentTok{\# relationship between the predicted and observed values of wages. In other words, the linear model is almost being mutually exclusive in seeking its conclusions and interpreations}
+\CommentTok{\# of the relationships within the data in a linear context and structure when it was clear that all of the data in the model was complex, nuanced and scattered from each other which signals}
+\CommentTok{\# the need for a non{-}linear relationship measure and formula to find the relationships in the data. The only thing of noteworthyness in terms of the practical improvements that}
+\CommentTok{\# could have been made to enforce this need of keeping the non{-}linear 4{-}knot restricted cubic spline model/term would be to improve the MSE score difference to be closer or greater in value}
+\CommentTok{\# than the linear model\textquotesingle{}s MSE score in order to make the non{-}linear nature of the 4{-}knot restricted cubic spline model could be approximately normal or greater in value than the linear model.}
+\CommentTok{\# Then, the non{-}linear nature of the 4{-}knot restricted cubic spline model would be able to offer a more predictive accuracy improvement in the prediction of the observed values of wages to the}
+\CommentTok{\# predicted values of wages along with showing the positive relationships between the wages and the other covariates (such as ages, education, etc...).}
+\end{Highlighting}
+\end{Shaded}
+
+\bookmarksetup{startatroot}
+
+\chapter{}\label{section-25}
+
+\bookmarksetup{startatroot}
+
 \chapter{Summary}\label{summary}
 
 In summary, this book has no content whatsoever.

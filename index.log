@@ -1,9 +1,9 @@
-This is LuaHBTeX, Version 1.24.0 (TeX Live 2026)  (format=lualatex 2026.6.1)  30 JUN 2026 02:02
+This is LuaHBTeX, Version 1.24.0 (TeX Live 2026)  (format=lualatex 2026.6.30)  12 JUL 2026 22:29
  restricted system commands enabled.
 **index.tex
 (./index.tex
-LaTeX2e <2025-11-01>
-L3 programming layer <2026-05-26>
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
 Lua module: luaotfload 2024-12-03 v3.29 Lua based OpenType font support
 Lua module: lualibs 2023-07-13 v2.76 ConTeXt Lua standard libraries.
 Lua module: lualibs-extended 2023-07-13 v2.76 ConTeXt Lua libraries -- extended collection.
@@ -47,7 +47,7 @@ Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hooks
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/koma-script/scrlogo.sty
 Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
 ))) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 )
 Applying: [2021/05/01] Usage of raw or classic option list on input line 254.
@@ -64,8 +64,7 @@ Class scrreprt Info: File `scrsize11pt.clo' used instead of
 (scrreprt)           file `scrsize11.clo' to setup font sizes on input line 2710.
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
 File: scrsize11pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (11pt)
-luaotfload | db : Font names database not found, generating new one.
-luaotfload | db : This can take several minutes; please be patient.) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/koma-script/typearea.sty
+luaotfload | db : Font names database loaded from /Users/Mzmz12/Library/TinyTeX/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/koma-script/typearea.sty
 Package: typearea 2026/02/02 v3.49.2 KOMA-Script package (type area)
 \ta@bcor=\skip50
 \ta@div=\count274
@@ -170,13 +169,13 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
-File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+File: dvipsnam.def 2026-05-17 v3.0m Driver-dependent file (DPC,SPQR)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.def
 File: svgnam.def 2024/09/29 v3.02 Predefined colors according to SVG 1.1 (UK)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.def
 File: x11nam.def 2024/09/29 v3.02 Predefined colors according to Unix/X11 (UK)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2025/07/09 v2.17z AMS math features
+Package: amsmath 2026/05/19 v2.18d AMS math features
 \@mathmargin=\skip66
 For additional information on amsmath, use the `?' option.
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -236,8 +235,8 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \multlinegap=\skip67
 \multlinetaggap=\skip68
 \mathdisplay@stack=\toks22
-LaTeX Info: Redefining \[ on input line 2950.
-LaTeX Info: Redefining \] on input line 2951.
+LaTeX Info: Redefining \[ on input line 2965.
+LaTeX Info: Redefining \] on input line 2966.
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
@@ -250,7 +249,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 )) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2026-05-26 L3 programming layer (loader) 
+Package: expl3 2026-06-18 L3 programming layer (loader) 
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
 File: l3backend-luatex.def 2026-02-18 L3 backend support: PDF output (LuaTeX)
 \l__color_backend_stack_int=\count296
@@ -506,7 +505,7 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameRule=\dimen165
 \FrameSep=\dimen166
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
+Package: longtable 2026-01-28 v4.27 Multi-page Table package (DPC)
 \LTleft=\skip71
 \LTright=\skip72
 \LTpre=\skip73
@@ -545,7 +544,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count325
 \@thisrulewidth=\dimen180
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+Package: array 2026/02/24 v2.7b Tabular extension package (FMi)
 \col@sep=\dimen181
 \ar@mcellbox=\box64
 \extrarowheight=\dimen182
@@ -572,9 +571,9 @@ Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box66
 \fn@width=\dimen185
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2026-05-17 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2026-05-17 v1.4h Standard LaTeX Graphics (DPC,SPQR)
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
@@ -591,7 +590,7 @@ Package graphics Info: Driver file: luatex.def on input line 106.
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2026-05-21 v1.32 PDF bookmarks (HO)
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2026-04-24 v7.01q Hypertext links for LaTeX
+Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
@@ -628,13 +627,13 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 \Hy@linkcounter=\count331
 \Hy@pagecounter=\count332
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2026-04-24 v7.01q Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count333
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2026-04-24 v7.01q Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `unicode' set `true' on input line 4070.
 Package hyperref Info: Hyper figures OFF on input line 4199.
@@ -672,7 +671,7 @@ Package hyperref Info: PDF/A mode OFF on input line 6121.
 )
 Package hyperref Info: Driver (autodetected): hluatex.
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hluatex.def
-File: hluatex.def 2026-04-24 v7.01q Hyperref driver for luaTeX
+File: hluatex.def 2026-06-17 v7.01r Hyperref driver for luaTeX
 \Fld@listcount=\count339
 \c@bookmark@seq@number=\count340
 (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
@@ -994,29 +993,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 247.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 247.
-(/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
-) (/Users/Mzmz12/Library/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [1
+[1
 
 
 
@@ -1134,12 +1111,12 @@ l.551          col = "#
                      aa4848", type = "p")
 
 Here is how much of LuaTeX's memory you used:
- 24974 strings out of 475888
+ 24906 strings out of 475704
  100000,1373583 words of node,token memory allocated
  5115 words of node memory still in use:
    10 hlist, 4 vlist, 2 rule, 3 disc, 3 local_par, 2 dir, 2 math, 74 glue, 8 kern, 8 penalty, 150 noad, 150 math_char, 299 glyph, 31 attribute, 69 glue_spec, 31 attribute_list, 2 temp, 5 write, 1 pdf_dest, 2 pdf_colorstack nodes
-   avail lists: 1:2,2:173,4:61,5:182,6:18,7:4353,9:110,10:13,11:187,12:1
- 47194 multiletter control sequences out of 65536+600000
- 60 fonts using 18785463 bytes
- 108i,7n,114p,11226b,418s stack positions out of 10000i,1000n,20000p,200000b,200000s
+   avail lists: 1:1,2:173,4:61,5:182,6:18,7:4353,9:110,10:13,11:187,12:1
+ 47310 multiletter control sequences out of 65536+600000
+ 42 fonts using 11307007 bytes
+ 108i,7n,114p,11226b,416s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!
