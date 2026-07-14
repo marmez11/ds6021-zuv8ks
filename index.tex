@@ -3314,7 +3314,7 @@ FALSE), : unnamed smooth arguments, will be ignored
 \end{Shaded}
 
 \begin{verbatim}
-Linear Model CV MSE:    1237.87 
+Linear Model CV MSE:    1236.25 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3324,7 +3324,7 @@ Linear Model CV MSE:    1237.87
 \end{Shaded}
 
 \begin{verbatim}
-RCS Spline Model CV MSE: 1212.47 
+RCS Spline Model CV MSE: 1210.75 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3334,7 +3334,7 @@ RCS Spline Model CV MSE: 1212.47
 \end{Shaded}
 
 \begin{verbatim}
-Difference between models (RCS - Linear): -25.41 
+Difference between models (RCS - Linear): -25.5 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3344,7 +3344,7 @@ Difference between models (RCS - Linear): -25.41
 \end{Shaded}
 
 \begin{verbatim}
-Percentage improvement: -2.05 %
+Percentage improvement: -2.06 %
 \end{verbatim}
 
 \begin{Shaded}
@@ -3493,7 +3493,523 @@ i See also `vignette("ggplot2-in-packages")` for more information.
 
 \bookmarksetup{startatroot}
 
-\chapter{}\label{section-25}
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-4}
+
+\bookmarksetup{startatroot}
+
+\chapter{Date: 07/12/2026}\label{date-07122026}
+
+\bookmarksetup{startatroot}
+
+\chapter{Course : DS 6021 - Machine Learning I - Introduction to
+Predictive
+Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive-modeling-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 8 Homework}\label{module-8-homework}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# installing the packages}
+\CommentTok{\#install.packages("glmnet")}
+\CommentTok{\#install.packages("pls")}
+\CommentTok{\#install.packages("hdi")}
+\CommentTok{\#install.packages("lmtest")}
+
+
+\CommentTok{\# loading and using the packages in the program}
+\FunctionTok{library}\NormalTok{(glmnet)   }\CommentTok{\# contains the methods and functions for ridge, lasso, elastic net + cv.glmnet}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+Loaded glmnet 5.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(pls)      }\CommentTok{\# contains the methods and functions for PCR (principal component regression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Attaching package: 'pls'
+\end{verbatim}
+
+\begin{verbatim}
+The following object is masked from 'package:stats':
+
+    loadings
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lmtest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+
+Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#library(hdi)}
+
+\CommentTok{\# loading the riboflavin dataset}
+\CommentTok{\# d1 \textless{}{-} readRDS("data/riboflavin.rds")}
+\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021\_Predictability\_Modeling/Module7\_Linearmodel\_≠\_linear\_relationship/riboflavin.rds"}\NormalTok{)}
+\CommentTok{\# extracting the x and y values}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ d1}\SpecialCharTok{$}\NormalTok{x   }\CommentTok{\# 71 × 4088 matrix. n = 71, p = 4088}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ d1}\SpecialCharTok{$}\NormalTok{y   }\CommentTok{\# length{-}71 vector. n = 71}
+\CommentTok{\# extracting the column names}
+\NormalTok{x\_column\_names }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(x)}
+\CommentTok{\# setting the seed for reproducibility}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\CommentTok{\#Problem 1. Confirm that OLS cannot create a unique solution for this dataset.}
+\CommentTok{\# Attempt to fit a linear model using lm() and report what happens.}
+\CommentTok{\# How many coefficients does R return as NA, and why?}
+
+\CommentTok{\# fitting the OLS model with y values to the x values will not work}
+\CommentTok{\#  due to how x \textless{}{-} d1$x has the dimensions of 71 × 4088 matrix. n = 71, p = 4088}
+\CommentTok{\# and p \textgreater{} n = 4088 \textgreater{} 71 violates the OLS requirements for a unique solution }
+\CommentTok{\# ols\_fitted\_model \textless{}{-} ols(y \textasciitilde{} x)}
+
+\CommentTok{\# fitting the y values to the x values in a linear model}
+\CommentTok{\# this will work regardless of 𝑝 \textgreater{} 𝑛 {-}{-}\textgreater{} rank(X) \textless{} p {-}{-}\textgreater{} due to how d1$x has the dimensions of 71 × 4088 matrix. n = 71, p = 4088}
+\CommentTok{\# which is 4088 \textgreater{} 71 that agrees with the lm() requirements for a non{-}unique solution and}
+\CommentTok{\# due to the rank(x) \textless{} p which is 71 \textless{} 4088 which is true then lm() assures that there is a non{-}unique solution and that the output non{-}matching }
+\CommentTok{\# coefficients from y to x will be NA}
+
+\CommentTok{\# fitting the y values to the x values in a linear model}
+\NormalTok{linear\_fitted\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x)}
+\CommentTok{\# calculating the linear algebra rank}
+\NormalTok{linear\_rank }\OtherTok{\textless{}{-}} \FunctionTok{qr}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{rank}
+
+
+\CommentTok{\# Count how many coefficients are NA}
+\NormalTok{number\_of\_na\_coefficients\_in\_linear\_model }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(linear\_fitted\_model}\SpecialCharTok{$}\NormalTok{coefficients))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of coefficients within the Linear Model combination of y to x that returns as NA:"}\NormalTok{, number\_of\_na\_coefficients\_in\_linear\_model, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Number of coefficients within the Linear Model combination of y to x that returns as NA: 4018 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The reason why we are getting NA is because the lm() requirements to have a unique solution are not met.}
+\CommentTok{\# This is evidenced through how this dataset has 71 observations  {-}{-}\textgreater{} n = 71 and 4088 predictors {-}{-}\textgreater{} p = 4088.}
+\CommentTok{\# Due to these n and p values, the lm() requirements to have a unique solution are not met and the full column rank}
+\CommentTok{\# of the design matrix X is not correct due to p \textgreater{} n = 4088 \textgreater{} 71. It is also important to note that the requirement}
+\CommentTok{\# of rank(x) \textless{} p being met due to 71 \textless{} 4088 that makes X\^{}T * X singular and prevents OLS from having a unique solution.}
+\CommentTok{\# It is even important to realize that when the design matrix X is fitted to Y via lm(y \textasciitilde{} x), R uses QR decomposition and}
+\CommentTok{\# any predictor that is linearly dependent on others is dropped. The coefficients for these dropped predictors appear as NA.}
+\CommentTok{\# So, the NA values calculated here is only a result of the many dependent or non{-}ranked columns in this QR composition linear model}
+\CommentTok{\# fitting of y to x will automatically assign NA values to those columns values.}
+
+
+\CommentTok{\# Problem 2. Fit ridge regression using glmnet (alpha = 0). Select lambda λ}
+\CommentTok{\# via 10{-}fold cross{-}validation. Report λmin and λlse (LSE). Plot the Cross Valdidation (CV)}
+\CommentTok{\# curve with the two vertical lines. How does CV{-}MSE change as lambda λ increases?}
+
+\CommentTok{\# Ridge Regression: β(ridge) = arg β min ||Y {-} Xβ||\^{}(2, 2) + λ ||β||\^{}(2, 2)}
+\CommentTok{\# where λ \textgreater{} 0 is a tuning parameter (penalty) that controls the amount of shrinkage.}
+\CommentTok{\# The first term is the OLS loss where λ {-}{-}\textgreater{} 0, then the ridge regression reduces the OLS loss.}
+\CommentTok{\# the second term penalizes the large coefficients of this regression line and as λ {-}{-}\textgreater{} infinity,}
+\CommentTok{\# then this ridge regression gets closer to 0 (penalty).}
+
+\CommentTok{\# L2 penalty (ridge regression): ||x|| = x\^{}t * x = √(x1 \^{} 2 + x2 \^{} 2 + ... + xd \^{} 2)}
+
+\CommentTok{\# β\^{}(LSE) ​= (X\^{}T * X)\^{}−1 * X\^{}T * y}
+\CommentTok{\# X = design matrix of predictors,}
+\CommentTok{\# y = vector of observed responses,}
+\CommentTok{\# β\^{}(LSE) = estimated regression coefficients.}
+
+\CommentTok{\# Fit ridge regression using glmnet (alpha = 0, fold cross{-}validation = 10).}
+\NormalTok{cv\_10\_ridge }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{0}\NormalTok{, }\AttributeTok{nfolds =} \DecValTok{10}\NormalTok{, }\AttributeTok{type.measure =} \StringTok{"mse"}\NormalTok{)}
+
+\CommentTok{\# Plot the Cross Valdidation (CV) curve with the two vertical lines.}
+\FunctionTok{plot}\NormalTok{(cv\_10\_ridge, }\AttributeTok{main =} \StringTok{"Ridge Regression – 10{-}fold CV Error Curve"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW8_files/figure-pdf/unnamed-chunk-1-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Getting the LSE and min lambda values}
+\NormalTok{lambda\_min\_ridge }\OtherTok{\textless{}{-}}\NormalTok{ cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{lambda\_1se\_ridge }\OtherTok{\textless{}{-}}\NormalTok{ cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{lambda}\FloatTok{.1}\NormalTok{se}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Selected lambda (λ) (min CV{-}MSE):"}\NormalTok{, }\FunctionTok{round}\NormalTok{(lambda\_min\_ridge, }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Selected lambda (λ) (min CV-MSE): 5.934162 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"lambda.1se:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(lambda\_1se\_ridge, }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lambda.1se: 36.41147 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# From the ridge regression plot that is produced from this code, we can witness how the Cross Valdidation (CV) Mean Squared Error (MSE)}
+\CommentTok{\# curve that describes the diference between this model\textquotesingle{}s y values and this Riboflavin\textquotesingle{}s y production values as a result of their relationship to their x values}
+\CommentTok{\# as the lambda λ increases or decreases along the {-}log(λ) x axis. In this case, the Cross Valdidation (CV) Mean Squared Error (MSE) curve is a downward sloping curve}
+\CommentTok{\# that is a result of the ridge regression model\textquotesingle{}s ability to reduce the bias in the y values as the lambda λ increases. This decrease of bias is reflecting in how}
+\CommentTok{\# when the lambda λ is lower in value (such as {-}(log(λ=6))) then the bias of y is high due to the large difference in the MSE value at this point and how this MSE value}
+\CommentTok{\# difference seems to be getting smaller as the lambda λ gets higher in value (such as {-}(log(λ=1 or λ=0))) and thus the bias in the y values decreases. It is also important}
+\CommentTok{\# to note that this MSE value difference also reflects the changes in the variance of the y values as the lambda λ goes along the x axis. So, the variance of the MSE value difference}
+\CommentTok{\# is at its highest with the y value is biased at {-}(log(λ=6))) and tends to get smaller as the lambda λ decreases and moves along with x axis to get to the lowest variances at}
+\CommentTok{\# {-}(log(λ=1 or λ=0)). Finally, the penalty or shrinkage of the ridge regression model is reflected in how the MSE value difference is getting smaller as the lambda λ goes along the x axis.}
+
+
+\CommentTok{\# Problem 3. Plot the ridge coefficient path (}
+\CommentTok{\# on the x{-}axis, coefficient values on the y{-}axis). }
+\CommentTok{\# Describe qualitatively what happens to the coefficients as }
+\CommentTok{\# increases. Does any coefficient reach exactly zero?}
+
+\FunctionTok{plot}\NormalTok{(cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{glmnet.fit, }
+     \AttributeTok{xvar =} \StringTok{"lambda"}\NormalTok{, }
+     \AttributeTok{label =} \ConstantTok{FALSE}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Ridge Coefficient Path (all coefficients shrink toward 0 to show when predicator variables don\textquotesingle{}t effect the 𝑦 outcome)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW8_files/figure-pdf/unnamed-chunk-1-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# L2 penalty (ridge regression): ||x|| = x\^{}t * x = √(x1 \^{} 2 + x2 \^{} 2 + ... + xd \^{} 2)}
+
+\CommentTok{\# From this ridge regression plot and its coefficient pathway on the y axis,}
+\CommentTok{\# we can see how the 𝛽 coefficients values are going from smaller (𝛽 = 0.0 {-}{-}\textgreater{} no effect on the predicted y outcomes) to the higher}
+\CommentTok{\# (𝛽 = 0.02 {-}{-}\textgreater{} some to a lot of effect on the predicted y outcomes) as the lambda λ goes along the x axis. In this case, the coefficient values are getting}
+\CommentTok{\# bigger and you can tell from the lines in the plot that the predict y value outcomes are heavily influenced by 𝛽 coefficient as we move along the lambda λ values along the x axis.}
+\CommentTok{\# Thus, the coefficient values are getting quantitatively bigger and the variances of these predicted y values that derives from the linear combinations of these increasing coefficients}
+\CommentTok{\# to their x predictor variables are along getting quantitatively bigger and more diverse as we move along the lambda λ x axis values.}
+\CommentTok{\# The only two things to note in this case, is that the coefficient of these predicted y values and all of these data lines actually starts at 0.0 when the lambda λ value is at its highest}
+\CommentTok{\# {-}log(λ \textgreater{} {-}6). The second thing is that the coefficient values of this plot seem to be kept within a small range of values due to }
+\CommentTok{\# the penalties and loss functions that are being used to keep the coefficients from getting too large and imposes the L2 penalty on the ridge regression model to keep the coefficent pathways smooth as it goes from zero to larger values.}
+\CommentTok{\# As reflected by this equation, Loss = min𝛽 * ||y {-} x𝛽||\^{}2 + 𝜆 ∑ 𝛽\^{}2j}
+
+
+\CommentTok{\# Problem 4. Fit lasso regression (alpha = 1) and select λ}
+\CommentTok{\# via 10{-}fold CV. At λlse,}
+\CommentTok{\# how many gene expression features are retained }
+\CommentTok{\# (non{-}zero coefficients)? Plot the coefficient path and the }
+\CommentTok{\# CV error curve.}
+
+\CommentTok{\# Fit lasso regression}
+\NormalTok{cv\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{nfolds =} \DecValTok{10}\NormalTok{, }\AttributeTok{type.measure =} \StringTok{"mse"}\NormalTok{)}
+
+\CommentTok{\# Getting the LSE and min lambda values}
+\NormalTok{lambda\_min\_lasso }\OtherTok{\textless{}{-}}\NormalTok{ cv\_lasso}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{lambda\_1se\_lasso }\OtherTok{\textless{}{-}}\NormalTok{ cv\_lasso}\SpecialCharTok{$}\NormalTok{lambda}\FloatTok{.1}\NormalTok{se}
+
+\CommentTok{\# Number of non{-}zero gene expression features at lambda.lse}
+\NormalTok{coef\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(cv\_lasso, }\AttributeTok{s =} \StringTok{"lambda.1se"}\NormalTok{)}
+\NormalTok{num\_retained\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(coef\_lasso[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, ] }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+
+\CommentTok{\# Print the Lambda }
+\FunctionTok{cat}\NormalTok{(}\StringTok{"lambda.1se (lasso):"}\NormalTok{, }\FunctionTok{round}\NormalTok{(lambda\_1se\_lasso, }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lambda.1se (lasso): 0.092316 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of retained (non{-}zero) gene expression features at lambda.lse:"}\NormalTok{, }
+\NormalTok{    num\_retained\_lasso, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Number of retained (non-zero) gene expression features at lambda.lse: 25 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Plot CV error curve with the two vertical lines}
+\FunctionTok{plot}\NormalTok{(cv\_lasso, }\AttributeTok{main =} \StringTok{"Lasso Regression – 10{-}fold CV Error Curve"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW8_files/figure-pdf/unnamed-chunk-1-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Coefficient path plot}
+\FunctionTok{plot}\NormalTok{(cv\_lasso}\SpecialCharTok{$}\NormalTok{glmnet.fit, }
+     \AttributeTok{xvar =} \StringTok{"lambda"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Lasso Coefficient Path (many coefficients hit exactly zero)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW8_files/figure-pdf/unnamed-chunk-1-4.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Problem 5. Fit an elastic net with α ϵ \{0.25, 0.5, 0.75\}.}
+\CommentTok{\# For each α, record the minimum CV{-}MSE. }
+\CommentTok{\# Create a small table showing (α, λmin, min CV{-}MSE).}
+\CommentTok{\# Which α yields the lowest CV{-}MSE? }
+\CommentTok{\# How does the number of selected features compare to lasso?}
+
+\CommentTok{\# Setting the alpha, min lambda, min CV{-}MSE, and number of selected elastic net features}
+\NormalTok{alphas }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.25}\NormalTok{)}
+\NormalTok{min\_cv\_mse\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(alphas))}
+\NormalTok{lambda\_min\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(alphas))}
+\NormalTok{num\_selected\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(alphas))}
+
+\CommentTok{\# Fitting elastic net through looping and appending the values to the vectors}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(alphas)) \{}
+\NormalTok{  cv\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =}\NormalTok{ alphas[i], }\AttributeTok{nfolds =} \DecValTok{10}\NormalTok{, }\AttributeTok{type.measure =} \StringTok{"mse"}\NormalTok{)}
+\NormalTok{  min\_cv\_mse\_elastic\_net[i] }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(cv\_elastic\_net}\SpecialCharTok{$}\NormalTok{cvm)}
+\NormalTok{  lambda\_min\_elastic\_net[i] }\OtherTok{\textless{}{-}}\NormalTok{ cv\_elastic\_net}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{  coefs }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(cv\_elastic\_net, }\AttributeTok{s =}\NormalTok{ cv\_elastic\_net}\SpecialCharTok{$}\NormalTok{lambda.min)}
+\NormalTok{  num\_selected\_elastic\_net[i] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(coefs[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, ] }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# creating a final data frame table}
+\NormalTok{results\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{alpha =}\NormalTok{ alphas,}
+  \AttributeTok{min\_lambda =} \FunctionTok{round}\NormalTok{(lambda\_min\_elastic\_net, }\DecValTok{6}\NormalTok{),}
+  \AttributeTok{min\_CV\_MSE =} \FunctionTok{round}\NormalTok{(min\_cv\_mse\_elastic\_net, }\DecValTok{6}\NormalTok{),}
+  \AttributeTok{num\_nonzero\_features =}\NormalTok{ num\_selected\_elastic\_net}
+\NormalTok{)}
+
+\CommentTok{\# printing the results and comparing the number of selected features}
+\FunctionTok{print}\NormalTok{(results\_elastic\_net)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  alpha min_lambda min_CV_MSE num_nonzero_features
+1  0.25   0.167457   0.203687                   69
+2  0.50   0.079923   0.222400                   55
+3  0.75   0.040306   0.214340                   48
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The number of selected features from Elastic Net in comparison with Lasso:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+The number of selected features from Elastic Net in comparison with Lasso:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(num\_selected\_elastic\_net))\{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Elastic Net (alpha="}\NormalTok{, alphas[i], }\StringTok{") selected "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Lasso (alpha=1) selected "}\NormalTok{, num\_retained\_lasso, }\StringTok{" features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Selected Features of Elastic Net ("}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{") compared to Lasso ("}\NormalTok{, num\_retained\_lasso, }\StringTok{") — greater? "}\NormalTok{, num\_selected\_elastic\_net[i] }\SpecialCharTok{\textgreater{}}\NormalTok{ num\_retained\_lasso, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ The Elastic Net (alpha= 0.25 ) selected  69  features.
+ The Lasso (alpha=1) selected  25  features.
+ The Selected Features of Elastic Net ( 69 ) compared to Lasso ( 25 ) — greater?  TRUE 
+
+ The Elastic Net (alpha= 0.5 ) selected  55  features.
+ The Lasso (alpha=1) selected  25  features.
+ The Selected Features of Elastic Net ( 55 ) compared to Lasso ( 25 ) — greater?  TRUE 
+
+ The Elastic Net (alpha= 0.75 ) selected  48  features.
+ The Lasso (alpha=1) selected  25  features.
+ The Selected Features of Elastic Net ( 48 ) compared to Lasso ( 25 ) — greater?  TRUE 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# From this data frame of all (α = alphas, λmin = lambda mins, min CV{-}MSE = minimum cross validation mean squared error, and num\_nonzero\_features = number of nonzero features extracted from the lambda min values),}
+\CommentTok{\# it would be easy to witness that the alpha that yields the lowest CV{-}MSE is the alpha of 0.25 where the lowest CV{-}MSE value of 0.203687.}
+\CommentTok{\# Also, it is easy to interpret that the number of selected features from the elastic net is always greater than the number of selected features from the lasso.}
+
+
+\CommentTok{\# Problem 6. Fit PCR using the pls package (or manual SVD as shown in the chapter). Select the number of }
+\CommentTok{\# components k{-}fold value(s) via cross{-}validation (use validationplot). Report the optimal k.}
+
+\CommentTok{\# fitting PCR model with the y and x variable values and the k{-}fold value is 10}
+\NormalTok{pcr\_fit }\OtherTok{\textless{}{-}} \FunctionTok{pcr}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{validation =} \StringTok{"CV"}\NormalTok{, }\AttributeTok{segments =} \DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Validation plot – choose optimal number of components}
+\FunctionTok{validationplot}\NormalTok{(pcr\_fit, }\AttributeTok{val.type =} \StringTok{"MSE"}\NormalTok{, }
+               \AttributeTok{main =} \StringTok{"PCR: k=10 fold {-} Cross{-}Validation Error vs Number of PC Components"}\NormalTok{,}
+               \AttributeTok{xlab =} \StringTok{"Number of Principal Components (PC)"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Cross{-}Validation Mean{-}Squared Error (MSE)"}\NormalTok{,}
+               \AttributeTok{legendpos =} \StringTok{"topright"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{HW8_files/figure-pdf/unnamed-chunk-1-5.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Identify optimal k}
+\NormalTok{optimal\_ncomp }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS):"}\NormalTok{, optimal\_ncomp, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS): 22 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#  a. Back{-}transform the PCR fit to obtain the full 4,088{-}dimensional coefficient vector 𝛽pcr.}
+\CommentTok{\# transforming }
+
+\CommentTok{\# this performs a backdoor linear transformation on all x values with the coefficients altered by the most optimal k number of principal components value for the PCR fitted object}
+\NormalTok{backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(pcr\_fit, }\AttributeTok{ncomp =}\NormalTok{ optimal\_ncomp)}
+\NormalTok{dimensions }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: "}\NormalTok{, }\FunctionTok{paste}\NormalTok{(dimensions, }\AttributeTok{collapse =} \StringTok{" x "}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088:  4088 x 1 x 1 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#  b. Use 𝛽 pcr to generate a prediction for the first observation in the dataset (X[1, ]). Show your R code and the predicted value.}
+\NormalTok{pred\_first\_observation\_of\_the\_pcr }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(pcr\_fit, }
+                      \AttributeTok{newdata =}\NormalTok{ x[}\DecValTok{1}\NormalTok{, , }\AttributeTok{drop =} \ConstantTok{FALSE}\NormalTok{], }
+                      \AttributeTok{ncomp =}\NormalTok{ optimal\_ncomp)}
+
+\CommentTok{\# predicted value for the first observation}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Predicted value for the first observation (X[1,]):"}\NormalTok{, }
+    \FunctionTok{round}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(pred\_first\_observation\_of\_the\_pcr), }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Predicted value for the first observation (X[1,]): -6.562936 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#  c. In one sentence, explain why you needed all 4,088 gene expression values to generate}
+\CommentTok{\# this prediction even though you only fit k principal components.}
+
+\CommentTok{\# For any prection to be accurate, we need to use all 4088 genes in linear combination with }
+\CommentTok{\# the new principal components (uncorrelated representations of the original predictor variables x) }
+\CommentTok{\# along with the coefficients in the coefficent vector to generate the accurate full{-}wieghted predictions of all }
+\CommentTok{\# the 4088 genes in this data set.}
+
+\CommentTok{\# Problem 7. Comparing across methods:}
+
+  \CommentTok{\# a. Report the CV{-}MSE at the selected tuning parameter for each of the four methods (ridge, lasso, elastic net, PCR).}
+\NormalTok{min\_cv\_mse\_ridge }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{cvm)}
+\NormalTok{min\_cv\_mse\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(cv\_lasso}\SpecialCharTok{$}\NormalTok{cvm)}
+\NormalTok{min\_cv\_mse\_elastic\_net\_min }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(min\_cv\_mse\_elastic\_net)}
+\NormalTok{cv\_mse\_pcr   }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(y)}
+
+  \CommentTok{\# b. Which method achieves the lowest CV{-}MSE on this dataset?}
+
+\CommentTok{\# Compare the lowest CV{-}MSE values for all methods}
+\NormalTok{lowest\_cv\_mse\_methods }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Ridge Regression"}\NormalTok{, }\StringTok{"Lasso Regression"}\NormalTok{, }\StringTok{"Elastic Net Regression"}\NormalTok{, }\StringTok{"Partial Least Square Regression (PCR)"}\NormalTok{)}
+\NormalTok{lowest\_cv\_mse\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(min\_cv\_mse\_ridge, min\_cv\_mse\_lasso, min\_cv\_mse\_elastic\_net\_min, cv\_mse\_pcr)}
+
+\CommentTok{\# Find the method with the lowest CV{-}MSE}
+\NormalTok{lowest\_cv\_mse\_index }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(lowest\_cv\_mse\_values)}
+\NormalTok{lowest\_cv\_mse\_method\_val }\OtherTok{\textless{}{-}}\NormalTok{ lowest\_cv\_mse\_methods[lowest\_cv\_mse\_index]}
+
+\CommentTok{\# Print the results}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The lowest CV{-}MSE achieved by the methods are:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+The lowest CV-MSE achieved by the methods are:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(lowest\_cv\_mse\_methods)) \{}
+  \FunctionTok{cat}\NormalTok{(lowest\_cv\_mse\_methods[i], }\StringTok{": "}\NormalTok{, }\FunctionTok{round}\NormalTok{(lowest\_cv\_mse\_values[i], }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Ridge Regression :  0.269497 
+Lasso Regression :  0.209623 
+Elastic Net Regression :  0.203687 
+Partial Least Square Regression (PCR) :  0.248206 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print the method with the lowest CV{-}MSE}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{The method with the lowest CV{-}MSE is:"}\NormalTok{, lowest\_cv\_mse\_method\_val, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+The method with the lowest CV-MSE is: Elastic Net Regression 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \CommentTok{\# c. Based on the guidance in the chapter, would you expect ridge or lasso to work better here?}
+  \CommentTok{\# Does the data agree with your expectation? Why or why not?}
+
+  \CommentTok{\# Due to all of the details and guidance within this chapter 7., I would say that since this data set is }
+  \CommentTok{\# a high{-}dimensional genetics dataset that would need to have some kind of correctlation, association and}
+  \CommentTok{\# even collinearity within the features/variables in the dataset since the calculation of the CV{-}MSE values}
+  \CommentTok{\# needs to be accurate considering that this measure is attempto to determine which method(s) actually predicts acccurately}
+  \CommentTok{\# to the already observed values/data in the genetics dataset along with being able to predict any changes in the prediction model }
+  \CommentTok{\# that would occur such as the inputting of new data and how these predictions reacts to changing values across the x axis such as }
+  \CommentTok{\# how the lambda λ values in the ridge regression and lasso regression models. It is also important to note that these}
+  \CommentTok{\# MSE values are also dependent on the lambda λ values that are used in the ridge regression and lasso regression models }
+  \CommentTok{\# along with helping determine the bias in the y prediction values and how the variances that these MSE help define behave and/or are structured}
+  \CommentTok{\# as the lambda λ values increase or decrease. In this case though, the data here really does meet my expectation in accurately predicting}
+  \CommentTok{\# the predicted y values from how these MSE values from each model reveals in the most non{-}linear way and the non{-}consideration of intercept and zero values}
+  \CommentTok{\# which model is more accurate or not based on its lower CV{-}MSE value. In conclusion after some comparisons between the ridge and lassoo prediction models}
+  \CommentTok{\# along with the the MSE curve values calculated in this chapter (Ridge Regression :  0.2694971, Lasso Regression :  0.2096233, Elastic Net Regression :  0.2036869 )}
+  \CommentTok{\# it becomes easy to conclude that the Lasso Regression (and possibly the Elastic Net Regression) is more accurate in predicting the y values in this genetics dataset.}
+  \CommentTok{\# This conclusion is backed up by the MSE values listed above.}
+\end{Highlighting}
+\end{Shaded}
 
 \bookmarksetup{startatroot}
 
