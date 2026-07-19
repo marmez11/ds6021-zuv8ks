@@ -297,5 +297,4 @@ print(rcs_spline_model_calibration)
 # than the linear model's MSE score in order to make the non-linear nature of the 4-knot restricted cubic spline model could be approximately normal or greater in value than the linear model.
 # Then, the non-linear nature of the 4-knot restricted cubic spline model would be able to offer a more predictive accuracy improvement in the prediction of the observed values of wages to the
 # predicted values of wages along with showing the positive relationships between the wages and the other covariates (such as ages, education, etc...).
-
 ```

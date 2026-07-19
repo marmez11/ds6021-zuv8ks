@@ -305,8 +305,8 @@ Attaching package: 'zoo'</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(hdi)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># loading the riboflavin dataset</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># d1 &lt;- readRDS("data/riboflavin.rds")</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021_Predictability_Modeling/Module7_Linearmodel_≠_linear_relationship/riboflavin.rds"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/riboflavin.rds"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># d1 &lt;- readRDS("/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021_Predictability_Modeling/Module7_Linearmodel_≠_linear_relationship/riboflavin.rds")</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extracting the x and y values</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> d1<span class="sc">$</span>x   <span class="co"># 71 × 4088 matrix. n = 71, p = 4088</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> d1<span class="sc">$</span>y   <span class="co"># length-71 vector. n = 71</span></span>
@@ -445,20 +445,20 @@ Attaching package: 'zoo'</code></pre>
 <span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>cv_lasso <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">nfolds =</span> <span class="dv">10</span>, <span class="at">type.measure =</span> <span class="st">"mse"</span>)</span>
 <span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the LSE and min lambda values</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>lambda_min_lasso <span class="ot">&lt;-</span> cv_lasso<span class="sc">$</span>lambda.min</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>lambda_1se_lasso <span class="ot">&lt;-</span> cv_lasso<span class="sc">$</span>lambda<span class="fl">.1</span>se</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>lambda_1se_lasso <span class="ot">&lt;-</span> cv_10_ridge<span class="sc">$</span>lambda<span class="fl">.1</span>se</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>lambda_min_lasso <span class="ot">&lt;-</span> cv_lasso<span class="sc">$</span>lambda.min</span>
 <span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of non-zero gene expression features at lambda.lse</span></span>
 <span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>coef_lasso <span class="ot">&lt;-</span> <span class="fu">coef</span>(cv_lasso, <span class="at">s =</span> <span class="st">"lambda.1se"</span>)</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>num_retained_lasso <span class="ot">&lt;-</span> <span class="fu">sum</span>(coef_lasso[<span class="sc">-</span><span class="dv">1</span>, ] <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>fianl_num_retained_lasso <span class="ot">&lt;-</span> <span class="fu">sum</span>(coef_lasso[<span class="sc">-</span><span class="dv">1</span>, ] <span class="sc">!=</span> <span class="dv">0</span>)</span>
 <span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the Lambda </span></span>
 <span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"lambda.1se (lasso):"</span>, <span class="fu">round</span>(lambda_1se_lasso, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lambda.1se (lasso): 0.092316 </code></pre>
+<pre><code>lambda.1se (lasso): 36.41147 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of retained (non-zero) gene expression features at lambda.lse:"</span>, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    num_retained_lasso, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    fianl_num_retained_lasso, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of retained (non-zero) gene expression features at lambda.lse: 25 </code></pre>
 </div>
@@ -524,22 +524,36 @@ Attaching package: 'zoo'</code></pre>
 <pre><code>The number of selected features from Elastic Net in comparison with Lasso:</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(num_selected_elastic_net)){</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">" The Elastic Net (alpha="</span>, alphas[i], <span class="st">") selected "</span>, num_selected_elastic_net[i], <span class="st">" features.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">" The Lasso (alpha=1) selected "</span>, num_retained_lasso, <span class="st">" features.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">" The Selected Features of Elastic Net ("</span>, num_selected_elastic_net[i], <span class="st">") compared to Lasso ("</span>, num_retained_lasso, <span class="st">") — greater? "</span>, num_selected_elastic_net[i] <span class="sc">&gt;</span> num_retained_lasso, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">" The Elastic Net (alpha="</span>, alphas[i], <span class="st">" and selected "</span>, num_selected_elastic_net[i], <span class="st">" features.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">" The Lasso (alpha=1) selected"</span>, fianl_num_retained_lasso, <span class="st">"features.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The Selected Features of Elastic Net "</span>, num_selected_elastic_net[i], <span class="st">" is greater than ("</span> , num_selected_elastic_net[i] <span class="sc">&gt;</span> fianl_num_retained_lasso, <span class="st">") the Selected Features of Lasso "</span>, fianl_num_retained_lasso,  <span class="st">".</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The Selected Features of Elastic Net "</span>, num_selected_elastic_net[i], <span class="st">" is leser than ("</span> , num_selected_elastic_net[i] <span class="sc">&lt;</span> fianl_num_retained_lasso, <span class="st">") the Selected Features of Lasso "</span>, fianl_num_retained_lasso,  <span class="st">".</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"The Selected Features of Elastic Net "</span>, num_selected_elastic_net[i], <span class="st">" is equal to ("</span> , num_selected_elastic_net[i] <span class="sc">==</span> fianl_num_retained_lasso, <span class="st">") the Selected Features of Lasso "</span>, fianl_num_retained_lasso,  <span class="st">".</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> The Elastic Net (alpha= 0.25 ) selected  69  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 69 ) compared to Lasso ( 25 ) — greater?  TRUE 
+<pre><code> The Elastic Net (alpha= 0.25  and selected  69  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  69  is greater than ( TRUE ) the Selected Features of Lasso  25 .
 
- The Elastic Net (alpha= 0.5 ) selected  55  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 55 ) compared to Lasso ( 25 ) — greater?  TRUE 
+The Selected Features of Elastic Net  69  is leser than ( FALSE ) the Selected Features of Lasso  25 .
 
- The Elastic Net (alpha= 0.75 ) selected  48  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 48 ) compared to Lasso ( 25 ) — greater?  TRUE </code></pre>
+The Selected Features of Elastic Net  69  is equal to ( FALSE ) the Selected Features of Lasso  25 .
+
+ The Elastic Net (alpha= 0.5  and selected  55  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  55  is greater than ( TRUE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  55  is leser than ( FALSE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  55  is equal to ( FALSE ) the Selected Features of Lasso  25 .
+
+ The Elastic Net (alpha= 0.75  and selected  48  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  48  is greater than ( TRUE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  48  is leser than ( FALSE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  48  is equal to ( FALSE ) the Selected Features of Lasso  25 .</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From this data frame of all (α = alphas, λmin = lambda mins, min CV-MSE = minimum cross validation mean squared error, and num_nonzero_features = number of nonzero features extracted from the lambda min values),</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># it would be easy to witness that the alpha that yields the lowest CV-MSE is the alpha of 0.25 where the lowest CV-MSE value of 0.203687.</span></span>
@@ -565,31 +579,31 @@ Attaching package: 'zoo'</code></pre>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify optimal k</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>optimal_ncomp <span class="ot">&lt;-</span> <span class="fu">which.min</span>(pcr_fit<span class="sc">$</span>validation<span class="sc">$</span>PRESS)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS):"</span>, optimal_ncomp, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>optimal_minimum_PLS_k_val <span class="ot">&lt;-</span> pcr_fit<span class="sc">$</span>validation<span class="sc">$</span>PRESS[<span class="fu">which.min</span>(pcr_fit<span class="sc">$</span>validation<span class="sc">$</span>PRESS)] <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The Optimal k number of the minimum number of PC components in the calcualted Partial Least Square Regression Value (PLS):"</span>, optimal_minimum_PLS_k_val, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS): 22 </code></pre>
+<pre><code>The Optimal k number of the minimum number of PC components in the calcualted Partial Least Square Regression Value (PLS): 16.62265 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  a. Back-transform the PCR fit to obtain the full 4,088-dimensional coefficient vector 𝛽pcr.</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># transforming </span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this performs a backdoor linear transformation on all x values with the coefficients altered by the most optimal k number of principal components value for the PCR fitted object</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>backdoor_coefficient_transformation_on_k_optimal_pcr <span class="ot">&lt;-</span> <span class="fu">coef</span>(pcr_fit, <span class="at">ncomp =</span> optimal_ncomp)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>dimensions <span class="ot">&lt;-</span> <span class="fu">dim</span>(backdoor_coefficient_transformation_on_k_optimal_pcr)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: "</span>, <span class="fu">paste</span>(dimensions, <span class="at">collapse =</span> <span class="st">" x "</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>backdoor_coefficient_transformation_on_k_optimal_pcr <span class="ot">&lt;-</span> <span class="fu">coef</span>(pcr_fit, <span class="at">ncomp =</span> optimal_minimum_PLS_k_val)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>dimensions <span class="ot">&lt;-</span> <span class="fu">dim</span>(backdoor_coefficient_transformation_on_k_optimal_pcr)[<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>]</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: "</span>, dimensions, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088:  4088 x 1 x 1 </code></pre>
+<pre><code>Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088:  4088 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  b. Use 𝛽 pcr to generate a prediction for the first observation in the dataset (X[1, ]). Show your R code and the predicted value.</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>pred_first_observation_of_the_pcr <span class="ot">&lt;-</span> <span class="fu">predict</span>(pcr_fit, </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">newdata =</span> x[<span class="dv">1</span>, , <span class="at">drop =</span> <span class="cn">FALSE</span>], </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncomp =</span> optimal_ncomp)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncomp =</span> optimal_minimum_PLS_k_val)</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted value for the first observation</span></span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Predicted value for the first observation (X[1,]):"</span>, </span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">as.numeric</span>(pred_first_observation_of_the_pcr), <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Predicted value for the first observation (X[1,]): -6.562936 </code></pre>
+<pre><code>Predicted value for the first observation (X[1,]): -6.6234 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  c. In one sentence, explain why you needed all 4,088 gene expression values to generate</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this prediction even though you only fit k principal components.</span></span>
@@ -604,14 +618,14 @@ Attaching package: 'zoo'</code></pre>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a. Report the CV-MSE at the selected tuning parameter for each of the four methods (ridge, lasso, elastic net, PCR).</span></span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>min_cv_mse_ridge <span class="ot">&lt;-</span> <span class="fu">min</span>(cv_10_ridge<span class="sc">$</span>cvm)</span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>min_cv_mse_lasso <span class="ot">&lt;-</span> <span class="fu">min</span>(cv_lasso<span class="sc">$</span>cvm)</span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>min_cv_mse_elastic_net_min <span class="ot">&lt;-</span> <span class="fu">min</span>(min_cv_mse_elastic_net)</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>min_cv_mse_elastic_net <span class="ot">&lt;-</span> <span class="fu">min</span>(min_cv_mse_elastic_net[<span class="fu">which.min</span>(min_cv_mse_elastic_net)])</span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>cv_mse_pcr   <span class="ot">&lt;-</span> <span class="fu">min</span>(pcr_fit<span class="sc">$</span>validation<span class="sc">$</span>PRESS) <span class="sc">/</span> <span class="fu">length</span>(y)</span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># b. Which method achieves the lowest CV-MSE on this dataset?</span></span>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the lowest CV-MSE values for all methods</span></span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>lowest_cv_mse_methods <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ridge Regression"</span>, <span class="st">"Lasso Regression"</span>, <span class="st">"Elastic Net Regression"</span>, <span class="st">"Partial Least Square Regression (PCR)"</span>)</span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>lowest_cv_mse_values <span class="ot">&lt;-</span> <span class="fu">c</span>(min_cv_mse_ridge, min_cv_mse_lasso, min_cv_mse_elastic_net_min, cv_mse_pcr)</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>lowest_cv_mse_methods <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ridge Regression"</span>, <span class="st">"Lasso Regression"</span>, <span class="st">"Elastic Net Regression"</span>, <span class="st">"Partial Least Square Regression"</span>)</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>lowest_cv_mse_values <span class="ot">&lt;-</span> <span class="fu">c</span>(min_cv_mse_ridge, min_cv_mse_lasso, min_cv_mse_elastic_net, cv_mse_pcr)</span>
 <span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the method with the lowest CV-MSE</span></span>
 <span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>lowest_cv_mse_index <span class="ot">&lt;-</span> <span class="fu">which.min</span>(lowest_cv_mse_values)</span>
@@ -623,19 +637,19 @@ Attaching package: 'zoo'</code></pre>
 <pre><code>The lowest CV-MSE achieved by the methods are:</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(lowest_cv_mse_methods)) {</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(lowest_cv_mse_methods[i], <span class="st">": "</span>, <span class="fu">round</span>(lowest_cv_mse_values[i], <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(lowest_cv_mse_methods[i], <span class="st">": "</span>, lowest_cv_mse_values[i], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Ridge Regression :  0.269497 
-Lasso Regression :  0.209623 
-Elastic Net Regression :  0.203687 
-Partial Least Square Regression (PCR) :  0.248206 </code></pre>
+<pre><code>Ridge Regression :  0.2694971 
+Lasso Regression :  0.2096233 
+Elastic Net Regression :  0.2036869 
+Partial Least Square Regression :  0.2482063 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the method with the lowest CV-MSE</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The method with the lowest CV-MSE is:"</span>, lowest_cv_mse_method_val, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">The method with the lowest CV-MSE is:"</span>, lowest_cv_mse_method_val)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-The method with the lowest CV-MSE is: Elastic Net Regression </code></pre>
+The method with the lowest CV-MSE is: Elastic Net Regression</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># c. Based on the guidance in the chapter, would you expect ridge or lasso to work better here?</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Does the data agree with your expectation? Why or why not?</span></span>

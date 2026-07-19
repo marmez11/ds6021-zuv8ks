@@ -3314,7 +3314,7 @@ FALSE), : unnamed smooth arguments, will be ignored
 \end{Shaded}
 
 \begin{verbatim}
-Linear Model CV MSE:    1236.25 
+Linear Model CV MSE:    1236.47 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3324,7 +3324,7 @@ Linear Model CV MSE:    1236.25
 \end{Shaded}
 
 \begin{verbatim}
-RCS Spline Model CV MSE: 1210.75 
+RCS Spline Model CV MSE: 1211.18 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3334,7 +3334,7 @@ RCS Spline Model CV MSE: 1210.75
 \end{Shaded}
 
 \begin{verbatim}
-Difference between models (RCS - Linear): -25.5 
+Difference between models (RCS - Linear): -25.29 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3344,7 +3344,7 @@ Difference between models (RCS - Linear): -25.5
 \end{Shaded}
 
 \begin{verbatim}
-Percentage improvement: -2.06 %
+Percentage improvement: -2.05 %
 \end{verbatim}
 
 \begin{Shaded}
@@ -3574,8 +3574,8 @@ The following objects are masked from 'package:base':
 \CommentTok{\#library(hdi)}
 
 \CommentTok{\# loading the riboflavin dataset}
-\CommentTok{\# d1 \textless{}{-} readRDS("data/riboflavin.rds")}
-\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021\_Predictability\_Modeling/Module7\_Linearmodel\_≠\_linear\_relationship/riboflavin.rds"}\NormalTok{)}
+\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/riboflavin.rds"}\NormalTok{)}
+\CommentTok{\# d1 \textless{}{-} readRDS("/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021\_Predictability\_Modeling/Module7\_Linearmodel\_≠\_linear\_relationship/riboflavin.rds")}
 \CommentTok{\# extracting the x and y values}
 \NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ d1}\SpecialCharTok{$}\NormalTok{x   }\CommentTok{\# 71 × 4088 matrix. n = 71, p = 4088}
 \NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ d1}\SpecialCharTok{$}\NormalTok{y   }\CommentTok{\# length{-}71 vector. n = 71}
@@ -3732,12 +3732,12 @@ lambda.1se: 36.41147
 \NormalTok{cv\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{nfolds =} \DecValTok{10}\NormalTok{, }\AttributeTok{type.measure =} \StringTok{"mse"}\NormalTok{)}
 
 \CommentTok{\# Getting the LSE and min lambda values}
+\NormalTok{lambda\_1se\_lasso }\OtherTok{\textless{}{-}}\NormalTok{ cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{lambda}\FloatTok{.1}\NormalTok{se}
 \NormalTok{lambda\_min\_lasso }\OtherTok{\textless{}{-}}\NormalTok{ cv\_lasso}\SpecialCharTok{$}\NormalTok{lambda.min}
-\NormalTok{lambda\_1se\_lasso }\OtherTok{\textless{}{-}}\NormalTok{ cv\_lasso}\SpecialCharTok{$}\NormalTok{lambda}\FloatTok{.1}\NormalTok{se}
 
 \CommentTok{\# Number of non{-}zero gene expression features at lambda.lse}
 \NormalTok{coef\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(cv\_lasso, }\AttributeTok{s =} \StringTok{"lambda.1se"}\NormalTok{)}
-\NormalTok{num\_retained\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(coef\_lasso[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, ] }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+\NormalTok{fianl\_num\_retained\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(coef\_lasso[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, ] }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
 
 \CommentTok{\# Print the Lambda }
 \FunctionTok{cat}\NormalTok{(}\StringTok{"lambda.1se (lasso):"}\NormalTok{, }\FunctionTok{round}\NormalTok{(lambda\_1se\_lasso, }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
@@ -3745,13 +3745,13 @@ lambda.1se: 36.41147
 \end{Shaded}
 
 \begin{verbatim}
-lambda.1se (lasso): 0.092316 
+lambda.1se (lasso): 36.41147 
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{cat}\NormalTok{(}\StringTok{"Number of retained (non{-}zero) gene expression features at lambda.lse:"}\NormalTok{, }
-\NormalTok{    num\_retained\_lasso, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{    fianl\_num\_retained\_lasso, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3835,25 +3835,39 @@ The number of selected features from Elastic Net in comparison with Lasso:
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(num\_selected\_elastic\_net))\{}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Elastic Net (alpha="}\NormalTok{, alphas[i], }\StringTok{") selected "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Lasso (alpha=1) selected "}\NormalTok{, num\_retained\_lasso, }\StringTok{" features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Selected Features of Elastic Net ("}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{") compared to Lasso ("}\NormalTok{, num\_retained\_lasso, }\StringTok{") — greater? "}\NormalTok{, num\_selected\_elastic\_net[i] }\SpecialCharTok{\textgreater{}}\NormalTok{ num\_retained\_lasso, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Elastic Net (alpha="}\NormalTok{, alphas[i], }\StringTok{" and selected "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{" The Lasso (alpha=1) selected"}\NormalTok{, fianl\_num\_retained\_lasso, }\StringTok{"features.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"The Selected Features of Elastic Net "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" is greater than ("}\NormalTok{ , num\_selected\_elastic\_net[i] }\SpecialCharTok{\textgreater{}}\NormalTok{ fianl\_num\_retained\_lasso, }\StringTok{") the Selected Features of Lasso "}\NormalTok{, fianl\_num\_retained\_lasso,  }\StringTok{".}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"The Selected Features of Elastic Net "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" is leser than ("}\NormalTok{ , num\_selected\_elastic\_net[i] }\SpecialCharTok{\textless{}}\NormalTok{ fianl\_num\_retained\_lasso, }\StringTok{") the Selected Features of Lasso "}\NormalTok{, fianl\_num\_retained\_lasso,  }\StringTok{".}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"The Selected Features of Elastic Net "}\NormalTok{, num\_selected\_elastic\_net[i], }\StringTok{" is equal to ("}\NormalTok{ , num\_selected\_elastic\_net[i] }\SpecialCharTok{==}\NormalTok{ fianl\_num\_retained\_lasso, }\StringTok{") the Selected Features of Lasso "}\NormalTok{, fianl\_num\_retained\_lasso,  }\StringTok{".}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
- The Elastic Net (alpha= 0.25 ) selected  69  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 69 ) compared to Lasso ( 25 ) — greater?  TRUE 
+ The Elastic Net (alpha= 0.25  and selected  69  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  69  is greater than ( TRUE ) the Selected Features of Lasso  25 .
 
- The Elastic Net (alpha= 0.5 ) selected  55  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 55 ) compared to Lasso ( 25 ) — greater?  TRUE 
+The Selected Features of Elastic Net  69  is leser than ( FALSE ) the Selected Features of Lasso  25 .
 
- The Elastic Net (alpha= 0.75 ) selected  48  features.
- The Lasso (alpha=1) selected  25  features.
- The Selected Features of Elastic Net ( 48 ) compared to Lasso ( 25 ) — greater?  TRUE 
+The Selected Features of Elastic Net  69  is equal to ( FALSE ) the Selected Features of Lasso  25 .
+
+ The Elastic Net (alpha= 0.5  and selected  55  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  55  is greater than ( TRUE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  55  is leser than ( FALSE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  55  is equal to ( FALSE ) the Selected Features of Lasso  25 .
+
+ The Elastic Net (alpha= 0.75  and selected  48  features.
+ The Lasso (alpha=1) selected 25 features.
+The Selected Features of Elastic Net  48  is greater than ( TRUE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  48  is leser than ( FALSE ) the Selected Features of Lasso  25 .
+
+The Selected Features of Elastic Net  48  is equal to ( FALSE ) the Selected Features of Lasso  25 .
 \end{verbatim}
 
 \begin{Shaded}
@@ -3882,13 +3896,13 @@ The number of selected features from Elastic Net in comparison with Lasso:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Identify optimal k}
-\NormalTok{optimal\_ncomp }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS)}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS):"}\NormalTok{, optimal\_ncomp, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{optimal\_minimum\_PLS\_k\_val }\OtherTok{\textless{}{-}}\NormalTok{ pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS[}\FunctionTok{which.min}\NormalTok{(pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS)] }\SpecialCharTok{{-}} \DecValTok{1}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The Optimal k number of the minimum number of PC components in the calcualted Partial Least Square Regression Value (PLS):"}\NormalTok{, optimal\_minimum\_PLS\_k\_val, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS): 22 
+The Optimal k number of the minimum number of PC components in the calcualted Partial Least Square Regression Value (PLS): 16.62265 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3897,14 +3911,14 @@ The Optimal k (number of PC components) in the calculated Partial Least Square R
 \CommentTok{\# transforming }
 
 \CommentTok{\# this performs a backdoor linear transformation on all x values with the coefficients altered by the most optimal k number of principal components value for the PCR fitted object}
-\NormalTok{backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(pcr\_fit, }\AttributeTok{ncomp =}\NormalTok{ optimal\_ncomp)}
-\NormalTok{dimensions }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr)}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: "}\NormalTok{, }\FunctionTok{paste}\NormalTok{(dimensions, }\AttributeTok{collapse =} \StringTok{" x "}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(pcr\_fit, }\AttributeTok{ncomp =}\NormalTok{ optimal\_minimum\_PLS\_k\_val)}
+\NormalTok{dimensions }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(backdoor\_coefficient\_transformation\_on\_k\_optimal\_pcr)[}\DecValTok{0}\SpecialCharTok{:}\DecValTok{1}\NormalTok{]}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: "}\NormalTok{, dimensions, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088:  4088 x 1 x 1 
+Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088:  4088 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3912,7 +3926,7 @@ Checking all of the Dimensions in the PCR object to check if the transformations
 \CommentTok{\#  b. Use 𝛽 pcr to generate a prediction for the first observation in the dataset (X[1, ]). Show your R code and the predicted value.}
 \NormalTok{pred\_first\_observation\_of\_the\_pcr }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(pcr\_fit, }
                       \AttributeTok{newdata =}\NormalTok{ x[}\DecValTok{1}\NormalTok{, , }\AttributeTok{drop =} \ConstantTok{FALSE}\NormalTok{], }
-                      \AttributeTok{ncomp =}\NormalTok{ optimal\_ncomp)}
+                      \AttributeTok{ncomp =}\NormalTok{ optimal\_minimum\_PLS\_k\_val)}
 
 \CommentTok{\# predicted value for the first observation}
 \FunctionTok{cat}\NormalTok{(}\StringTok{"Predicted value for the first observation (X[1,]):"}\NormalTok{, }
@@ -3921,7 +3935,7 @@ Checking all of the Dimensions in the PCR object to check if the transformations
 \end{Shaded}
 
 \begin{verbatim}
-Predicted value for the first observation (X[1,]): -6.562936 
+Predicted value for the first observation (X[1,]): -6.6234 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3939,14 +3953,14 @@ Predicted value for the first observation (X[1,]): -6.562936
   \CommentTok{\# a. Report the CV{-}MSE at the selected tuning parameter for each of the four methods (ridge, lasso, elastic net, PCR).}
 \NormalTok{min\_cv\_mse\_ridge }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(cv\_10\_ridge}\SpecialCharTok{$}\NormalTok{cvm)}
 \NormalTok{min\_cv\_mse\_lasso }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(cv\_lasso}\SpecialCharTok{$}\NormalTok{cvm)}
-\NormalTok{min\_cv\_mse\_elastic\_net\_min }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(min\_cv\_mse\_elastic\_net)}
+\NormalTok{min\_cv\_mse\_elastic\_net }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(min\_cv\_mse\_elastic\_net[}\FunctionTok{which.min}\NormalTok{(min\_cv\_mse\_elastic\_net)])}
 \NormalTok{cv\_mse\_pcr   }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(pcr\_fit}\SpecialCharTok{$}\NormalTok{validation}\SpecialCharTok{$}\NormalTok{PRESS) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(y)}
 
   \CommentTok{\# b. Which method achieves the lowest CV{-}MSE on this dataset?}
 
 \CommentTok{\# Compare the lowest CV{-}MSE values for all methods}
-\NormalTok{lowest\_cv\_mse\_methods }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Ridge Regression"}\NormalTok{, }\StringTok{"Lasso Regression"}\NormalTok{, }\StringTok{"Elastic Net Regression"}\NormalTok{, }\StringTok{"Partial Least Square Regression (PCR)"}\NormalTok{)}
-\NormalTok{lowest\_cv\_mse\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(min\_cv\_mse\_ridge, min\_cv\_mse\_lasso, min\_cv\_mse\_elastic\_net\_min, cv\_mse\_pcr)}
+\NormalTok{lowest\_cv\_mse\_methods }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Ridge Regression"}\NormalTok{, }\StringTok{"Lasso Regression"}\NormalTok{, }\StringTok{"Elastic Net Regression"}\NormalTok{, }\StringTok{"Partial Least Square Regression"}\NormalTok{)}
+\NormalTok{lowest\_cv\_mse\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(min\_cv\_mse\_ridge, min\_cv\_mse\_lasso, min\_cv\_mse\_elastic\_net, cv\_mse\_pcr)}
 
 \CommentTok{\# Find the method with the lowest CV{-}MSE}
 \NormalTok{lowest\_cv\_mse\_index }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(lowest\_cv\_mse\_values)}
@@ -3964,28 +3978,28 @@ The lowest CV-MSE achieved by the methods are:
 \begin{Shaded}
 \begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(lowest\_cv\_mse\_methods)) \{}
-  \FunctionTok{cat}\NormalTok{(lowest\_cv\_mse\_methods[i], }\StringTok{": "}\NormalTok{, }\FunctionTok{round}\NormalTok{(lowest\_cv\_mse\_values[i], }\DecValTok{6}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(lowest\_cv\_mse\_methods[i], }\StringTok{": "}\NormalTok{, lowest\_cv\_mse\_values[i], }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-Ridge Regression :  0.269497 
-Lasso Regression :  0.209623 
-Elastic Net Regression :  0.203687 
-Partial Least Square Regression (PCR) :  0.248206 
+Ridge Regression :  0.2694971 
+Lasso Regression :  0.2096233 
+Elastic Net Regression :  0.2036869 
+Partial Least Square Regression :  0.2482063 
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Print the method with the lowest CV{-}MSE}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{The method with the lowest CV{-}MSE is:"}\NormalTok{, lowest\_cv\_mse\_method\_val, }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{The method with the lowest CV{-}MSE is:"}\NormalTok{, lowest\_cv\_mse\_method\_val)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 
-The method with the lowest CV-MSE is: Elastic Net Regression 
+The method with the lowest CV-MSE is: Elastic Net Regression
 \end{verbatim}
 
 \begin{Shaded}

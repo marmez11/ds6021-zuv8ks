@@ -18,8 +18,8 @@ library(lmtest)
 #library(hdi)
 
 # loading the riboflavin dataset
-# d1 <- readRDS("data/riboflavin.rds")
-d1 <- readRDS("/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021_Predictability_Modeling/Module7_Linearmodel_≠_linear_relationship/riboflavin.rds")
+d1 <- readRDS("data/riboflavin.rds")
+# d1 <- readRDS("/Users/Mzmz12/Documents/UVA Data Science Online Masters/DS6021_Predictability_Modeling/Module7_Linearmodel_≠_linear_relationship/riboflavin.rds")
 # extracting the x and y values
 x <- d1$x   # 71 × 4088 matrix. n = 71, p = 4088
 y <- d1$y   # length-71 vector. n = 71
@@ -140,17 +140,17 @@ plot(cv_10_ridge$glmnet.fit,
 cv_lasso <- cv.glmnet(x, y, alpha = 1, nfolds = 10, type.measure = "mse")
 
 # Getting the LSE and min lambda values
+lambda_1se_lasso <- cv_10_ridge$lambda.1se
 lambda_min_lasso <- cv_lasso$lambda.min
-lambda_1se_lasso <- cv_lasso$lambda.1se
 
 # Number of non-zero gene expression features at lambda.lse
 coef_lasso <- coef(cv_lasso, s = "lambda.1se")
-num_retained_lasso <- sum(coef_lasso[-1, ] != 0)
+fianl_num_retained_lasso <- sum(coef_lasso[-1, ] != 0)
 
 # Print the Lambda 
 cat("lambda.1se (lasso):", round(lambda_1se_lasso, 6), "\n")
 cat("Number of retained (non-zero) gene expression features at lambda.lse:", 
-    num_retained_lasso, "\n\n")
+    fianl_num_retained_lasso, "\n\n")
 
 #Plot CV error curve with the two vertical lines
 plot(cv_lasso, main = "Lasso Regression – 10-fold CV Error Curve")
@@ -193,9 +193,11 @@ results_elastic_net <- data.frame(
 print(results_elastic_net)
 cat("The number of selected features from Elastic Net in comparison with Lasso:\n")
 for(i in seq_along(num_selected_elastic_net)){
-  cat(" The Elastic Net (alpha=", alphas[i], ") selected ", num_selected_elastic_net[i], " features.\n")
-  cat(" The Lasso (alpha=1) selected ", num_retained_lasso, " features.\n")
-  cat(" The Selected Features of Elastic Net (", num_selected_elastic_net[i], ") compared to Lasso (", num_retained_lasso, ") — greater? ", num_selected_elastic_net[i] > num_retained_lasso, "\n\n")
+  cat(" The Elastic Net (alpha=", alphas[i], " and selected ", num_selected_elastic_net[i], " features.\n")
+  cat(" The Lasso (alpha=1) selected", fianl_num_retained_lasso, "features.\n")
+  cat("The Selected Features of Elastic Net ", num_selected_elastic_net[i], " is greater than (" , num_selected_elastic_net[i] > fianl_num_retained_lasso, ") the Selected Features of Lasso ", fianl_num_retained_lasso,  ".\n\n")
+  cat("The Selected Features of Elastic Net ", num_selected_elastic_net[i], " is leser than (" , num_selected_elastic_net[i] < fianl_num_retained_lasso, ") the Selected Features of Lasso ", fianl_num_retained_lasso,  ".\n\n")
+  cat("The Selected Features of Elastic Net ", num_selected_elastic_net[i], " is equal to (" , num_selected_elastic_net[i] == fianl_num_retained_lasso, ") the Selected Features of Lasso ", fianl_num_retained_lasso,  ".\n\n")
 }
 
 # From this data frame of all (α = alphas, λmin = lambda mins, min CV-MSE = minimum cross validation mean squared error, and num_nonzero_features = number of nonzero features extracted from the lambda min values),
@@ -216,21 +218,21 @@ validationplot(pcr_fit, val.type = "MSE",
                legendpos = "topright")
 
 # Identify optimal k
-optimal_ncomp <- which.min(pcr_fit$validation$PRESS)
-cat("The Optimal k (number of PC components) in the calculated Partial Least Square Regression Value (PLS):", optimal_ncomp, "\n\n")
+optimal_minimum_PLS_k_val <- pcr_fit$validation$PRESS[which.min(pcr_fit$validation$PRESS)] - 1
+cat("The Optimal k number of the minimum number of PC components in the calcualted Partial Least Square Regression Value (PLS):", optimal_minimum_PLS_k_val, "\n\n")
 
 #  a. Back-transform the PCR fit to obtain the full 4,088-dimensional coefficient vector 𝛽pcr.
 # transforming 
 
 # this performs a backdoor linear transformation on all x values with the coefficients altered by the most optimal k number of principal components value for the PCR fitted object
-backdoor_coefficient_transformation_on_k_optimal_pcr <- coef(pcr_fit, ncomp = optimal_ncomp)
-dimensions <- dim(backdoor_coefficient_transformation_on_k_optimal_pcr)
-cat("Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: ", paste(dimensions, collapse = " x "), "\n\n")
+backdoor_coefficient_transformation_on_k_optimal_pcr <- coef(pcr_fit, ncomp = optimal_minimum_PLS_k_val)
+dimensions <- dim(backdoor_coefficient_transformation_on_k_optimal_pcr)[0:1]
+cat("Checking all of the Dimensions in the PCR object to check if the transformations of the coefficients in the coefficient vector is correct for 4088: ", dimensions, "\n\n")
 
 #  b. Use 𝛽 pcr to generate a prediction for the first observation in the dataset (X[1, ]). Show your R code and the predicted value.
 pred_first_observation_of_the_pcr <- predict(pcr_fit, 
                       newdata = x[1, , drop = FALSE], 
-                      ncomp = optimal_ncomp)
+                      ncomp = optimal_minimum_PLS_k_val)
 
 # predicted value for the first observation
 cat("Predicted value for the first observation (X[1,]):", 
@@ -249,14 +251,14 @@ cat("Predicted value for the first observation (X[1,]):",
   # a. Report the CV-MSE at the selected tuning parameter for each of the four methods (ridge, lasso, elastic net, PCR).
 min_cv_mse_ridge <- min(cv_10_ridge$cvm)
 min_cv_mse_lasso <- min(cv_lasso$cvm)
-min_cv_mse_elastic_net_min <- min(min_cv_mse_elastic_net)
+min_cv_mse_elastic_net <- min(min_cv_mse_elastic_net[which.min(min_cv_mse_elastic_net)])
 cv_mse_pcr   <- min(pcr_fit$validation$PRESS) / length(y)
 
   # b. Which method achieves the lowest CV-MSE on this dataset?
 
 # Compare the lowest CV-MSE values for all methods
-lowest_cv_mse_methods <- c("Ridge Regression", "Lasso Regression", "Elastic Net Regression", "Partial Least Square Regression (PCR)")
-lowest_cv_mse_values <- c(min_cv_mse_ridge, min_cv_mse_lasso, min_cv_mse_elastic_net_min, cv_mse_pcr)
+lowest_cv_mse_methods <- c("Ridge Regression", "Lasso Regression", "Elastic Net Regression", "Partial Least Square Regression")
+lowest_cv_mse_values <- c(min_cv_mse_ridge, min_cv_mse_lasso, min_cv_mse_elastic_net, cv_mse_pcr)
 
 # Find the method with the lowest CV-MSE
 lowest_cv_mse_index <- which.min(lowest_cv_mse_values)
@@ -265,10 +267,10 @@ lowest_cv_mse_method_val <- lowest_cv_mse_methods[lowest_cv_mse_index]
 # Print the results
 cat("The lowest CV-MSE achieved by the methods are:\n")
 for (i in 1:length(lowest_cv_mse_methods)) {
-  cat(lowest_cv_mse_methods[i], ": ", round(lowest_cv_mse_values[i], 6), "\n")
+  cat(lowest_cv_mse_methods[i], ": ", lowest_cv_mse_values[i], "\n")
 }
 # Print the method with the lowest CV-MSE
-cat("\nThe method with the lowest CV-MSE is:", lowest_cv_mse_method_val, "\n\n")
+cat("\nThe method with the lowest CV-MSE is:", lowest_cv_mse_method_val)
 
 
   # c. Based on the guidance in the chapter, would you expect ridge or lasso to work better here?
@@ -289,5 +291,4 @@ cat("\nThe method with the lowest CV-MSE is:", lowest_cv_mse_method_val, "\n\n")
   # along with the the MSE curve values calculated in this chapter (Ridge Regression :  0.2694971, Lasso Regression :  0.2096233, Elastic Net Regression :  0.2036869 )
   # it becomes easy to conclude that the Lasso Regression (and possibly the Elastic Net Regression) is more accurate in predicting the y values in this genetics dataset.
   # This conclusion is backed up by the MSE values listed above.
-  
 ```
