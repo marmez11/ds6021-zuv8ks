@@ -1,0 +1,21 @@
+# Name: Maxwell Braseth 
+# Date: 07/21/2026
+# Course : DS 6021 - Machine Learning I - Introduction to Predictive Modeling
+# Module 9 Homework
+
+```{r}
+
+# Task 1. Pick a dataset with a continuous outcome, a continuous predictor, and a multi-level categorical grouping variable (NHANES with a different outcome/predictor pair than used in this chapter is fine, as is an outside dataset). Fit the full/partial/no-sharing ladder from this chapter (fully shared, shared-shape offset, full interaction, fully separate) and report which point on the spectrum the data support using cross-validated MSE.
+
+# Task 2. Fit a group-specific response surface: two continuous predictors, additive-in-group vs. interactive-in-group (rcs(x1,4)*rcs(x2,4) + group vs. rcs(x1,4)*rcs(x2,4)*group). Compare CV-MSE between the two, and produce at least one plotly surface per group for the interactive model.
+
+# Task 3. Reparameterize the group predictor with sum-to-zero contrasts (contr.sum) as in this chapter, build the global/deviation penalty.factor vector via attr(X, "assign"), and fit both ridge and lasso. Report, at the cross-validated lambda λ, which groups’ curves get pulled essentially back to the shared curve and which remain distinct.
+
+# Task 4. One-paragraph conclusion: does your dataset support a fully shared, fully separate, or regularized in-between model for the grouping variable you chose? Justify using both predictive evidence (CV-MSE across the ladder and the regularized fit) and interpretive evidence (which groups’ coefficients/curves shrank the most, and whether that tracked group size, distinctiveness of the group’s curve, or something else — be honest if the pattern doesn’t look clean).
+
+# Task 5. In the notes above, the R command : "contrasts(nhanes_reg$Race1) <- contr.sum(nlevels(nhanes_reg$Race1))" implemented a reparameterization of the race indicator variables. Derive the transformation matrix R that takes the standard parameterization to the parameterization implemented by conctr.sum. In other words, what is R such that Z = X * R                                                                           where X and Z are as follows: "X <- model.matrix(~Race1, data = nhanes)" and "Z <- model.matrix(~Race1, data = nhanes_reg)"
+
+
+
+
+```
