@@ -4,8 +4,132 @@
 # Module 9 Homework
 
 ```{r}
+# Name: Maxwell Braseth 
+# Date: 07/21/2026
+# Course : DS 6021 - Machine Learning I - Introduction to Predictive Modeling
+# Module 9 Homework
 
-# Task 1. Pick a dataset with a continuous outcome, a continuous predictor, and a multi-level categorical grouping variable (NHANES with a different outcome/predictor pair than used in this chapter is fine, as is an outside dataset). Fit the full/partial/no-sharing ladder from this chapter (fully shared, shared-shape offset, full interaction, fully separate) and report which point on the spectrum the data support using cross-validated MSE.
+# REQUIRED FOR QUARTO PDF — prevents LaTeX # errors
+options(prType = "plain")
+options(grType = "none")
+
+library(NHANES)
+library(rms)
+library(dplyr)
+library(glmnet)
+library(knitr)
+library(Hmisc)
+
+# Task 1. Fit the full/partial/no-sharing ladder and report CV-MSE
+
+data(NHANES)
+
+nhanes_new_data <- NHANES |>
+  select(Testosterone, HealthGen, BMI, Age) |>
+  na.omit() |>
+  as.data.frame()
+
+nhanes_new_data$HealthGen <- factor(nhanes_new_data$HealthGen)
+nhanes_new_data$HealthGen <- droplevels(nhanes_new_data$HealthGen)
+
+new_dd_nhanes <- datadist(nhanes_new_data)
+options(datadist = "new_dd_nhanes")
+
+cat("Complete number of cases:", nrow(nhanes_new_data), "\n")
+
+# ------------------------------------------------------------
+# Fit first model to extract knots safely
+# ------------------------------------------------------------
+fit_model_fully_shared <- ols(Testosterone ~ rcs(BMI, 5),
+                              data = nhanes_new_data, x = TRUE, y = TRUE)
+
+# CORRECT KNOT EXTRACTION (works in all versions)
+bmi_knots <- fit_model_fully_shared$design$BMI$parms
+
+# ------------------------------------------------------------
+# Fit ladder models using extracted knots
+# ------------------------------------------------------------
+
+fit_model_partial_shared <- ols(Testosterone ~ rcs(BMI, bmi_knots) + HealthGen,
+                                data = nhanes_new_data, x = TRUE, y = TRUE)
+
+fit_model_full_interaction <- ols(Testosterone ~ rcs(BMI, bmi_knots) * HealthGen,
+                                  data = nhanes_new_data, x = TRUE, y = TRUE)
+
+# Fully separate
+fitted_model_healthGen_Excellent <- ols(Testosterone ~ rcs(BMI, bmi_knots),
+                                        data = nhanes_new_data |> filter(HealthGen == "Excellent"))
+fitted_model_healthGen_Vgood <- ols(Testosterone ~ rcs(BMI, bmi_knots),
+                                    data = nhanes_new_data |> filter(HealthGen == "Vgood"))
+fitted_model_healthGen_Good <- ols(Testosterone ~ rcs(BMI, bmi_knots),
+                                   data = nhanes_new_data |> filter(HealthGen == "Good"))
+fitted_model_healthGen_Poor <- ols(Testosterone ~ rcs(BMI, bmi_knots),
+                                   data = nhanes_new_data |> filter(HealthGen == "Poor"))
+fitted_model_healthGen_Fair <- ols(Testosterone ~ rcs(BMI, bmi_knots),
+                                   data = nhanes_new_data |> filter(HealthGen == "Fair"))
+
+# ------------------------------------------------------------
+# CV-MSE LADDER
+# ------------------------------------------------------------
+
+k <- 5
+folds <- sample(rep(1:k, length.out = nrow(nhanes_new_data)))
+
+cv_mse <- function(type) {
+  mse <- numeric(k)
+  for (i in 1:k) {
+    train <- nhanes_new_data[folds != i, ]
+    test  <- nhanes_new_data[folds == i, ]
+    
+    if (type == "shared") {
+      f <- ols(Testosterone ~ rcs(BMI, 5), data = train)
+      p <- predict(f, test)
+      
+    } else if (type == "offset") {
+      f <- ols(Testosterone ~ rcs(BMI, 5) + HealthGen, data = train)
+      p <- predict(f, test)
+      
+    } else if (type == "interaction") {
+      f <- ols(Testosterone ~ rcs(BMI, 5) * HealthGen, data = train)
+      p <- predict(f, test)
+      
+    } else {  # fully separate
+      p <- rep(NA_real_, nrow(test))
+      for (g in levels(train$HealthGen)) {
+        tr  <- train[train$HealthGen == g, ]
+        idx <- which(test$HealthGen == g)
+        if (nrow(tr) >= 20 && length(idx) > 0) {
+          p[idx] <- predict(ols(Testosterone ~ rcs(BMI, 5), data = tr), test[idx, ])
+        } else {
+          p[idx] <- mean(tr$Testosterone, na.rm = TRUE)
+        }
+      }
+    }
+    mse[i] <- mean((test$Testosterone - p)^2, na.rm = TRUE)
+  }
+  mean(mse)
+}
+
+results <- data.frame(
+  Model  = c("1. Fully shared",
+             "2. Shared-shape offset",
+             "3. Full interaction",
+             "4. Fully separate"),
+  CV_MSE = c(cv_mse("shared"),
+             cv_mse("offset"),
+             cv_mse("interaction"),
+             cv_mse("separate"))
+)
+
+kable(results, digits = 1,
+      caption = "5-fold Cross-Validated MSE – Information Sharing Ladder")
+
+best <- results$Model[which.min(results$CV_MSE)]
+cat("\n====================================================\n")
+cat("Data support (lowest CV-MSE):", best, "\n")
+cat("====================================================\n")
+
+
 
 # Task 2. Fit a group-specific response surface: two continuous predictors, additive-in-group vs. interactive-in-group (rcs(x1,4)*rcs(x2,4) + group vs. rcs(x1,4)*rcs(x2,4)*group). Compare CV-MSE between the two, and produce at least one plotly surface per group for the interactive model.
 
@@ -14,8 +138,5 @@
 # Task 4. One-paragraph conclusion: does your dataset support a fully shared, fully separate, or regularized in-between model for the grouping variable you chose? Justify using both predictive evidence (CV-MSE across the ladder and the regularized fit) and interpretive evidence (which groups’ coefficients/curves shrank the most, and whether that tracked group size, distinctiveness of the group’s curve, or something else — be honest if the pattern doesn’t look clean).
 
 # Task 5. In the notes above, the R command : "contrasts(nhanes_reg$Race1) <- contr.sum(nlevels(nhanes_reg$Race1))" implemented a reparameterization of the race indicator variables. Derive the transformation matrix R that takes the standard parameterization to the parameterization implemented by conctr.sum. In other words, what is R such that Z = X * R                                                                           where X and Z are as follows: "X <- model.matrix(~Race1, data = nhanes)" and "Z <- model.matrix(~Race1, data = nhanes_reg)"
-
-
-
 
 ```

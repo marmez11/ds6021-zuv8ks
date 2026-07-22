@@ -3314,7 +3314,7 @@ FALSE), : unnamed smooth arguments, will be ignored
 \end{Shaded}
 
 \begin{verbatim}
-Linear Model CV MSE:    1236.54 
+Linear Model CV MSE:    1236.75 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3324,7 +3324,7 @@ Linear Model CV MSE:    1236.54
 \end{Shaded}
 
 \begin{verbatim}
-RCS Spline Model CV MSE: 1211.16 
+RCS Spline Model CV MSE: 1212.01 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3334,7 +3334,7 @@ RCS Spline Model CV MSE: 1211.16
 \end{Shaded}
 
 \begin{verbatim}
-Difference between models (RCS - Linear): -25.38 
+Difference between models (RCS - Linear): -24.75 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3344,7 +3344,7 @@ Difference between models (RCS - Linear): -25.38
 \end{Shaded}
 
 \begin{verbatim}
-Percentage improvement: -2.05 %
+Percentage improvement: -2 %
 \end{verbatim}
 
 \begin{Shaded}
@@ -4043,19 +4043,172 @@ Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive
 
 \chapter{Module 9 Homework}\label{module-9-homework}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Task 1. Pick a dataset with a continuous outcome, a continuous predictor, and a multi{-}level categorical grouping variable (NHANES with a different outcome/predictor pair than used in this chapter is fine, as is an outside dataset). Fit the full/partial/no{-}sharing ladder from this chapter (fully shared, shared{-}shape offset, full interaction, fully separate) and report which point on the spectrum the data support using cross{-}validated MSE.}
+\bookmarksetup{startatroot}
 
-\CommentTok{\# Task 2. Fit a group{-}specific response surface: two continuous predictors, additive{-}in{-}group vs. interactive{-}in{-}group (rcs(x1,4)*rcs(x2,4) + group vs. rcs(x1,4)*rcs(x2,4)*group). Compare CV{-}MSE between the two, and produce at least one plotly surface per group for the interactive model.}
+\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-6}
 
-\CommentTok{\# Task 3. Reparameterize the group predictor with sum{-}to{-}zero contrasts (contr.sum) as in this chapter, build the global/deviation penalty.factor vector via attr(X, "assign"), and fit both ridge and lasso. Report, at the cross{-}validated lambda λ, which groups’ curves get pulled essentially back to the shared curve and which remain distinct.}
+\bookmarksetup{startatroot}
 
-\CommentTok{\# Task 4. One{-}paragraph conclusion: does your dataset support a fully shared, fully separate, or regularized in{-}between model for the grouping variable you chose? Justify using both predictive evidence (CV{-}MSE across the ladder and the regularized fit) and interpretive evidence (which groups’ coefficients/curves shrank the most, and whether that tracked group size, distinctiveness of the group’s curve, or something else — be honest if the pattern doesn’t look clean).}
+\chapter{Date: 07/21/2026}\label{date-07212026-1}
 
-\CommentTok{\# Task 5. In the notes above, the R command : "contrasts(nhanes\_reg$Race1) \textless{}{-} contr.sum(nlevels(nhanes\_reg$Race1))" implemented a reparameterization of the race indicator variables. Derive the transformation matrix R that takes the standard parameterization to the parameterization implemented by conctr.sum. In other words, what is R such that Z = X * R                                                                           where X and Z are as follows: "X \textless{}{-} model.matrix(\textasciitilde{}Race1, data = nhanes)" and "Z \textless{}{-} model.matrix(\textasciitilde{}Race1, data = nhanes\_reg)"}
-\end{Highlighting}
-\end{Shaded}
+\bookmarksetup{startatroot}
+
+\chapter{Course : DS 6021 - Machine Learning I - Introduction to
+Predictive
+Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive-modeling-3}
+
+\bookmarksetup{startatroot}
+
+\chapter{Module 9 Homework}\label{module-9-homework-1}
+
+\bookmarksetup{startatroot}
+
+\chapter{REQUIRED FOR QUARTO PDF --- prevents LaTeX \#
+errors}\label{required-for-quarto-pdf-prevents-latex-errors}
+
+options(prType = ``plain'') options(grType = ``none'')
+
+library(NHANES) library(rms) library(dplyr) library(glmnet)
+library(plotly) library(knitr) library(Hmisc)
+
+\bookmarksetup{startatroot}
+
+\chapter{Task 1. Fit the full/partial/no-sharing ladder and report
+CV-MSE}\label{task-1.-fit-the-fullpartialno-sharing-ladder-and-report-cv-mse}
+
+data(NHANES)
+
+nhanes\_new\_data \textless- NHANES \textbar\textgreater{}
+select(Testosterone, HealthGen, BMI, Age) \textbar\textgreater{}
+na.omit() \textbar\textgreater{} as.data.frame()
+
+nhanes\_new\_data\(HealthGen <- factor(nhanes_new_data\)HealthGen)
+nhanes\_new\_data\(HealthGen <- droplevels(nhanes_new_data\)HealthGen)
+
+new\_dd\_nhanes \textless- datadist(nhanes\_new\_data) options(datadist
+= ``new\_dd\_nhanes'')
+
+cat(``Complete number of cases:'', nrow(nhanes\_new\_data), ``\n'')
+
+nhanes\_new\_data\_columns\_summary \textless- Hmisc::describe(
+nhanes\_new\_data{[}, c(``Testosterone'', ``HealthGen'', ``BMI''){]} )
+
+nhanes\_new\_data\_HealthGen\_Status \textless-
+nhanes\_new\_data\(HealthGen
+nhanes_new_data_BMI <- nhanes_new_data\)BMI
+nhanes\_new\_data\_Testosterone \textless-
+nhanes\_new\_data\$Testosterone
+
+\bookmarksetup{startatroot}
+
+\chapter{------------------------------------------------------------}\label{section-25}
+
+\bookmarksetup{startatroot}
+
+\chapter{FIXED LINE: extract actual numeric knots for
+rcs()}\label{fixed-line-extract-actual-numeric-knots-for-rcs}
+
+\bookmarksetup{startatroot}
+
+\chapter{------------------------------------------------------------}\label{section-26}
+
+bmi\_knots \textless-
+rcspline.eval(nhanes\_new\_data\(BMI, nk = 5, inclx = TRUE)\)knots
+
+\bookmarksetup{startatroot}
+
+\chapter{Fit ladder models}\label{fit-ladder-models}
+
+fit\_model\_fully\_shared \textless- ols(Testosterone \textasciitilde{}
+rcs(BMI, bmi\_knots), data = nhanes\_new\_data, x = TRUE, y = TRUE)
+fit\_model\_fully\_shared
+
+fit\_model\_partial\_shared \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots) + HealthGen, data =
+nhanes\_new\_data, x = TRUE, y = TRUE) fit\_model\_partial\_shared
+
+fit\_model\_full\_interaction \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots) * HealthGen, data =
+nhanes\_new\_data, x = TRUE, y = TRUE) fit\_model\_full\_interaction
+
+fitted\_model\_healthGen\_Excellent \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
+\textbar\textgreater{} filter(HealthGen == ``Excellent''))
+fitted\_model\_healthGen\_Vgood \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
+\textbar\textgreater{} filter(HealthGen == ``Vgood''))
+fitted\_model\_healthGen\_Good \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
+\textbar\textgreater{} filter(HealthGen == ``Good''))
+fitted\_model\_healthGen\_Poor \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
+\textbar\textgreater{} filter(HealthGen == ``Poor''))
+fitted\_model\_healthGen\_Fair \textless- ols(Testosterone
+\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
+\textbar\textgreater{} filter(HealthGen == ``Fair''))
+
+\bookmarksetup{startatroot}
+
+\chapter{------------------------------------------------------------}\label{section-27}
+
+\bookmarksetup{startatroot}
+
+\chapter{CV-MSE LADDER (shared → offset → interaction →
+separate)}\label{cv-mse-ladder-shared-offset-interaction-separate}
+
+\bookmarksetup{startatroot}
+
+\chapter{------------------------------------------------------------}\label{section-28}
+
+k \textless- 5 folds \textless- sample(rep(1:k, length.out =
+nrow(nhanes\_new\_data)))
+
+cv\_mse \textless- function(type) \{ mse \textless- numeric(k) for (i in
+1:k) \{ train \textless- nhanes\_new\_data{[}folds != i, {]} test
+\textless- nhanes\_new\_data{[}folds == i, {]}
+
+\begin{verbatim}
+if (type == "shared") {
+  f <- ols(Testosterone ~ rcs(BMI, 5), data = train)
+  p <- predict(f, test)
+  
+} else if (type == "offset") {
+  f <- ols(Testosterone ~ rcs(BMI, 5) + HealthGen, data = train)
+  p <- predict(f, test)
+  
+} else if (type == "interaction") {
+  f <- ols(Testosterone ~ rcs(BMI, 5) * HealthGen, data = train)
+  p <- predict(f, test)
+  
+} else {  # fully separate
+  p <- rep(NA_real_, nrow(test))
+  for (g in levels(train$HealthGen)) {
+    tr  <- train[train$HealthGen == g, ]
+    idx <- which(test$HealthGen == g)
+    if (nrow(tr) >= 20 && length(idx) > 0) {
+      p[idx] <- predict(ols(Testosterone ~ rcs(BMI, 5), data = tr), test[idx, ])
+    } else {
+      p[idx] <- mean(tr$Testosterone, na.rm = TRUE)
+    }
+  }
+}
+mse[i] <- mean((test$Testosterone - p)^2, na.rm = TRUE)
+\end{verbatim}
+
+\} mean(mse) \}
+
+results \textless- data.frame( Model = c(``1. Fully shared'', ``2.
+Shared-shape offset'', ``3. Full interaction'', ``4. Fully separate''),
+CV\_MSE = c(cv\_mse(``shared''), cv\_mse(``offset''),
+cv\_mse(``interaction''), cv\_mse(``separate'')) )
+
+kable(results, digits = 1, caption = ``5-fold Cross-Validated MSE --
+Information Sharing Ladder'')
+
+best \textless- results\(Model[which.min(results\)CV\_MSE){]}
+cat(``\n====================================================\n'')
+cat(``Data support (lowest CV-MSE):'', best, ``\n'')
+cat(``====================================================\n'')
 
 \bookmarksetup{startatroot}
 
