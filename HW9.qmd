@@ -18,7 +18,7 @@ library(NHANES)
 library(rms)
 library(dplyr)
 library(glmnet)
-# library(plotly)
+library(plotly)
 library(knitr)
 library(Hmisc)
 
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(results = "hide", message = FALSE, warning = FALSE)
 
 # Task 1. Pick a dataset with a continuous outcome, a continuous predictor, and a multi-level categorical grouping variable (NHANES with a different outcome/predictor pair than used in this chapter is fine, as is an outside dataset). Fit the full/partial/no-sharing ladder from this chapter (fully shared, shared-shape offset, full interaction, fully separate) and report which point on the spectrum the data support using cross-validated MSE.
 
-# options(prType = "html")
+options(prType = "html")
 
 data(NHANES)
 
@@ -351,22 +351,8 @@ for (level_healthgen_status in healthgen_levels) {
   )
   
   # Create the 3D response surface
-  # I Have to omitt this plot to render this project to github, please reommit it when reviewing this code
-  #plotly_model_of_testosterone_predictions_from_age_and_bmi <- plot_ly(x = bmi_grid, y = age_grid, z = z_testosterone_matrix) %>% add_surface() %>% layout(title = paste("Interactive BMI x Age Response Surface Area:", "HealthGen = ", level_healthgen_status), scene = list(xaxis = list(title = "BMI"), yaxis = list(title = "Age"),zaxis = list(title = "Predicted Testosterone")))
-
-  # ---- PDF-safe replacement for print() ----
-  #file_name <- paste0("surface_", gsub(" ", "_", level_healthgen_status), ".png")
-  
-  # Temporarily save the widget and screenshot it
-  #htmlwidgets::saveWidget(as_widget(plotly_model_of_testosterone_predictions_from_age_and_bmi),"temp_plotly.html",selfcontained = TRUE)
-  
-  #webshot2::webshot("temp_plotly.html",file = file_name,delay = 2,vwidth = 900,vheight = 700)
-  
-  # Include the static image in the document
-  #knitr::include_graphics(file_name)
-  
-  # Clean up temporary file
-  #unlink("temp_plotly.html")
+  plotly_model_of_testosterone_predictions_from_age_and_bmi <- plot_ly(x = bmi_grid, y = age_grid, z = z_testosterone_matrix) %>% add_surface() %>% layout(title = paste("Interactive BMI x Age Response Surface Area:", "HealthGen = ", level_healthgen_status), scene = list(xaxis = list(title = "BMI"), yaxis = list(title = "Age"),zaxis = list(title = "Predicted Testosterone")))
+    print(plotly_model_of_testosterone_predictions_from_age_and_bmi)
 }
 
 # Task 3. Reparameterize the group predictor with sum-to-zero contrasts (contr.sum) as in this chapter, build the global/deviation penalty.factor vector via attr(X, "assign"), and fit both ridge and lasso. Report, at the cross-validated lambda λ, which groups’ curves get pulled essentially back to the shared curve and which remain distinct.
@@ -408,25 +394,23 @@ y_testosterone <- nhanes_regularization_data$Testosterone
 
 # fit both ridge and lasso.
 
-# (I had to omitt the plots to render this homework assignment, reommit them when reviewing this code)
-
 # cv lasso and ridge for the age and/or bmi for predicting testosterone with the applied penalty factor assigned alpha = 0 or 1 for lasso for the L2 penalty It shrinks all coefficient weights smoothly toward zero but never reduces them to exactly zero along with L1 penalty where the model applies an L1 regularization penalty to penalizes the absolute size of the coefficients, which can force less important coefficients to become exactly zero.
 
 # lasso and ridge for the age and testosterone
 cv_lasso_age_nhanes_data <- cv.glmnet(x = x_age, y = y_testosterone, alpha = 0,
  penalty.factor = penalty_factor_age, nfolds = 10, standardize = TRUE)
-#plot(cv_lasso_age_nhanes_data)
+plot(cv_lasso_age_nhanes_data)
 cv_ridge_age_nhanes_data <- cv.glmnet(x = x_age, y = y_testosterone, alpha = 1,
  penalty.factor = penalty_factor_age, nfolds = 10, standardize = TRUE)
-#plot(cv_ridge_age_nhanes_data)
+plot(cv_ridge_age_nhanes_data)
 
 # lasso and ridge for the bmi and testosterone
 cv_lasso_bmi_nhanes_data <- cv.glmnet(x = x_bmi, y = y_testosterone, alpha = 0,
  penalty.factor = penalty_factor_bmi, nfolds = 10, standardize = TRUE)
-#plot(cv_lasso_bmi_nhanes_data)
+plot(cv_lasso_bmi_nhanes_data)
 cv_ridge_bmi_nhanes_data <- cv.glmnet(x = x_bmi, y = y_testosterone, alpha = 1,
  penalty.factor = penalty_factor_bmi, nfolds = 10, standardize = TRUE)
-#plot(cv_ridge_bmi_nhanes_data)
+plot(cv_ridge_bmi_nhanes_data)
 
 cat("RIDGE (α = 0)")
 cat("λ.min bmi =", cv_ridge_bmi_nhanes_data$lambda.min, "\n")
@@ -511,5 +495,6 @@ cat("\nFirst 6 rows of X %*% R:\n")
 print(head(((X %*% R)), 6))
 
 # From all of this code that I wrote above, it becomes very easy to interpret how the reparameterization of the data and the HealthGen predictor variable helps reinforce the conclusion that Z = X * R. This is first evidenced in my calculations of the max absolute difference |Z - X %*% R|, which are less than 0.0001. Through this, I can see that the reparameterization at "X <- model.matrix(~ HealthGen, data = nhanes_newer_data) and Z <- model.matrix(~ HealthGen, data = nhanes_regularization_data_new)" was a success and this will help calculate the R matrix considering that R requires that R <- solve(crossprod(X), crossprod(X, Z)). Thus from the checking calculations at max_abs_diff <- max(abs(Z - (X %*% R))), cat("\nMaximum absolute difference |Z - X %*% R| =", max_abs_diff, "\n"), checking_r_to_z_times_x <- (X %*% R) and print(mean(checking_r_to_z_times_x == Z)), we could conclude with a close estimation that Z = X * R. We could also conclude that Z = X * R, through the first rows of data from the tables of X and Y shows pretty effective transformations that are needed in 𝑅 =(𝑋^𝑇 * X)^-1 * (X^T * Z) that are all confirmed through the 1 values in the Healthgen level = "Excellent" for all of the tables despite the poor tranformations for the other columns of this dataset reflected in the tables. In conclusion, the reparameterization of the data and the HealthGen predictor variable realliy helps reinforce the conclusion that Z = X * R and that these reparameterization transformations of Matrix X and Z are accurate.
+
 
 ```
