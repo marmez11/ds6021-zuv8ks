@@ -3314,7 +3314,7 @@ FALSE), : unnamed smooth arguments, will be ignored
 \end{Shaded}
 
 \begin{verbatim}
-Linear Model CV MSE:    1236.75 
+Linear Model CV MSE:    1238.4 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3324,7 +3324,7 @@ Linear Model CV MSE:    1236.75
 \end{Shaded}
 
 \begin{verbatim}
-RCS Spline Model CV MSE: 1212.01 
+RCS Spline Model CV MSE: 1213.01 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3334,7 +3334,7 @@ RCS Spline Model CV MSE: 1212.01
 \end{Shaded}
 
 \begin{verbatim}
-Difference between models (RCS - Linear): -24.75 
+Difference between models (RCS - Linear): -25.39 
 \end{verbatim}
 
 \begin{Shaded}
@@ -3344,7 +3344,7 @@ Difference between models (RCS - Linear): -24.75
 \end{Shaded}
 
 \begin{verbatim}
-Percentage improvement: -2 %
+Percentage improvement: -2.05 %
 \end{verbatim}
 
 \begin{Shaded}
@@ -4029,186 +4029,581 @@ The method with the lowest CV-MSE is: Elastic Net Regression
 
 \chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-5}
 
-\bookmarksetup{startatroot}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Date: 07/21/2026}
+\CommentTok{\# Course : DS 6021 {-} Machine Learning I {-} Introduction to Predictive Modeling}
+\CommentTok{\# Module 9 Homework}
 
-\chapter{Date: 07/21/2026}\label{date-07212026}
+\CommentTok{\# install.packages("NHANES")}
+\CommentTok{\# install.packages("rms")}
+\CommentTok{\# install.packages("dplyr")}
+\CommentTok{\# install.packages("glmnet")}
+\CommentTok{\# install.packages("plotly")}
+\CommentTok{\# install.packages("knitr")}
+\CommentTok{\# install.packages("Hmisc")}
+\CommentTok{\#install.packages("webshot2")}
+\CommentTok{\#webshot2::install\_phantomjs()}
 
-\bookmarksetup{startatroot}
-
-\chapter{Course : DS 6021 - Machine Learning I - Introduction to
-Predictive
-Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive-modeling-2}
-
-\bookmarksetup{startatroot}
-
-\chapter{Module 9 Homework}\label{module-9-homework}
-
-\bookmarksetup{startatroot}
-
-\chapter{Name: Maxwell Braseth}\label{name-maxwell-braseth-6}
-
-\bookmarksetup{startatroot}
-
-\chapter{Date: 07/21/2026}\label{date-07212026-1}
-
-\bookmarksetup{startatroot}
-
-\chapter{Course : DS 6021 - Machine Learning I - Introduction to
-Predictive
-Modeling}\label{course-ds-6021---machine-learning-i---introduction-to-predictive-modeling-3}
-
-\bookmarksetup{startatroot}
-
-\chapter{Module 9 Homework}\label{module-9-homework-1}
-
-\bookmarksetup{startatroot}
-
-\chapter{REQUIRED FOR QUARTO PDF --- prevents LaTeX \#
-errors}\label{required-for-quarto-pdf-prevents-latex-errors}
-
-options(prType = ``plain'') options(grType = ``none'')
-
-library(NHANES) library(rms) library(dplyr) library(glmnet)
-library(plotly) library(knitr) library(Hmisc)
-
-\bookmarksetup{startatroot}
-
-\chapter{Task 1. Fit the full/partial/no-sharing ladder and report
-CV-MSE}\label{task-1.-fit-the-fullpartialno-sharing-ladder-and-report-cv-mse}
-
-data(NHANES)
-
-nhanes\_new\_data \textless- NHANES \textbar\textgreater{}
-select(Testosterone, HealthGen, BMI, Age) \textbar\textgreater{}
-na.omit() \textbar\textgreater{} as.data.frame()
-
-nhanes\_new\_data\(HealthGen <- factor(nhanes_new_data\)HealthGen)
-nhanes\_new\_data\(HealthGen <- droplevels(nhanes_new_data\)HealthGen)
-
-new\_dd\_nhanes \textless- datadist(nhanes\_new\_data) options(datadist
-= ``new\_dd\_nhanes'')
-
-cat(``Complete number of cases:'', nrow(nhanes\_new\_data), ``\n'')
-
-nhanes\_new\_data\_columns\_summary \textless- Hmisc::describe(
-nhanes\_new\_data{[}, c(``Testosterone'', ``HealthGen'', ``BMI''){]} )
-
-nhanes\_new\_data\_HealthGen\_Status \textless-
-nhanes\_new\_data\(HealthGen
-nhanes_new_data_BMI <- nhanes_new_data\)BMI
-nhanes\_new\_data\_Testosterone \textless-
-nhanes\_new\_data\$Testosterone
-
-\bookmarksetup{startatroot}
-
-\chapter{------------------------------------------------------------}\label{section-25}
-
-\bookmarksetup{startatroot}
-
-\chapter{FIXED LINE: extract actual numeric knots for
-rcs()}\label{fixed-line-extract-actual-numeric-knots-for-rcs}
-
-\bookmarksetup{startatroot}
-
-\chapter{------------------------------------------------------------}\label{section-26}
-
-bmi\_knots \textless-
-rcspline.eval(nhanes\_new\_data\(BMI, nk = 5, inclx = TRUE)\)knots
-
-\bookmarksetup{startatroot}
-
-\chapter{Fit ladder models}\label{fit-ladder-models}
-
-fit\_model\_fully\_shared \textless- ols(Testosterone \textasciitilde{}
-rcs(BMI, bmi\_knots), data = nhanes\_new\_data, x = TRUE, y = TRUE)
-fit\_model\_fully\_shared
-
-fit\_model\_partial\_shared \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots) + HealthGen, data =
-nhanes\_new\_data, x = TRUE, y = TRUE) fit\_model\_partial\_shared
-
-fit\_model\_full\_interaction \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots) * HealthGen, data =
-nhanes\_new\_data, x = TRUE, y = TRUE) fit\_model\_full\_interaction
-
-fitted\_model\_healthGen\_Excellent \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
-\textbar\textgreater{} filter(HealthGen == ``Excellent''))
-fitted\_model\_healthGen\_Vgood \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
-\textbar\textgreater{} filter(HealthGen == ``Vgood''))
-fitted\_model\_healthGen\_Good \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
-\textbar\textgreater{} filter(HealthGen == ``Good''))
-fitted\_model\_healthGen\_Poor \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
-\textbar\textgreater{} filter(HealthGen == ``Poor''))
-fitted\_model\_healthGen\_Fair \textless- ols(Testosterone
-\textasciitilde{} rcs(BMI, bmi\_knots), data = nhanes\_new\_data
-\textbar\textgreater{} filter(HealthGen == ``Fair''))
-
-\bookmarksetup{startatroot}
-
-\chapter{------------------------------------------------------------}\label{section-27}
-
-\bookmarksetup{startatroot}
-
-\chapter{CV-MSE LADDER (shared → offset → interaction →
-separate)}\label{cv-mse-ladder-shared-offset-interaction-separate}
-
-\bookmarksetup{startatroot}
-
-\chapter{------------------------------------------------------------}\label{section-28}
-
-k \textless- 5 folds \textless- sample(rep(1:k, length.out =
-nrow(nhanes\_new\_data)))
-
-cv\_mse \textless- function(type) \{ mse \textless- numeric(k) for (i in
-1:k) \{ train \textless- nhanes\_new\_data{[}folds != i, {]} test
-\textless- nhanes\_new\_data{[}folds == i, {]}
+\FunctionTok{library}\NormalTok{(NHANES)}
+\FunctionTok{library}\NormalTok{(rms)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-if (type == "shared") {
-  f <- ols(Testosterone ~ rcs(BMI, 5), data = train)
-  p <- predict(f, test)
-  
-} else if (type == "offset") {
-  f <- ols(Testosterone ~ rcs(BMI, 5) + HealthGen, data = train)
-  p <- predict(f, test)
-  
-} else if (type == "interaction") {
-  f <- ols(Testosterone ~ rcs(BMI, 5) * HealthGen, data = train)
-  p <- predict(f, test)
-  
-} else {  # fully separate
-  p <- rep(NA_real_, nrow(test))
-  for (g in levels(train$HealthGen)) {
-    tr  <- train[train$HealthGen == g, ]
-    idx <- which(test$HealthGen == g)
-    if (nrow(tr) >= 20 && length(idx) > 0) {
-      p[idx] <- predict(ols(Testosterone ~ rcs(BMI, 5), data = tr), test[idx, ])
-    } else {
-      p[idx] <- mean(tr$Testosterone, na.rm = TRUE)
-    }
-  }
-}
-mse[i] <- mean((test$Testosterone - p)^2, na.rm = TRUE)
+Loading required package: Hmisc
 \end{verbatim}
 
-\} mean(mse) \}
+\begin{verbatim}
 
-results \textless- data.frame( Model = c(``1. Fully shared'', ``2.
-Shared-shape offset'', ``3. Full interaction'', ``4. Fully separate''),
-CV\_MSE = c(cv\_mse(``shared''), cv\_mse(``offset''),
-cv\_mse(``interaction''), cv\_mse(``separate'')) )
+Attaching package: 'Hmisc'
+\end{verbatim}
 
-kable(results, digits = 1, caption = ``5-fold Cross-Validated MSE --
-Information Sharing Ladder'')
+\begin{verbatim}
+The following objects are masked from 'package:base':
 
-best \textless- results\(Model[which.min(results\)CV\_MSE){]}
-cat(``\n====================================================\n'')
-cat(``Data support (lowest CV-MSE):'', best, ``\n'')
-cat(``====================================================\n'')
+    format.pval, units
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:Hmisc':
+
+    src, summarize
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:stats':
+
+    filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+Loaded glmnet 5.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# library(plotly)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(Hmisc)}
+
+\CommentTok{\# Task 1. Pick a dataset with a continuous outcome, a continuous predictor, and a multi{-}level categorical grouping variable (NHANES with a different outcome/predictor pair than used in this chapter is fine, as is an outside dataset). Fit the full/partial/no{-}sharing ladder from this chapter (fully shared, shared{-}shape offset, full interaction, fully separate) and report which point on the spectrum the data support using cross{-}validated MSE.}
+
+\FunctionTok{options}\NormalTok{(}\AttributeTok{prType =} \StringTok{"html"}\NormalTok{)}
+
+\FunctionTok{data}\NormalTok{(NHANES)}
+
+\CommentTok{\# selecting columns for a continuous outcome, a continuous predictor, and a multi{-}level categorical grouping variable for the nhanes data}
+\CommentTok{\# continuous outcome: Testosterone}
+\CommentTok{\# continuous predictor(s): BMI, Age}
+\CommentTok{\# categorical grouping variable: HealthGen}
+\NormalTok{nhanes\_new\_data }\OtherTok{\textless{}{-}}\NormalTok{ NHANES }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(Testosterone, HealthGen, BMI, Age) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{as.data.frame}\NormalTok{()}
+
+\CommentTok{\# Making sure HealthGen is a factor}
+\NormalTok{nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{HealthGen }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{HealthGen)}
+\CommentTok{\# Remove unused factor levels}
+\NormalTok{nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{HealthGen }\OtherTok{\textless{}{-}} \FunctionTok{droplevels}\NormalTok{(nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{HealthGen)}
+
+\CommentTok{\# Creating a datadist object}
+\NormalTok{new\_dd\_nhanes }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(nhanes\_new\_data)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"new\_dd\_nhanes"}\NormalTok{)}
+
+\CommentTok{\# all columns in the nhanes\_new\_data data set}
+\NormalTok{nhanes\_new\_data\_HealthGen\_Status }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{HealthGen}
+\NormalTok{nhanes\_new\_data\_BMI              }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{BMI}
+\NormalTok{nhanes\_new\_data\_Testosterone     }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data}\SpecialCharTok{$}\NormalTok{Testosterone}
+
+\CommentTok{\# Fit the full/partial/no{-}sharing ladder from this chapter (fully shared, shared{-}shape offset, full interaction, fully separate)}
+
+\CommentTok{\# number of knots or splines}
+\NormalTok{bmi\_knots }\OtherTok{\textless{}{-}} \FunctionTok{attr}\NormalTok{(}\FunctionTok{rcs}\NormalTok{(nhanes\_new\_data\_BMI, }\DecValTok{5}\NormalTok{), }\StringTok{"parms"}\NormalTok{)}
+
+\CommentTok{\# fully shared}
+\NormalTok{fit\_model\_fully\_shared }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots), }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Partial sharing: shared{-}shape offset and shifted}
+\NormalTok{fit\_model\_partial\_shared }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots) }\SpecialCharTok{+}\NormalTok{ HealthGen, }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# full interaction}
+\NormalTok{fit\_model\_full\_interaction }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots) }\SpecialCharTok{*}\NormalTok{ HealthGen, }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# fully separate (kept your original style of names)}
+\NormalTok{fitted\_model\_healthGen\_Excellent\_separate }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots), }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(HealthGen }\SpecialCharTok{==} \StringTok{"Excellent"}\NormalTok{))}
+\NormalTok{fitted\_model\_healthGen\_Vgood\_separate     }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots),}\AttributeTok{data =}\NormalTok{ nhanes\_new\_data }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(HealthGen }\SpecialCharTok{==} \StringTok{"Vgood"}\NormalTok{))}
+\NormalTok{fitted\_model\_healthGen\_Good\_separate      }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots), }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(HealthGen }\SpecialCharTok{==} \StringTok{"Good"}\NormalTok{))}
+\NormalTok{fitted\_model\_healthGen\_Fair\_separate      }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots), }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(HealthGen }\SpecialCharTok{==} \StringTok{"Fair"}\NormalTok{))}
+\NormalTok{fitted\_model\_healthGen\_Poor\_separate }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, bmi\_knots), }\AttributeTok{data =}\NormalTok{ nhanes\_new\_data }\SpecialCharTok{|\textgreater{}} \FunctionTok{filter}\NormalTok{(HealthGen }\SpecialCharTok{==} \StringTok{"Poor"}\NormalTok{))}
+
+\CommentTok{\# Report which point on the spectrum the data support using cross{-}validated MSE.}
+\CommentTok{\# CV{-}MSE for all models}
+
+\CommentTok{\# setting the seed for reproducibility of results}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\CommentTok{\# k values for cross{-}validation}
+\NormalTok{k\_val }\OtherTok{\textless{}{-}} \DecValTok{10}
+\CommentTok{\# total number of rows or cases in the nhanes\_new\_data data set}
+\NormalTok{total\_num\_of\_new\_data\_nhanes }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(nhanes\_new\_data)}
+\CommentTok{\# k{-}fold cross{-}validation vector}
+\NormalTok{k\_fold\_id }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_val, }\AttributeTok{length.out =}\NormalTok{ total\_num\_of\_new\_data\_nhanes))}
+\CommentTok{\# Create empty vectors to store CV{-}MSE for each model}
+\NormalTok{cv\_mse\_full\_shared      }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_partial\_shared   }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_full\_interaction }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_fully\_separate   }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\CommentTok{\# creating other empty vectors for Group{-}specific fully{-}separate MSEs}
+\NormalTok{cv\_mse\_Excellent }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_Vgood     }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_Good      }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_Fair      }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\NormalTok{cv\_mse\_Poor      }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val)}
+\CommentTok{\# looping through the k values}
+\ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_val) \{}
+  \CommentTok{\# setting training and test data based on the k value}
+\NormalTok{  train }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data[k\_fold\_id }\SpecialCharTok{!=}\NormalTok{ k, ]}
+\NormalTok{  test  }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data[k\_fold\_id }\SpecialCharTok{==}\NormalTok{ k, ]}
+  \CommentTok{\# Fully shared and calculating the cv mse}
+\NormalTok{  fit\_full\_shared\_new }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{5}\NormalTok{), }\AttributeTok{data =}\NormalTok{ train)}
+\NormalTok{  cv\_mse\_full\_shared[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((}\FunctionTok{predict}\NormalTok{(fit\_full\_shared\_new, test) }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\# Partial sharing (shared{-}shape offset) and calculating the cv mse}
+\NormalTok{  fit\_partial\_shared\_new }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ HealthGen, }\AttributeTok{data =}\NormalTok{ train)}
+\NormalTok{  cv\_mse\_partial\_shared[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((}\FunctionTok{predict}\NormalTok{(fit\_partial\_shared\_new, test) }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\# Full interaction and calculating the cv mse}
+\NormalTok{  fit\_full\_interaction\_new }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ HealthGen, }\AttributeTok{data =}\NormalTok{ train)}
+\NormalTok{  cv\_mse\_full\_interaction[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((}\FunctionTok{predict}\NormalTok{(fit\_full\_interaction\_new, test) }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\# Creating a vector to store predictions of all groups}
+\NormalTok{  pred\_separate\_per\_group }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(test))}
+  
+  \CommentTok{\# Fit one model per HealthGen group on the training data}
+
+  \CommentTok{\# looping through each level of the HealthGen status groups}
+  \ControlFlowTok{for}\NormalTok{ (health\_status\_level }\ControlFlowTok{in} \FunctionTok{levels}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{HealthGen)) \{}
+    \CommentTok{\# pulling out the training data at the certain HealthGen Status level}
+\NormalTok{    train\_data\_health\_status\_group }\OtherTok{\textless{}{-}}\NormalTok{ train[train}\SpecialCharTok{$}\NormalTok{HealthGen }\SpecialCharTok{==}\NormalTok{ health\_status\_level, ]}
+    \CommentTok{\# pulling out the index of the data of that health status}
+\NormalTok{    test\_index }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(test}\SpecialCharTok{$}\NormalTok{HealthGen }\SpecialCharTok{==}\NormalTok{ health\_status\_level)}
+    
+    \CommentTok{\# Skip the row in the new data if there no test observations indexes/values or too few training observations}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(test\_index) }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{||} \FunctionTok{nrow}\NormalTok{(train\_data\_health\_status\_group) }\SpecialCharTok{\textless{}} \DecValTok{15}\NormalTok{) \{}
+      \ControlFlowTok{next}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \CommentTok{\# fitting the model for each healthgen status group with the predictions of Testosterone via the restricted cubic splines of BMI at k = 5 from the training data}
+\NormalTok{      fitted\_model\_healthGen\_separate\_groups }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{5}\NormalTok{), }\AttributeTok{data =}\NormalTok{ train\_data\_health\_status\_group)}
+    \CommentTok{\# pulling out the predictions from the model for each row of the test data}
+\NormalTok{      predictions\_for\_healthGen\_groups }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fitted\_model\_healthGen\_separate\_groups, test[test\_index, ])}
+      \CommentTok{\# placing the predictions in the pred\_separate\_per\_group vector}
+\NormalTok{      pred\_separate\_per\_group[test\_index] }\OtherTok{\textless{}{-}}\NormalTok{ predictions\_for\_healthGen\_groups}
+      
+      \CommentTok{\# Calculating all of the group{-}specific MSE}
+\NormalTok{      group\_mses }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((predictions\_for\_healthGen\_groups }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone[test\_index])}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+      \CommentTok{\# placing the group{-}specific MSE of the Excellent group of the HealthGen status groups into the cv\_mse\_Excellent vector}
+      \ControlFlowTok{if}\NormalTok{ (health\_status\_level }\SpecialCharTok{==} \StringTok{"Excellent"}\NormalTok{)}
+\NormalTok{        cv\_mse\_Excellent[k] }\OtherTok{\textless{}{-}}\NormalTok{ group\_mses}
+      \CommentTok{\# placing the group{-}specific MSE of the Vgood group of the HealthGen status groups into the cv\_mse\_Vgood vector}
+      \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (health\_status\_level }\SpecialCharTok{==} \StringTok{"Vgood"}\NormalTok{)}
+\NormalTok{        cv\_mse\_Vgood[k] }\OtherTok{\textless{}{-}}\NormalTok{ group\_mses}
+      \CommentTok{\# placing the group{-}specific MSE of the Good group of the HealthGen status groups into the cv\_mse\_Good vector}
+      \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (health\_status\_level }\SpecialCharTok{==} \StringTok{"Good"}\NormalTok{)}
+\NormalTok{        cv\_mse\_Good[k] }\OtherTok{\textless{}{-}}\NormalTok{ group\_mses}
+      \CommentTok{\# placing the group{-}specific MSE of the Fair group of the HealthGen status groups into the cv\_mse\_Fair vector}
+      \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (health\_status\_level }\SpecialCharTok{==} \StringTok{"Fair"}\NormalTok{)}
+\NormalTok{        cv\_mse\_Fair[k] }\OtherTok{\textless{}{-}}\NormalTok{ group\_mses}
+      \CommentTok{\# placing the group{-}specific MSE of the Poor group of the HealthGen status groups into the cv\_mse\_Poor vector}
+      \ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (health\_status\_level }\SpecialCharTok{==} \StringTok{"Poor"}\NormalTok{)}
+\NormalTok{        cv\_mse\_Poor[k] }\OtherTok{\textless{}{-}}\NormalTok{ group\_mses}
+      \CommentTok{\# Skipping the row in the new data the level of the HealthGen status groups does not exist in all of the specified levels of the HealthGen status groups }
+        \ControlFlowTok{next}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  \CommentTok{\# calculating the total cv mse of all of the prediction values of all of the separated groups of the HealthGen status groups}
+\NormalTok{  cv\_mse\_fully\_separate[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((pred\_separate\_per\_group }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# Create a dataframe to store the CV{-}MSE for each model}
+\NormalTok{cv\_mses\_all\_models }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Model =} \FunctionTok{c}\NormalTok{(}\StringTok{"Fully Shared"}\NormalTok{, }
+            \StringTok{"Partially Shared (Offset)"}\NormalTok{, }
+            \StringTok{"Full Interaction"}\NormalTok{, }
+            \StringTok{"Fully Separate"}\NormalTok{),}
+  \AttributeTok{CV\_MSE =} \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(cv\_mse\_full\_shared, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_partial\_shared, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_full\_interaction, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_fully\_separate, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{)}
+
+\CommentTok{\# Specifying the digits and caption in the table}
+\FunctionTok{kable}\NormalTok{(cv\_mses\_all\_models, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }
+      \AttributeTok{caption =} \StringTok{"10{-}fold Cross{-}Validated MSE – Information Sharing Ladder"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{10-fold Cross-Validated MSE -- Information Sharing
+Ladder}\tabularnewline
+\toprule\noalign{}
+Model & CV\_MSE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Model & CV\_MSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Fully Shared & 50509.47 \\
+Partially Shared (Offset) & 50597.78 \\
+Full Interaction & 50807.34 \\
+Fully Separate & 50796.37 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creating a HealthGen status separate groups dataframe}
+\NormalTok{separate\_group\_results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{HealthGen =} \FunctionTok{c}\NormalTok{(}\StringTok{"Excellent"}\NormalTok{, }\StringTok{"Vgood"}\NormalTok{, }\StringTok{"Good"}\NormalTok{, }\StringTok{"Fair"}\NormalTok{, }\StringTok{"Poor"}\NormalTok{),}
+  \AttributeTok{CV\_MSE =} \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(cv\_mse\_Excellent, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_Vgood, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_Good, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_Fair, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+             \FunctionTok{mean}\NormalTok{(cv\_mse\_Poor, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{)}
+\CommentTok{\# Specifying the digits and caption in the table}
+\FunctionTok{kable}\NormalTok{(separate\_group\_results, }\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }
+      \AttributeTok{caption =} \StringTok{"Fully Separate CV{-}MSE by HealthGen Group"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{Fully Separate CV-MSE by HealthGen Group}\tabularnewline
+\toprule\noalign{}
+HealthGen & CV\_MSE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+HealthGen & CV\_MSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Excellent & 54367.0 \\
+Vgood & 56029.3 \\
+Good & 46711.3 \\
+Fair & 43892.4 \\
+Poor & 52291.0 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Force the CV\_MSE column to be numeric to allow future MSE calculations}
+\NormalTok{cv\_mses\_all\_models}\SpecialCharTok{$}\NormalTok{CV\_MSE }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(cv\_mses\_all\_models}\SpecialCharTok{$}\NormalTok{CV\_MSE)}
+
+\CommentTok{\# Extract the Fully Separate row}
+\NormalTok{fully\_sep\_row }\OtherTok{\textless{}{-}}\NormalTok{ cv\_mses\_all\_models[cv\_mses\_all\_models}\SpecialCharTok{$}\NormalTok{Model }\SpecialCharTok{==} \StringTok{"Fully Shared"}\NormalTok{, ]}
+
+\CommentTok{\# Extracting the row for the separate HealthGen group with the lowest CV\_MSE}
+\NormalTok{separate\_group\_mse }\OtherTok{\textless{}{-}}\NormalTok{ separate\_group\_results[separate\_group\_results}\SpecialCharTok{$}\NormalTok{CV\_MSE }\SpecialCharTok{==} \FunctionTok{min}\NormalTok{(separate\_group\_results}\SpecialCharTok{$}\NormalTok{CV\_MSE), ]}
+
+\CommentTok{\# Printing out of the CV{-}MSE values for all models (separate model too, just not each individual isolated groups of the HealthGen status groups)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Exact CV{-}MSE values:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Exact CV-MSE values:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(cv\_mses\_all\_models)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                      Model   CV_MSE
+1              Fully Shared 50509.47
+2 Partially Shared (Offset) 50597.78
+3          Full Interaction 50807.34
+4            Fully Separate 50796.37
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Printing out of the CV{-}MSE values for each HealthGen group}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Exact CV{-}MSE values for each separate group:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Exact CV-MSE values for each separate group:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(separate\_group\_results)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  HealthGen   CV_MSE
+1 Excellent 54367.05
+2     Vgood 56029.35
+3      Good 46711.31
+4      Fair 43892.44
+5      Poor 52291.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# printing out the minimum CV{-}MSE value for the fully separate model}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{ Overall Fully Separate CV{-}MSE: "}\NormalTok{, }
+\NormalTok{    fully\_sep\_row}\SpecialCharTok{$}\NormalTok{Model, }
+    \StringTok{"("}\NormalTok{, }\FunctionTok{round}\NormalTok{(fully\_sep\_row}\SpecialCharTok{$}\NormalTok{CV\_MSE, }\DecValTok{2}\NormalTok{), }\StringTok{")}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+ Overall Fully Separate CV-MSE:  Fully Shared ( 50509.47 )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# printing out the minimum CV{-}MSE value for each of the separate HealthGen groups}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{ Best individual HealthGen group:"}\NormalTok{, }
+\NormalTok{    separate\_group\_mse}\SpecialCharTok{$}\NormalTok{HealthGen, }
+    \StringTok{"("}\NormalTok{, }\FunctionTok{round}\NormalTok{(separate\_group\_mse}\SpecialCharTok{$}\NormalTok{CV\_MSE, }\DecValTok{2}\NormalTok{), }\StringTok{")}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+ Best individual HealthGen group: Fair ( 43892.44 )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Task 2. Fit a group{-}specific response surface: two continuous predictors, additive{-}in{-}group vs. interactive{-}in{-}group (rcs(x1,4)*rcs(x2,4) + group vs. rcs(x1,4)*rcs(x2,4 * group). }
+
+\CommentTok{\# Compare CV{-}MSE between the two, and produce at least one plotly surface per group for the interactive model.}
+
+\CommentTok{\# Creating a new datadist object for group{-}specific response surfaces with two continuous predictor variables. Creating a new datadist object for group{-}specific response surfaces with two continuous predictor variables}
+\NormalTok{new\_dd\_nhanes\_new }\OtherTok{\textless{}{-}} \FunctionTok{datadist}\NormalTok{(nhanes\_new\_data)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{datadist =} \StringTok{"new\_dd\_nhanes\_new"}\NormalTok{)}
+
+\CommentTok{\# New 10{-}fold CV{-}MSE comparison for the additive{-}in{-}group and interactive{-}in{-}group models}
+
+\CommentTok{\# Setting the seed for reproducibility}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{50}\NormalTok{)}
+\CommentTok{\# k values for cross{-}validation}
+\NormalTok{k\_val\_new }\OtherTok{\textless{}{-}} \DecValTok{10}
+\CommentTok{\# generating random k values for cross{-}validation in a vector for the length of the nhanes\_new\_data}
+\NormalTok{k\_fold\_id\_new }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_val\_new, }\AttributeTok{length.out =} \FunctionTok{nrow}\NormalTok{(nhanes\_new\_data)))}
+
+\CommentTok{\# Create empty vectors to store CV{-}MSE for each model}
+\NormalTok{cv\_mse\_additive    }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val\_new)}
+\NormalTok{cv\_mse\_interactive }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, k\_val\_new)}
+
+\CommentTok{\# looping through the k values 1{-}10}
+\ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{k\_val\_new) \{}
+  \CommentTok{\# Splitting the data into training and test sets}
+\NormalTok{  train }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data[k\_fold\_id\_new }\SpecialCharTok{!=}\NormalTok{ k, ]}
+\NormalTok{  test  }\OtherTok{\textless{}{-}}\NormalTok{ nhanes\_new\_data[k\_fold\_id\_new }\SpecialCharTok{==}\NormalTok{ k, ]}
+  
+  \CommentTok{\# Fitting the additive{-}in{-}group model (4 knots)}
+\NormalTok{  fitted\_model\_additive\_in\_group }\OtherTok{\textless{}{-}} \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{rcs}\NormalTok{(Age, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ HealthGen, }\AttributeTok{data =}\NormalTok{ train, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\# Predictions and MSE for the additive model}
+\NormalTok{  predictions\_additive\_group }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fitted\_model\_additive\_in\_group, }\AttributeTok{newdata =}\NormalTok{ test)}
+\NormalTok{  cv\_mse\_additive[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((predictions\_additive\_group }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\# Additive{-}in{-}group model predictions and MSE added safety to avoid infinite or NaN predictions safeguards to skip any k fold value if any HealthGen group is too small (prevents singular matrix)}
+\NormalTok{  tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{HealthGen)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(tab }\SpecialCharTok{\textless{}} \DecValTok{25}\NormalTok{)) \{}
+\NormalTok{    cv\_mse\_interactive[k] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+    \ControlFlowTok{next}
+\NormalTok{  \}}
+  
+  \CommentTok{\# Try to fit the interactive model (4 knots); catch errors}
+\NormalTok{  fitted\_model\_fully\_interactive\_in\_group }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(}
+    \FunctionTok{ols}\NormalTok{(Testosterone }\SpecialCharTok{\textasciitilde{}} \FunctionTok{rcs}\NormalTok{(BMI, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{rcs}\NormalTok{(Age, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ HealthGen, }
+        \AttributeTok{data =}\NormalTok{ train, }\AttributeTok{x =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{y =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}
+\NormalTok{  )}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(fitted\_model\_fully\_interactive\_in\_group)) \{}
+\NormalTok{    cv\_mse\_interactive[k] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+    \ControlFlowTok{next}
+\NormalTok{  \}}
+  
+  \CommentTok{\# Predictions for the interactive model}
+\NormalTok{  predictions\_interactive\_group }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fitted\_model\_fully\_interactive\_in\_group, }\AttributeTok{newdata =}\NormalTok{ test)}
+  
+  \CommentTok{\# Extra safety: discard fold if any prediction is infinite or NaN}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.finite}\NormalTok{(predictions\_interactive\_group))) \{}
+\NormalTok{    cv\_mse\_interactive[k] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    cv\_mse\_interactive[k] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((predictions\_interactive\_group }\SpecialCharTok{{-}}\NormalTok{ test}\SpecialCharTok{$}\NormalTok{Testosterone)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Printing out CV{-}MSe values of Additive{-}in{-}group (shared surface + offsets)" and "Fully interactive{-}in{-}group" models}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Fold{-}specific additive CV{-}MSE:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Fold-specific additive CV-MSE:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(cv\_mse\_additive)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] 47899.02 49851.25 51999.55 44812.20 46543.05 53291.65 61064.53 48644.64
+ [9] 50245.22 46074.54
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Fold{-}specific interactive CV{-}MSE:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Fold-specific interactive CV-MSE:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(cv\_mse\_interactive)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] 583346.05  50597.29  51281.31  44509.59  46411.69  52574.09  62286.23
+ [8]  49334.00  52555.49  45822.86
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_surface\_area }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Model  =} \FunctionTok{c}\NormalTok{(}\StringTok{"Additive{-}in{-}group (shared surface + offsets)"}\NormalTok{,}
+             \StringTok{"Fully interactive{-}in{-}group"}\NormalTok{),}
+  \AttributeTok{CV\_MSE =} \FunctionTok{c}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(cv\_mse\_additive, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+             \FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(cv\_mse\_interactive, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{))}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(cv\_surface\_area, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{,}
+      \AttributeTok{caption =} \StringTok{"10{-}fold CV{-}MSE for the Additive vs Interactive Response Surface Areas"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{10-fold CV-MSE for the Additive vs Interactive Response Surface
+Areas}\tabularnewline
+\toprule\noalign{}
+Model & CV\_MSE \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Model & CV\_MSE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Additive-in-group (shared surface + offsets) & 50042.56 \\
+Fully interactive-in-group & 103871.86 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Printing out of the CV{-}MSE values for the additive{-}in{-}group and interactive{-}in{-}group models}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Exact 10{-}fold CV{-}MSE values from the additive{-}in{-}group and interactive{-}in{-}group models:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Exact 10-fold CV-MSE values from the additive-in-group and interactive-in-group models:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(cv\_surface\_area)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                         Model    CV_MSE
+1 Additive-in-group (shared surface + offsets)  50042.56
+2                   Fully interactive-in-group 103871.86
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Both CV{-}MSE\textquotesingle{}s for the additive{-}in{-}group and interactive{-}in{-}group models: }\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Both CV-MSE's for the additive-in-group and interactive-in-group models: 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Additive{-}in{-}group: "}\NormalTok{ , }\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(cv\_mse\_additive, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Additive-in-group:  50042.56 
+\end{verbatim}
 
 \bookmarksetup{startatroot}
 

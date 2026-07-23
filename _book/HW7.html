@@ -539,19 +539,19 @@ FALSE), : unnamed smooth arguments, will be ignored</code></pre>
 <span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Linear Model CV MSE:   "</span>, <span class="fu">round</span>(mean_cv_mse_linear, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear Model CV MSE:    1237.47 </code></pre>
+<pre><code>Linear Model CV MSE:    1237.91 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"RCS Spline Model CV MSE:"</span>, <span class="fu">round</span>(mean_cv_mse_rcs, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>RCS Spline Model CV MSE: 1212.48 </code></pre>
+<pre><code>RCS Spline Model CV MSE: 1212.41 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Difference between models (RCS - Linear):"</span>, <span class="fu">round</span>(mean_cv_mse_rcs <span class="sc">-</span> mean_cv_mse_linear, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Difference between models (RCS - Linear): -24.99 </code></pre>
+<pre><code>Difference between models (RCS - Linear): -25.49 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Percentage improvement:"</span>, <span class="fu">round</span>((mean_cv_mse_rcs <span class="sc">-</span> mean_cv_mse_linear) <span class="sc">/</span> mean_cv_mse_linear <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Percentage improvement: -2.02 %</code></pre>
+<pre><code>Percentage improvement: -2.06 %</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Does the spline model offer a meaningful improvement in predictive accuracy in comparison with the linear model?</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
